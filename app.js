@@ -138,7 +138,7 @@ const AUDIO_BUILD = "20261012120000";
    Formats: WebM (VP9 + Opus) and WebP play in Chrome, Edge, Firefox and Safari (WebP 14+, WebM
    video 16.4+); WAV plays everywhere. Fetch streams + AbortController: every browser since 2019. */
 var AssetLoader = (function(){
-  const MANIFEST = /*@ASSET_MANIFEST*/[["assets/UI/btn-next-arrow.svg",409],["assets/UI/btn-next-disabled-arrow.svg",418],["assets/UI/btn-next-disabled-pill.svg",589],["assets/swiftpal_buttons/btn-play-waiting.svg",607],["assets/UI/nudge_fx_ring_outer.svg",631],["assets/UI/nudge_fx_ring_inner.svg",648],["assets/swiftpal_buttons/btn-next-disabled.svg",673],["assets/UI/start_card.webp",1024],["assets/UI/btn-next-pill.svg",1269],["assets/swiftpal_buttons/btn-next.svg",1271],["assets/swiftpal_buttons/btn-finish.svg",1316],["assets/SFX/sfx_next.ogg",1412],["assets/SFX/sfx_tap.ogg",1599],["assets/UI/nudge_fx_sparks.svg",2340],["assets/UI/btn-play.svg",2692],["assets/swiftpal_buttons/btn-play-round.svg",2692],["assets/UI/btn-play-waiting.svg",2702],["assets/swiftpal_buttons/btn-play-round-waiting.svg",2702],["assets/SFX/sfx_play.ogg",3317],["assets/Audio/vo2_w_thokar.ogg",4034],["assets/Audio/vo2_w_hiran.ogg",4100],["assets/Audio/vo2_w_shor.ogg",4255],["assets/Audio/vo2_o_phir_se.ogg",4317],["assets/Audio/vo_o_opt_tokri.ogg",4322],["assets/Audio/vo2_w_chupchap.ogg",4563],["assets/Audio/vo2_w_kisan.ogg",4735],["assets/Audio/vo2_w_suraj.ogg",4767],["assets/Audio/vo2_o_jharna.ogg",4863],["assets/Audio/vo_o_t_bhookh.ogg",4950],["assets/Audio/vo2_w_sahlana.ogg",5022],["assets/Audio/vo2_w_jhadiyan.ogg",5143],["assets/Audio/vo2_w_koodna.ogg",5210],["assets/UI/nudge_tap.webp",5306],["assets/Audio/vo2_o_nahi_to.ogg",5415],["assets/Audio/vo2_w_nala.ogg",5495],["assets/Audio/vo2_shabaash.ogg",5622],["assets/Audio/vo_o_t_saheli.ogg",5689],["assets/Audio/vo2_w_bakri.ogg",5731],["assets/Audio/vo2_w_jhadi.ogg",5750],["assets/SFX/sfx_wrong.ogg",5882],["assets/Audio/vo2_w_badal.ogg",5979],["assets/Audio/vo2_w_basta.ogg",6030],["assets/SFX/sfx_whoosh.ogg",6120],["assets/Audio/vo2_o_gusse_se.ogg",6307],["assets/Audio/vo_pt_practice.ogg",6391],["assets/Audio/vo2_w_gilahri.ogg",6498],["assets/Audio/vo2_o_gir_jana.ogg",6594],["assets/UI/nudge_hand_new.svg",6873],["assets/Audio/vo2_o_ooncha_ped.ogg",6947],["assets/Audio/vo_o_t_takrana.ogg",7002],["assets/Audio/vo_o_t_kheencha.ogg",7448],["assets/Audio/vo2_o_chhalang.ogg",7769],["assets/UI/mascot.webp",8006],["assets/Audio/vo2_c_tez_awaaz.ogg",8128],["assets/Audio/vo2_c_kheti.ogg",8508],["assets/Audio/vo2_o_phir_rone.ogg",8538],["assets/Audio/vo2_c_bina_bole.ogg",8548],["assets/Audio/vo2_o_tez_bhagna.ogg",8576],["assets/SFX/sfx_correct.ogg",9207],["assets/Audio/vo2_st04.ogg",9962],["assets/Audio/vo2_o_chhote_paudhe.ogg",10077],["assets/Audio/vo2_c_haath_phera.ogg",10284],["assets/Audio/vo2_h_thokar.ogg",10656],["assets/SFX/sfx_burst.ogg",11035],["assets/Audio/vo2_c_paani.ogg",11165],["assets/Audio/vo2_h_shor.ogg",11249],["assets/Audio/vo2_o_zor_rone.ogg",11550],["assets/Audio/vo2_h_bakri.ogg",11551],["assets/Audio/vo2_h_basta.ogg",11621],["assets/Audio/vo2_h_koodna.ogg",11627],["assets/Audio/vo2_h_chupchap.ogg",11853],["assets/Audio/vo2_h_badal.ogg",11890],["assets/Audio/vo2_h_kisan.ogg",11926],["assets/Audio/vo2_h_jhadiyan.ogg",12080],["assets/Audio/vo2_h_suraj.ogg",12289],["assets/Audio/vo2_h_gilahri.ogg",12353],["assets/Audio/vo2_h_sahlana.ogg",12498],["assets/Audio/vo2_o_dheere_rone.ogg",12498],["assets/Audio/vo2_c_takrana.ogg",13383],["assets/Audio/vo2_c_kutar.ogg",13680],["assets/Audio/vo2_t7_q.ogg",13971],["assets/Audio/vo2_g3_q.ogg",14181],["assets/SFX/sfx_celebrate.ogg",14250],["assets/Audio/vo2_st01.ogg",14440],["assets/Audio/vo2_st03.ogg",14749],["assets/Audio/vo2_c_doodh.ogg",14826],["assets/Audio/vo2_g4_q.ogg",15145],["assets/Audio/vo2_g1_q.ogg",15227],["assets/Audio/vo2_c_dhoop.ogg",16377],["assets/Audio/vo2_celebrate.ogg",17087],["assets/Audio/vo2_g5_q.ogg",17090],["assets/UI/audio.webp",17132],["assets/UI/hint.webp",17670],["assets/UI/start_mascot.webp",18020],["assets/Audio/vo2_g2_h3.ogg",18691],["assets/Audio/vo_pt_guided.ogg",18726],["assets/Audio/vo2_c_kitaben.ogg",19146],["assets/Audio/vo2_st11.ogg",19315],["assets/UI/start_bg.webp",19840],["assets/Audio/vo2_st06.ogg",19940],["assets/Audio/vo2_mic_read.ogg",22455],["assets/Audio/vo2_st09.ogg",23026],["assets/Audio/vo2_st07.ogg",23837],["assets/Images/opt_tokri.webp",23902],["assets/Audio/vo2_st05.ogg",23915],["assets/UI/sw_explain_still.webp",24366],["assets/UI/startnew_bg_plain.webp",24446],["assets/Audio/vo2_st08.ogg",25474],["assets/Audio/vo2_g2_h1.ogg",25746],["assets/Images/last_swifty_still.webp",26456],["assets/Audio/vo2_g4_h3.ogg",26698],["assets/Audio/vo2_g2_q.ogg",27711],["assets/Audio/vo2_g1_h3.ogg",29875],["assets/Audio/vo2_st02.ogg",30396],["assets/Audio/vo2_g1_h1.ogg",31049],["assets/UI/vo_button.webp",31892],["assets/UI/sw_head_neutral.webp",31940],["assets/Audio/vo2_g3_h3.ogg",32420],["assets/Audio/vo2_pt_tutorial.ogg",32850],["assets/Audio/vo2_t8_q.ogg",34870],["assets/Audio/vo2_st10.ogg",35146],["assets/Audio/vo2_g5_h3.ogg",36671],["assets/UI/sw_head_hint.webp",36812],["assets/UI/sw_head_talking.webp",37384],["assets/Audio/vo2_t8_read.ogg",37880],["assets/Audio/vo2_ws1_q.ogg",40435],["assets/UI/sw_head_celebrate.webp",41998],["assets/Audio/vo2_landing.ogg",42172],["assets/Audio/vo2_t7_end.ogg",44821],["assets/Audio/vo2_ws2_q.ogg",47189],["assets/UI/sw_head_tryagain.webp",48836],["assets/UI/end_screen.webp",50224],["assets/UI/startnew_bg.webp",52978],["assets/Audio/vo2_t7_type.ogg",56021],["assets/Audio/vo2_t7_ans.ogg",62497],["assets/UI/hint_active.webp",62642],["assets/UI/start_btn.webp",65092],["assets/UI/sw_lg_talking.webp",69960],["assets/UI/sw_lg_hint.webp",72584],["assets/UI/sw_lg_celebrating.webp",79680],["assets/Audio/vo2_t8_ans.ogg",82125],["assets/Images/st_cry.webp",88818],["assets/Images/st_ahead.webp",90326],["assets/Images/st_hans.webp",102828],["assets/Images/st_thokar.webp",105844],["assets/Images/st_cry_alone.webp",106676],["assets/UI/sw_lg_tryagain.webp",110656],["assets/Images/st_bandar.webp",114896],["assets/Images/st_maa.webp",115290],["assets/Images/st_bhalu.webp",115490],["assets/Images/st_run.webp",119698],["assets/Images/st_bola.webp",135808],["assets/Images/st_jhadi.webp",140506],["assets/Images/st_nala.webp",156254],["assets/SFX/bgm_mela.ogg",171495],["assets/UI/loader.webp",178248],["assets/UI/sw_explain_talk.webp",369026],["assets/UI/sw_head_celebrate_anim.webp",390546],["assets/UI/sw_head_tryagain_anim.webp",429222],["assets/UI/sw_lg_celebrating_anim.webp",430844],["assets/UI/sw_head_hint_anim.webp",435706],["assets/UI/cel_talk.webp",650742],["assets/UI/cel_idle.webp",651146],["assets/UI/cel_shabaash.webp",684852],["assets/UI/sw_lg_hint_anim.webp",878778],["assets/UI/new_landing_swiftee_anim.webp",1160630],["assets/UI/swiftee_transition.webp",1500554],["assets/UI/peeking_talk_up.webp",1561680],["assets/peeking_talk_up.webp",1561680],["assets/Images/last_swifty_end.webp",1779506]]/*@END_ASSET_MANIFEST*/;
+  const MANIFEST = /*@ASSET_MANIFEST*/[["assets/Images/cover.webp",193254],["assets/UI/btn-next-arrow.svg",409],["assets/UI/btn-next-disabled-arrow.svg",418],["assets/UI/btn-next-disabled-pill.svg",589],["assets/swiftpal_buttons/btn-play-waiting.svg",607],["assets/UI/nudge_fx_ring_outer.svg",631],["assets/UI/nudge_fx_ring_inner.svg",648],["assets/swiftpal_buttons/btn-next-disabled.svg",673],["assets/UI/start_card.webp",1024],["assets/UI/btn-next-pill.svg",1269],["assets/swiftpal_buttons/btn-next.svg",1271],["assets/swiftpal_buttons/btn-finish.svg",1316],["assets/SFX/sfx_next.ogg",1412],["assets/SFX/sfx_tap.ogg",1599],["assets/UI/nudge_fx_sparks.svg",2340],["assets/UI/btn-play.svg",2692],["assets/swiftpal_buttons/btn-play-round.svg",2692],["assets/UI/btn-play-waiting.svg",2702],["assets/swiftpal_buttons/btn-play-round-waiting.svg",2702],["assets/SFX/sfx_play.ogg",3317],["assets/Audio/vo2_w_thokar.ogg",4034],["assets/Audio/vo2_w_hiran.ogg",4100],["assets/Audio/vo2_w_shor.ogg",4255],["assets/Audio/vo2_o_phir_se.ogg",4317],["assets/Audio/vo_o_opt_tokri.ogg",4322],["assets/Audio/vo2_w_chupchap.ogg",4563],["assets/Audio/vo2_w_kisan.ogg",4735],["assets/Audio/vo2_w_suraj.ogg",4767],["assets/Audio/vo2_o_jharna.ogg",4863],["assets/Audio/vo_o_t_bhookh.ogg",4950],["assets/Audio/vo2_w_sahlana.ogg",5022],["assets/Audio/vo2_w_jhadiyan.ogg",5143],["assets/Audio/vo2_w_koodna.ogg",5210],["assets/UI/nudge_tap.webp",5306],["assets/Audio/vo2_o_nahi_to.ogg",5415],["assets/Audio/vo2_w_nala.ogg",5495],["assets/Audio/vo2_shabaash.ogg",5622],["assets/Audio/vo_o_t_saheli.ogg",5689],["assets/Audio/vo2_w_bakri.ogg",5731],["assets/Audio/vo2_w_jhadi.ogg",5750],["assets/SFX/sfx_wrong.ogg",5882],["assets/Audio/vo2_w_badal.ogg",5979],["assets/Audio/vo2_w_basta.ogg",6030],["assets/SFX/sfx_whoosh.ogg",6120],["assets/Audio/vo2_o_gusse_se.ogg",6307],["assets/Audio/vo_pt_practice.ogg",6391],["assets/Audio/vo2_w_gilahri.ogg",6498],["assets/Audio/vo2_o_gir_jana.ogg",6594],["assets/UI/nudge_hand_new.svg",6873],["assets/Audio/vo2_o_ooncha_ped.ogg",6947],["assets/Audio/vo_o_t_takrana.ogg",7002],["assets/Audio/vo_o_t_kheencha.ogg",7448],["assets/Audio/vo2_o_chhalang.ogg",7769],["assets/UI/mascot.webp",8006],["assets/Audio/vo2_c_tez_awaaz.ogg",8128],["assets/Audio/vo2_c_kheti.ogg",8508],["assets/Audio/vo2_o_phir_rone.ogg",8538],["assets/Audio/vo2_c_bina_bole.ogg",8548],["assets/Audio/vo2_o_tez_bhagna.ogg",8576],["assets/SFX/sfx_correct.ogg",9207],["assets/Audio/vo2_st04.ogg",9962],["assets/Audio/vo2_o_chhote_paudhe.ogg",10077],["assets/Audio/vo2_c_haath_phera.ogg",10284],["assets/Audio/vo2_h_thokar.ogg",10656],["assets/SFX/sfx_burst.ogg",11035],["assets/Audio/vo2_c_paani.ogg",11165],["assets/Audio/vo2_h_shor.ogg",11249],["assets/Audio/vo2_o_zor_rone.ogg",11550],["assets/Audio/vo2_h_bakri.ogg",11551],["assets/Audio/vo2_h_basta.ogg",11621],["assets/Audio/vo2_h_koodna.ogg",11627],["assets/Audio/vo2_h_chupchap.ogg",11853],["assets/Audio/vo2_h_badal.ogg",11890],["assets/Audio/vo2_h_kisan.ogg",11926],["assets/Audio/vo2_h_jhadiyan.ogg",12080],["assets/Audio/vo2_h_suraj.ogg",12289],["assets/Audio/vo2_h_gilahri.ogg",12353],["assets/Audio/vo2_h_sahlana.ogg",12498],["assets/Audio/vo2_o_dheere_rone.ogg",12498],["assets/Audio/vo2_c_takrana.ogg",13383],["assets/Audio/vo2_c_kutar.ogg",13680],["assets/Audio/vo2_t7_q.ogg",13971],["assets/Audio/vo2_g3_q.ogg",14181],["assets/SFX/sfx_celebrate.ogg",14250],["assets/Audio/vo2_st01.ogg",14440],["assets/Audio/vo2_st03.ogg",14749],["assets/Audio/vo2_c_doodh.ogg",14826],["assets/Audio/vo2_g4_q.ogg",15145],["assets/Audio/vo2_g1_q.ogg",15227],["assets/Audio/vo2_c_dhoop.ogg",16377],["assets/Audio/vo2_celebrate.ogg",17087],["assets/Audio/vo2_g5_q.ogg",17090],["assets/UI/audio.webp",17132],["assets/UI/hint.webp",17670],["assets/UI/start_mascot.webp",18020],["assets/Audio/vo2_g2_h3.ogg",18691],["assets/Audio/vo_pt_guided.ogg",18726],["assets/Audio/vo2_c_kitaben.ogg",19146],["assets/Audio/vo2_st11.ogg",19315],["assets/UI/start_bg.webp",19840],["assets/Audio/vo2_st06.ogg",19940],["assets/Audio/vo2_mic_read.ogg",22455],["assets/Audio/vo2_st09.ogg",23026],["assets/Audio/vo2_st07.ogg",23837],["assets/Images/opt_tokri.webp",23902],["assets/Audio/vo2_st05.ogg",23915],["assets/UI/sw_explain_still.webp",24366],["assets/UI/startnew_bg_plain.webp",24446],["assets/Audio/vo2_st08.ogg",25474],["assets/Audio/vo2_g2_h1.ogg",25746],["assets/Images/last_swifty_still.webp",26456],["assets/Audio/vo2_g4_h3.ogg",26698],["assets/Audio/vo2_g2_q.ogg",27711],["assets/Audio/vo2_g1_h3.ogg",29875],["assets/Audio/vo2_st02.ogg",30396],["assets/Audio/vo2_g1_h1.ogg",31049],["assets/UI/vo_button.webp",31892],["assets/UI/sw_head_neutral.webp",31940],["assets/Audio/vo2_g3_h3.ogg",32420],["assets/Audio/vo2_pt_tutorial.ogg",32850],["assets/Audio/vo2_t8_q.ogg",34870],["assets/Audio/vo2_st10.ogg",35146],["assets/Audio/vo2_g5_h3.ogg",36671],["assets/UI/sw_head_hint.webp",36812],["assets/UI/sw_head_talking.webp",37384],["assets/Audio/vo2_t8_read.ogg",37880],["assets/Audio/vo2_ws1_q.ogg",40435],["assets/UI/sw_head_celebrate.webp",41998],["assets/Audio/vo2_landing.ogg",42172],["assets/Audio/vo2_t7_end.ogg",44821],["assets/Audio/vo2_ws2_q.ogg",47189],["assets/UI/sw_head_tryagain.webp",48836],["assets/UI/end_screen.webp",50224],["assets/UI/startnew_bg.webp",52978],["assets/Audio/vo2_t7_type.ogg",56021],["assets/Audio/vo2_t7_ans.ogg",62497],["assets/UI/hint_active.webp",62642],["assets/UI/start_btn.webp",65092],["assets/UI/sw_lg_talking.webp",69960],["assets/UI/sw_lg_hint.webp",72584],["assets/UI/sw_lg_celebrating.webp",79680],["assets/Audio/vo2_t8_ans.ogg",82125],["assets/Images/st_cry.webp",88818],["assets/Images/st_ahead.webp",90326],["assets/Images/st_hans.webp",102828],["assets/Images/st_thokar.webp",105844],["assets/Images/st_cry_alone.webp",106676],["assets/UI/sw_lg_tryagain.webp",110656],["assets/Images/st_bandar.webp",114896],["assets/Images/st_maa.webp",115290],["assets/Images/st_bhalu.webp",115490],["assets/Images/st_run.webp",119698],["assets/Images/st_bola.webp",135808],["assets/Images/st_jhadi.webp",140506],["assets/Images/st_nala.webp",156254],["assets/SFX/bgm_mela.ogg",171495],["assets/UI/loader.webp",178248],["assets/UI/sw_explain_talk.webp",369026],["assets/UI/sw_head_celebrate_anim.webp",390546],["assets/UI/sw_head_tryagain_anim.webp",429222],["assets/UI/sw_lg_celebrating_anim.webp",430844],["assets/UI/sw_head_hint_anim.webp",435706],["assets/UI/cel_talk.webp",650742],["assets/UI/cel_idle.webp",651146],["assets/UI/cel_shabaash.webp",684852],["assets/UI/sw_lg_hint_anim.webp",878778],["assets/UI/new_landing_swiftee_anim.webp",1160630],["assets/UI/swiftee_transition.webp",1500554],["assets/UI/peeking_talk_up.webp",1561680],["assets/peeking_talk_up.webp",1561680],["assets/Images/last_swifty_end.webp",1779506]]/*@END_ASSET_MANIFEST*/;
   const HTTP = /^https?:$/.test(location.protocol) && !!window.fetch;
   const STALL_MS = 10000, HARD_MS = 60000, WORKERS = 5;
   const BASE = (function(){ try{ return new URL(".", location.href).href; }catch(e){ return ""; } })();
@@ -3470,7 +3470,7 @@ const SlideModules = {
         state.hintActive = true;
         play(src(w.word_audio), ()=>{ if(!alive()) return; state.hintActive = false;
           if(!active()){ finish(); return; }
-          const a = markActive(); if(wasActive) play(src(a.clue_audio), ()=>{}); }); };
+          const a = markActive(); palUp(a, true); if(wasActive) play(src(a.clue_audio), ()=>{}); }); };
       const wrong = (path)=>{ sfxWrongSoft(); state.attempts++;
         path.forEach(c=>{ c.classList.remove("ws-wrong"); void c.offsetWidth; c.classList.add("ws-wrong"); });
         later(()=> path.forEach(c=> c.classList.remove("ws-wrong")), 650);
@@ -3478,16 +3478,24 @@ const SlideModules = {
         SwiftPAL.emit("answer_wrong", { slide_id: slide.id, phase: slide.phase, attempts: state.attempts });
         const w = active(); if(!w) return; w.miss++;
         rung(w, Math.min(Math.max(w.miss, w.level + 1), 3)); };
+      /* SME: ONLY THE TARGET WORD'S LETTERS CAN BE DRAGGED. A drag starts only on a letter of the active word and only grows
+         over that word's letters; any other letter just wiggles (a miss on the usual ladder: wiggle -> "सही शब्द है ..." -> hand). */
+      const inTarget = (c)=>{ const a = active(); return !!a && a.cells.includes(c); };
+      const okPath = (p)=>{ const a = active(); return !!a && p.length > 0 && p.every(c=> a.cells.includes(c)); };
       const evaluate = (path)=>{ paint([]); if(path.length < 2) return;
         const w = words.find(x=> !x.found && x.cells.length === path.length && x.cells[0] === path[0] && x.cells[x.cells.length - 1] === path[path.length - 1]);
-        if(w) found(w); else wrong(path); };
+        if(w) found(w); else if(!okPath(path)) wrong(path); };   // part of the target word: simply let go
       board.addEventListener("pointerdown", (e)=>{ if(state.locked || state.hintActive) return;
         const c = cellAt(e.clientX, e.clientY); if(!c) return; e.preventDefault();
         if(demoT) pauseDemo();
-        dragFrom = c; lastCell = c; paint(anchor && anchor !== c ? pathBetween(anchor, c) : [c]);
+        if(!inTarget(c)){ if(anchor){ anchor.classList.remove("anchor"); anchor = null; } paint([]); wrong([c]);   // not a letter of the word
+          if(demo && !demo.found && !demoT && alive()) later(()=>{ if(demo && !demo.found && !state.locked) runDemo(demo); }, 900);
+          return; }
+        dragFrom = c; lastCell = c; paint(anchor && anchor !== c && okPath(pathBetween(anchor, c)) ? pathBetween(anchor, c) : [c]);
         try{ board.setPointerCapture(e.pointerId); }catch(err){} });
       board.addEventListener("pointermove", (e)=>{ if(!dragFrom) return; const c = cellAt(e.clientX, e.clientY);
-        if(!c || c === lastCell) return; lastCell = c; paint(pathBetween(dragFrom, c)); });
+        if(!c || c === lastCell) return; const p = pathBetween(dragFrom, c); if(!okPath(p)) return;   // the selection never leaves the word
+        lastCell = c; paint(p); });
       const up = (e)=>{ if(!dragFrom) return; const from = dragFrom, to = lastCell || from; dragFrom = null;
         if(anchor) anchor.classList.remove("anchor");
         if(to === from){
@@ -3506,23 +3514,36 @@ const SlideModules = {
       state.replayAudio = intro;
       intro();
 
-      /* THE MAGIC CAP - an idle guide. After 6 s with no touch and no voice, a funny, slightly spooky wizard cap drops
-         onto the clue card, blinks and looks at the grid, reads the clue again and casts a trail of sparkles onto the
-         FIRST LETTER of the word, which glows gold. Any touch sends it away in a puff; it returns after the next quiet
-         6 s. It speaks before the engine's 7 s reminder would, so the two never overlap. Not a hint rung: no score change. */
+      /* THE MAGIC HAT - always on the page (SME). A character that belongs to the word lives in it (data.words[].pal - a shy
+         face for चुपचाप, a farmer for किसान ...): it peeks out each time a new clue comes up; after 6 s with no touch and no
+         voice it climbs out, the clue is read again and it throws its own things (data.words[].fx - grain, rain drops, nuts
+         ...) onto the FIRST LETTER of the word, which glows gold. Any touch sends it back down into the hat; it comes up again
+         after the next quiet 6 s. It speaks before the engine's 7 s reminder would, so the two never overlap. Not a hint
+         rung: no score change. */
       const CAP_IDLE_MS = 6000;
-      const cap = document.createElement("div"); cap.className = "ws-cap"; cap.innerHTML = '<i class="ws-cap-aura"></i>' + CAP_SVG;
+      const cap = document.createElement("div"); cap.className = "ws-cap"; cap.innerHTML = '<i class="ws-cap-aura"></i>' + CAP_SVG +
+        '<div class="ws-pal"><span class="ws-pal-ch"></span></div>';
       side.appendChild(cap);
+      const pal = cap.querySelector(".ws-pal-ch");
+      const palOf = (w)=> (w && (w.pal || w.emoji)) || "🐰";
+      const fxOf = (w)=> (w && w.fx) || "✨";
+      let palT = null;
+      const palUp = (w, peek)=>{ clearTimeout(palT); pal.textContent = palOf(w); cap.classList.add("pal-up");
+        if(peek) palT = setTimeout(()=>{ if(!capOn) cap.classList.remove("pal-up"); }, 2600); };
+      const palDown = ()=>{ clearTimeout(palT); cap.classList.remove("pal-up"); };
+      later(()=> cap.classList.add("in"), 500);                      // the hat pops in with the page and stays
+      later(()=>{ const a = active(); if(a && !capOn) palUp(a, true); }, 1300);
+      onLeave(()=> clearTimeout(palT));
       let capOn = false, capWord = null, capCastT = null, capHoldT = null, lastAct = Date.now(), quietSince = Date.now();
       const scaleNow = ()=> parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--scale")) || 1;
       const castSparkles = (cell)=>{ if(!capOn || !cell) return;
         const s = scaleNow(), wr = wrap.getBoundingClientRect(), tr = cell.getBoundingClientRect();
-        const tip = (cap.querySelector(".cap-wandtip") || cap).getBoundingClientRect();
+        const tip = pal.getBoundingClientRect();                           // the word's things fly from its character
         const x0 = (tip.left - wr.left + tip.width/2)/s, y0 = (tip.top - wr.top + tip.height/2)/s;
         const x1 = (tr.left - wr.left + tr.width/2)/s, y1 = (tr.top - wr.top + tr.height/2)/s;
         const mx = (x0 + x1)/2, my = Math.min(y0, y1) - 34;
-        for(let i = 0; i < 14; i++){ const sp = document.createElement("i"); sp.className = "ws-spark" + (i % 3 ? "" : " big");
-          wrap.appendChild(sp);
+        for(let i = 0; i < 10; i++){ const sp = document.createElement("i"); sp.className = "ws-fxp" + (i % 3 ? "" : " big");
+          sp.textContent = fxOf(capWord); wrap.appendChild(sp);
           const jx = (Math.random() - .5) * 26, jy = (Math.random() - .5) * 26;
           const an = sp.animate([
             { transform: `translate(${x0}px,${y0}px) scale(.3) rotate(0deg)`, opacity: 0 },
@@ -3532,15 +3553,15 @@ const SlideModules = {
           an.onfinish = ()=> sp.remove(); onLeave(()=> sp.remove()); } };
       function capHide(){ if(!capOn) return; capOn = false;
         clearInterval(capCastT); clearTimeout(capHoldT);
-        cap.classList.remove("in", "cast", "talk"); cap.classList.add("out");
+        cap.classList.remove("cast", "talk"); palDown();                  // the character ducks back in; the hat stays
         if(capWord && capWord.cells[0]) capWord.cells[0].classList.remove("ws-cap-glow");
         capWord = null; quietSince = Date.now(); }
       const capShow = (w)=>{ capOn = true; capWord = w;
         SwiftPAL.emit("idle_guide_shown", { slide_id: slide.id, phase: slide.phase, word: w.word_hi });
-        cap.classList.remove("out"); void cap.offsetWidth; cap.classList.add("in");
+        palUp(w, false);
         later(()=>{ if(!capOn || capWord !== w) return;
           cap.classList.add("cast"); w.cells[0].classList.add("ws-cap-glow");
-          castSparkles(w.cells[0]); capCastT = setInterval(()=> castSparkles(w.cells[0]), 1700);
+          /* SME: no particles fly from the hat to the letter any more (castSparkles is kept, unused) - the letter's gold glow remains */
           cap.classList.add("talk");
           play(src(w.clue_audio), ()=>{ cap.classList.remove("talk");
             if(capOn && capWord === w) capHoldT = setTimeout(capHide, 2600); }); }, 750); };
@@ -3938,34 +3959,12 @@ const SlideModules = {
          sfx's end OR after 1800ms, whichever lands first, and never twice. Normal case is unchanged
          (real sfx are well under 1800ms, so the callback wins and you hear one sound then one line);
          the cap only rescues the case where the end never arrives. */
-      let _celSpoke = false;
-      /* [H11-161] SWIFTY JUMPS ON "शाबाश", NOT BEFORE. Asked for: the celebration Swifty appears
-         and jumps when the praise is spoken. He waits hidden through the jingle, and the moment the
-         line starts he is revealed, his pop runs and his one-shot animation is rewound - so the
-         jump and the word land together. (The rewind used to run as the screen opened, which spent
-         the jump under the jingle.) */
-      /* [H11-177] ONE CLIP THE LENGTH OF THE LINE. vo_shabash ("शाबाश! आज तो कमाल कर दिया!", 3.28 s)
-         and last_swifty_end.webp (3.28 s, plays once) are cut to each other in _tools/sprite_sheets.py:
-         the jump lands on "शाबाश" (0.3-1.3 s) and he talks through "आज तो कमाल कर दिया!". Until the
-         line starts he stands still (last_swifty_still.webp, the clip's first frame); when it ends he
-         holds the clip's last frame - nothing loops. Started at the same moment as the VO, from frame 0
-         (a fresh image: blob: over http, a counter from file://). Replaces [H11-171]'s three clips. */
-      const _em = document.querySelector(".end-mascot");
-      const _set = (u)=>{ try{ if(!_em) return; _em.removeAttribute("src"); void _em.offsetWidth; _em.setAttribute("src", u); }catch(e){} };
-      _set("assets/Images/last_swifty_still.webp?v=" + AUDIO_BUILD);
-      const _revealSwifty = ()=>{
-        const b = window.__endSwBlob;
-        _set(b ? URL.createObjectURL(b) : ("assets/Images/last_swifty_end.webp?v=" + AUDIO_BUILD + "&n=" + (window.__endSwN = (window.__endSwN || 0) + 1)));
-      };
-      const _lineDone = ()=>{};   /* the clip ends on its own last frame, matched to the line */
-      const _speakCel = ()=>{
-        if(_celSpoke) return;
-        _celSpoke = true;
-        _revealSwifty();
-        play(audioFor(slide, "prompt") || null, _lineDone);
-      };
-      setTimeout(_speakCel, 1800);
-      playSfx(slide.audio && slide.audio.sfx ? slide.audio.sfx : "sfx_celebrate", _speakCel);
+      /* [HI02H02] the HI02H04_L02_S01 finale: the sfx now; the sprite block at the end of this file makes Swiftee jump, land and
+         THEN speak the line (lip-synced). Without card.end_anim the line follows the sfx as before. */
+      { const _sfx = slide.audio && slide.audio.sfx ? slide.audio.sfx : "sfx_celebrate";
+        if(CARD.end_anim && CARD.end_anim.shabaash) playSfx(_sfx);
+        else { let _spoke = false; const _say = ()=>{ if(_spoke) return; _spoke = true; play(audioFor(slide, "prompt") || null, ()=>{}); };
+          setTimeout(_say, 1800); playSfx(_sfx, _say); } }
       /* [30i] NO TEXT ON THE LAST PAGE — Yasir 2026-07-30: "there should be no sentence on the last
          page, no praising nothing. the only writings allowed on that page is inside the button, other
          than that, no other sentences, no other words."
@@ -6158,3 +6157,156 @@ function buildDevNav(){
   setInterval(sync, 300); sync();
 }
 boot();
+
+/* ===== [HI02H02] the HI02H04_L02_S01 celebration (its block L02-CEL-MTG204, copied; the clip clock adapted) =====
+   The finale = the reference's: the sunburst, the gold star burst, Swiftee JUMPS (the शाबाश sheet) and lands, THEN speaks the line
+   lip-synced on the talk sheet (card.end_anim.bits, from vo2_celebrate), then idles; the arrow waits greyed until the line ends. */
+/* ===== L02-CEL-MTG204 =====
+   [L02-CEL-MTG204] (2026-10-10, user request) the celebration page's Swiftie and line = the reference MTG2A04_L01_S01's
+   (github.com/CodeWithPiyush0/MTG204_L01_S01, its page JS "CELEBRATION SWIFTIE, round 2l-2r"), see build.py. Its code, adapted to this
+   engine: play() is this engine's <audio> player and there is no _voiceClock (the typeof check falls back to isPlaying's first true as
+   the clip's clock); audioFor / isPlaying / state.ownsAudio / SlideModules.CELEBRATION are the same here. The timeline: she jumps
+   (the शाबाश sheet, frames 0-29 at 45 ms) and lands (30-35) in silence but for the celebration sfx the module plays at mount, THEN the
+   line starts and the whole of it lip-syncs on the talk sheet (card.end_anim.bits: one char per 25 ms, 1 = mouth open), then the idle
+   sheet's mouth-shut frames loop. The arrow waits greyed (cel-wait) until the line has ended, then pulses (cel-ready). */
+(function(){
+  /* round 2p (user): "once the VO finishes, the button is enabled and pulses" — on the celebration too.
+     The engine shows its arrow at once; here it waits (dim, not pressable) until the celebration
+     line has ended, then it pulses like the in-lesson arrow (no glow, no border change). */
+  function celArrowAfterVO(){
+    const eb = document.getElementById("endBtn"); if(!eb) return;
+    eb.classList.remove("hint-glow"); eb.classList.add("cel-wait");
+    const t0 = performance.now(); let heard = false;
+    (function tick(){
+      if(!eb.isConnected) return;
+      if(isPlaying) heard = true;
+      if((heard && !isPlaying) || performance.now() - t0 > 15000){
+        eb.classList.remove("cel-wait"); eb.classList.add("cel-ready"); return; }
+      requestAnimationFrame(tick);
+    })();
+  }
+  setTimeout(()=> (function wrapCel(tries){
+    const C = (typeof SlideModules !== "undefined") && SlideModules.CELEBRATION;
+    if(!C || !C.mount){ if(tries < 200) setTimeout(()=> wrapCel(tries + 1), 25); return; }
+    if(C.__celWrapped) return; C.__celWrapped = true;
+    const _mount = C.mount;
+    C.mount = function(host, slide){
+      const r = _mount.apply(this, arguments);
+      try { celArrowAfterVO(); } catch(e){}
+      try { runCelSprite(slide); } catch(e){}
+      return r;
+    };
+  })(0), 0);
+  let _celGen = 0;
+  /* round 2m — THREE SHEETS, ONE CLOCK (timeline re-ordered in round 2r — see inside: jump first, then
+     the line). While she talks the clock is the celebration VO itself, from the moment it is sounding:
+     the cursor walks the talk sheet forward (so the body keeps moving naturally) but only ever lands on
+     a frame whose mouth matches the VO at that instant — open on each syllable, shut in every dip.
+     All three sheets share frame size and alignment (make_cel_sprite.py), so switching never jumps. */
+  function runCelSprite(slide){
+    const A = CARD && CARD.end_anim;
+    const im = document.querySelector("#endScreen .end-mascot");
+    if(!A || !im || !A.bits || !A.shabaash) return;
+    const gen = ++_celGen;
+    let sp = document.getElementById("celSprite");
+    if(!sp){
+      sp = document.createElement("div"); sp.id = "celSprite"; sp.className = "cel-sprite";
+      sp.innerHTML = '<div class="cel-art"></div>';
+      im.parentNode.insertBefore(sp, im);
+    }
+    im.style.display = "none";
+    const art = sp.querySelector(".cel-art");
+    /* paint the talk + idle sheets once, invisibly, while the screen opens — so the browser decodes and
+       uploads them now, not at the शाबाश -> talk switch (measured: a 130-180 ms stall there) */
+    [A.talk, A.idle].forEach(sh => {
+      const pp = document.createElement("div"); pp.className = "cel-art cel-prepaint";
+      pp.style.aspectRatio = A.fw + " / " + A.fh; pp.style.backgroundImage = 'url("' + sh.src + '")';
+      sp.appendChild(pp);
+      requestAnimationFrame(()=> requestAnimationFrame(()=> setTimeout(()=> pp.remove(), 120)));
+    });
+    art.style.aspectRatio = A.fw + " / " + A.fh;
+    let curSrc = "";
+    const show = (sheet, i)=>{
+      if(sheet.src !== curSrc){ art.style.backgroundImage = 'url("' + sheet.src + '")'; curSrc = sheet.src; }
+      const c = i % A.cols, r = Math.floor(i / A.cols);
+      art.style.backgroundPosition = (c * 100 / (A.cols - 1)) + "% " + (r * 100 / (A.cols - 1)) + "%";
+      sp.dataset.sheet = sheet === A.shabaash ? "shabaash" : (sheet === A.idle ? "idle" : "talk");
+      sp.dataset.f = i;
+    };
+    const S = A.shabaash, T = A.talk, I = A.idle;
+    const OPEN = new Set(T.open);
+    const bits = A.bits || "";
+    const step = A.step_ms || 25;
+    const loud = (t)=> bits.charAt(Math.floor(t / step)) === "1";
+    const lenMs = bits.length * step;
+    /* round 2r (user + reference HI02H11 r106): SHE JUMPS AND CELEBRATES FIRST, THEN SPEAKS. The line
+       («बहुत बढ़िया, दोस्त! तुमने कमाल कर दिया!») has no «शाबाश» to hang the jump on, so the page owns
+       the audio (ownsAudio: the engine's auto-play is skipped) and runs:
+         jump     «शाबाश» sheet 0-29 at 45 ms/frame (1.35 s) — silent but for the engine's celebration sfx
+         landing  «शाबाश» sheet 30-35 (mouth shut, 0.27 s)
+         the VO   starts here; the WHOLE line lip-syncs on the talk sheet (the clip speaks from 0 ms)
+         after    idle sheet, mouth-shut frames only, looping */
+    const JUMP = S.pre.concat(S.word), LAND = S.post, FMS = 45;
+    const src = (typeof audioFor === "function") ? audioFor(slide, "prompt") : null;
+    if(!src) return;                                   /* no clip: let the engine's own auto-play run */
+    state.ownsAudio = true;
+    show(S, JUMP[0]);
+    let m0 = 0, lastF = 0, smooth = 0, vclock = null;
+    let phase = "jump", tj = 0, t0 = 0, waitStart = 0, done = false, cursor = 0, curOpen = null, lastStep = 0;
+    const idle = ()=>{
+      let j = 0;
+      (function tick(){
+        if(gen !== _celGen || !sp.isConnected) return;
+        show(I, I.loop[j % I.loop.length]); j++;
+        setTimeout(tick, 110);
+      })();
+    };
+    (function frame(){
+      if(gen !== _celGen || !sp.isConnected || done) return;
+      if(CARD.slides[state.idx] !== slide){ done = true; return; }
+      const now = performance.now();
+      /* the jump's clock starts once the screen's opening work has settled — three smooth paints in a
+         row (sunburst, stars, sfx and the sheets' first decode stall the first ~0.2-0.5 s; a jump timed
+         from the mount skipped half its frames). Capped at 0.7 s, so she never stands still longer. */
+      if(!tj){
+        if(!m0){ m0 = now; lastF = now; }
+        smooth = (now - lastF < 40) ? smooth + 1 : 0; lastF = now;
+        if(smooth >= 3 || now - m0 > 700) tj = now;
+        else { requestAnimationFrame(frame); return; }
+      }
+      if(phase === "jump" || phase === "land"){
+        const list = phase === "jump" ? JUMP : LAND, k = Math.floor((now - tj) / FMS);
+        if(k < list.length){ show(S, list[k]); requestAnimationFrame(frame); return; }
+        if(phase === "jump"){ phase = "land"; tj = now; show(S, LAND[0]); requestAnimationFrame(frame); return; }
+        phase = "wait"; waitStart = now;
+        play(src, ()=>{});                             /* the line starts as she lands */
+        /* the clip's OWN clock where the engine offers one (the reference's _voiceClock); here isPlaying's first true */
+        vclock = (typeof _voiceClock === "function") ? _voiceClock()
+          : (typeof voProgress === "function") ? ()=>{ const p = voProgress();   /* [HI02H02] this engine's clip clock */
+              const d = (typeof _curVoMs !== "undefined" && _curVoMs) || (currentAudio && currentAudio.duration > 0 ? currentAudio.duration * 1000 : 0);
+              return { t: (p >= 0 && d) ? p * d : null }; } : null;
+      }
+      if(phase === "wait"){
+        if(isPlaying && (!vclock || vclock().t != null || now - waitStart > 700)){ phase = "talk"; t0 = now; }   /* talk once the clip is really sounding */
+        else if(now - waitStart > 1800){ done = true; idle(); return; }     /* the VO never started */
+        else { requestAnimationFrame(frame); return; }
+      }
+      const vt = vclock ? vclock().t : null;
+      const t = vt != null ? vt : now - t0;
+      if(!isPlaying || t > lenMs + 400){ done = true; idle(); return; }
+      const want = loud(t + 16);                       /* one paint ahead: the frame shows on the NEXT paint */
+      /* step the talk sheet forward: at once when the mouth must change, else every 80 ms */
+      if(want !== curOpen || now - lastStep > 80){
+        let k = 1;
+        while(k < 36 && OPEN.has((cursor + k) % 36) !== want) k++;
+        cursor = (cursor + k) % 36;
+        show(T, cursor); curOpen = want; lastStep = now;
+      }
+      sp.dataset.t = Math.round(t); sp.dataset.w = want ? 1 : 0;   /* the sprite's own clock + choice (tests) */
+      requestAnimationFrame(frame);
+    })();
+  }
+  /* warm the sheets during the lesson, so the end screen never opens on an empty box */
+  setTimeout(()=>{ try { const A = CARD && CARD.end_anim; if(A && A.shabaash){
+    window.__celWarm = [A.shabaash.src, A.talk.src, A.idle.src].map(u => { const i = new Image(); i.src = u; if(i.decode) i.decode().catch(()=>{}); return i; }); } } catch(e){} }, 1500);
+})();

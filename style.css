@@ -4371,10 +4371,80 @@ html.no-anim .ev-lens,html.no-anim .ev-qa .ev-w{transition:none !important;}
 .ws-clue{flex-direction:column !important;flex-wrap:nowrap !important;gap:12px !important;padding:16px 24px 18px 84px !important;min-height:0 !important;}
 .ws-ctext{white-space:nowrap;font-size:28px !important;}
 .ws-slots{min-width:200px;}
-
-/* clue card: no question number; the clue and its answer box side by side on ONE line (asked) */
-.ws-num{display:none !important;}
-.ws-clue{flex-direction:row !important;flex-wrap:nowrap !important;align-items:center !important;justify-content:center !important;gap:18px !important;padding:16px 22px !important;}
-.ws-ctext{white-space:nowrap;flex:0 0 auto !important;}
-.ws-slots{flex:0 0 auto;min-width:150px;}
+/* ===== the celebration = the HI02H04_L02_S01 finale: the sunburst shows through, Swiftee is the reference's sprite (jump -> talk ->
+   idle), the arrow waits greyed until the line has ended ===== */
+.end-screen{background:transparent !important;}
+.end-screen .cel-sprite{position:relative;height:358px;width:300px;background:none;aspect-ratio:auto;z-index:2;animation:endPop .55s cubic-bezier(.34,1.5,.6,1);}
+.end-screen .cel-sprite .cel-art{position:absolute;left:50%;bottom:0;height:420px;transform:translateX(-50%);
+  background-repeat:no-repeat;background-size:600% 600%;filter:drop-shadow(0 12px 22px rgba(0,47,118,.22));}
+.end-screen .cel-sprite .cel-prepaint{opacity:.01;pointer-events:none;filter:none;}
+#endBtn.cel-wait{pointer-events:none;filter:grayscale(1);opacity:.55;animation:none !important;}
+#endBtn.cel-ready{animation:none;}
+/* SME: no question number; the clue and its answer box side by side on ONE line */
 .ws-side{width:640px !important;}
+.ws-num{display:none !important;}
+.ws-clue{flex-direction:row !important;flex-wrap:nowrap !important;align-items:center !important;justify-content:center !important;
+  gap:16px !important;padding:22px 24px !important;min-height:112px !important;}
+.ws-slots{min-width:140px !important;flex:0 0 auto;}
+/* ===== landing = the cover picture (HI02H04_L02_S01's [L02-LANDING-FRAME]): the picture fills the card under a 9px white stroke with
+   44px corners; no title, no picture strip; Swiftee, the speaker and the play button stay on top ===== */
+.start-gate .sg-frame{position:absolute;inset:0;z-index:1;box-sizing:border-box;border:9px solid #FFFFFF;border-radius:44px;overflow:hidden;
+  background:#BFE6FF;box-shadow:0 14px 30px rgba(11,61,140,.18);}
+.start-gate .sg-frame img{position:absolute;inset:0;width:100%;height:100%;max-width:none;max-height:none;object-fit:cover;object-position:50% 40%;
+  display:block;pointer-events:none;}
+.start-gate .sg-content{visibility:hidden !important;}
+/* the card takes the cover's own shape (1916x821) so the WHOLE picture shows - nothing cropped: 1096px inside the 9px stroke x 821/1916 + 18 */
+.start-gate .sg-card{height:488px !important;}
+.start-gate .sg-frame img{object-fit:fill;object-position:50% 50%;}
+/* the cover's title - "Sunny Splash" (SME pick): yellow-to-orange letters, white + navy outline, tilted; the words drop in one by
+   one once the landing is up, then float. Sized in cqw of the cover (the frame is the size container), so it scales with it. */
+.start-gate .sg-frame{container-type:inline-size;}
+.sg-cover-title{position:absolute;left:4cqw;top:4.2cqw;z-index:2;isolation:isolate;display:flex;gap:1.4cqw;align-items:flex-end;
+  transform:rotate(-4deg);font-family:var(--font-hi);font-weight:800;font-size:8.6cqw;line-height:1;white-space:nowrap;pointer-events:none;}
+.sg-cover-title .w{position:relative;display:inline-block;}
+.sg-cover-title .w::before{content:attr(data-t);position:absolute;left:0;top:0;z-index:-1;
+  -webkit-text-stroke:1.5cqw #0B3D8C;color:#0B3D8C;text-shadow:0 .6cqw 0 #062A63,0 1.2cqw 1.4cqw rgba(0,0,0,.25);}
+.sg-cover-title .w > span{display:inline-block;background:linear-gradient(180deg,#FFF27A 0%,#FFC21A 45%,#FF7A00 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;}
+/* the white ring is its own layer behind the letters (a stroke ON the letters drew the font's overlapping joins as white seams) */
+.sg-cover-title .w::after{content:attr(data-t);position:absolute;left:0;top:0;z-index:-1;-webkit-text-stroke:.55cqw #FFFFFF;color:#FFFFFF;}
+.sg-cover-title .w{opacity:0;}
+body.loaded .sg-cover-title .w{opacity:1;animation:coverDrop .7s cubic-bezier(.3,1.6,.5,1) both,coverFloat 2.6s ease-in-out infinite;
+  animation-delay:calc(.35s + var(--i) * .18s),calc(1.2s + var(--i) * .3s);}
+@keyframes coverDrop{from{opacity:0;transform:translateY(-14cqw) scale(.6);}to{opacity:1;transform:none;}}
+@keyframes coverFloat{0%,100%{translate:0 0;}50%{translate:0 -.8cqw;}}
+html.no-anim .sg-cover-title .w{animation:none !important;opacity:1;}
+/* ===== the magic hat is always on the page; the word's own character lives in it (SME) =====
+   The hat pops in with the page and then floats gently (the whole hat, so the character rides with it). The character sits
+   in a box whose bottom edge is the hat's opening, so it rises OUT of the hat and ducks back IN. */
+.ws-cap.in{animation:capPop .7s cubic-bezier(.3,1.6,.55,1) both,capFloat 3.2s ease-in-out .7s infinite;}
+@keyframes capFloat{0%,100%{translate:0 0;}50%{translate:0 -6px;}}
+.ws-cap.in .cap-body{animation:none;}
+.ws-cap.cast .cap-body{transform-box:fill-box;transform-origin:42% 100%;animation:capHop 1.2s ease-in-out infinite;}
+.ws-pal{position:absolute;left:28px;top:-100px;width:122px;height:164px;overflow:hidden;z-index:2;pointer-events:none;}
+.ws-pal-ch{position:absolute;left:50%;bottom:-4px;font-size:66px;line-height:1;transform:translate(-50%,112%);
+  transition:transform .55s cubic-bezier(.3,1.5,.5,1);filter:drop-shadow(0 4px 4px rgba(30,20,90,.25));
+  font-family:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif;}
+.ws-cap.pal-up .ws-pal-ch{transform:translate(-50%,0);animation:palBob 1.5s ease-in-out .55s infinite;}
+@keyframes palBob{0%,100%{translate:0 0;rotate:0deg;}25%{rotate:-6deg;}50%{translate:0 -7px;}75%{rotate:6deg;}}
+.ws-cap.pal-up .cap-eyes{opacity:0;}
+/* the word's things thrown onto the first letter (replace the gold stars) */
+.ws-fxp{position:absolute;left:0;top:0;width:30px;height:30px;margin:-15px 0 0 -15px;z-index:7;pointer-events:none;
+  display:flex;align-items:center;justify-content:center;font-size:26px;line-height:1;font-style:normal;
+  font-family:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif;}
+.ws-fxp.big{font-size:34px;}
+html.no-anim .ws-cap.in,html.no-anim .ws-pal-ch{animation:none !important;transition:none !important;}
+/* ===== the question box fits its text: as wide as the clue + answer box, less room between the text and the border ===== */
+.ws-stage{justify-items:center;}
+.ws-clue{width:fit-content !important;max-width:100% !important;padding:12px 16px !important;gap:12px !important;min-height:0 !important;
+  border-radius:24px !important;box-shadow:0 0 0 5px #F1F4F9,0 10px 20px rgba(11,61,140,.10) !important;}
+.ws-slots{height:56px;min-width:120px !important;}
+/* SME: the current-question dot without its glow - a plain pink dot, no halo, no pulse */
+.ws-dots i.now{animation:none !important;box-shadow:inset 0 0 0 2px #fff !important;transform:none !important;}
+/* SME: every meaning page's picture card is the SAME box - same width, same text area (room for two lines, the text centred
+   in it) - so the 480x270 picture (16:9, never stretched or cropped) sits in exactly the same place on G2-G5 (and T7, T8) */
+.stage .ev-qa .ev-passage{width:532px !important;max-width:532px !important;box-sizing:border-box;}
+.stage .ev-qa .ev-pic{flex:0 0 auto !important;}
+.stage .ev-qa .ev-pic .ev-img{object-fit:contain !important;}
+.stage .ev-qa .ev-side{min-height:91px;display:flex;flex-direction:column;justify-content:center;}
+
