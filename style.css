@@ -4447,4 +4447,190 @@ html.no-anim .ws-cap.in,html.no-anim .ws-pal-ch{animation:none !important;transi
 .stage .ev-qa .ev-pic{flex:0 0 auto !important;}
 .stage .ev-qa .ev-pic .ev-img{object-fit:contain !important;}
 .stage .ev-qa .ev-side{min-height:91px;display:flex;flex-direction:column;justify-content:center;}
+/* ===== the SME's magic hat art (New assets map/magic cap.svg) - its own colours: navy hat #123F67, teal band #557E84,
+   charcoal brim, gold wand + sparkles #EFD460. The wand swings from its end by the hat, the six sparkles twinkle in turn,
+   the word's character rises out of the hat's opening (the box below ends at the opening's rim). ===== */
+.ws-cap{width:230px;right:-18px;bottom:-14px;transform-origin:68% 92%;}
+.ws-cap .cap-svg{filter:drop-shadow(0 8px 10px rgba(5,35,65,.28));}
+.ws-cap-aura{left:66%;top:62%;width:190px;height:120px;margin:-60px 0 0 -95px;
+  background:radial-gradient(closest-side,rgba(85,126,132,.30),rgba(18,63,103,.10) 60%,transparent) !important;}
+.ws-cap .cap-wand{transform-box:view-box;transform-origin:165px 100px;}
+@keyframes capWand{from{transform:rotate(-12deg);}to{transform:rotate(9deg);}}
+.ws-cap .cap-star{transform-box:fill-box;transform-origin:50% 50%;animation:wsTwinkle 1.6s ease-in-out infinite;}
+.ws-cap .cap-star.s2{animation-delay:-.3s;}.ws-cap .cap-star.s3{animation-delay:-.6s;}.ws-cap .cap-star.s4{animation-delay:-.9s;}
+.ws-cap .cap-star.s5{animation-delay:-1.2s;}.ws-cap .cap-star.s6{animation-delay:-1.4s;}
+.ws-cap.cast .cap-body{transform-origin:50% 100%;}
+.ws-pal{left:97px;top:-112px;width:120px;height:230px;}
+.ws-cell.ws-cap-glow{animation:capCellGlowGold 1.1s ease-in-out infinite;}
+@keyframes capCellGlowGold{0%,100%{transform:scale(1);box-shadow:0 0 0 4px #fff,0 0 0 8px #EFD460,0 0 8px rgba(239,212,96,.6);}
+  50%{transform:scale(1.1);box-shadow:0 0 0 4px #fff,0 0 0 8px #EFD460,0 0 26px rgba(239,212,96,1);}}
+/* P1: a STORY PICTURE rises out of the hat (a little framed photo card), riding the same rise / bob as the characters */
+.ws-pal{left:74px;width:166px;}
+.ws-pal-ch.is-pic{font-size:0;bottom:-2px;}
+.ws-pal-ch.is-pic img{display:block;width:150px;height:84px;object-fit:cover;border-radius:12px;border:4px solid #FFFFFF;
+  box-shadow:0 0 0 2px #EFD460,0 6px 12px rgba(5,35,65,.28);background:#BFE6FF;}
+/* ===== P1 "Wand Halo + Ghost Grow" (SME pick) - only on a hat whose words have story pictures (.halo) ===== */
+/* the picture: grows up out of the hat from a tiny, faint, blurry ghost into a full, sharp picture */
+.ws-pal-ch.is-pic{transform:translate(-50%,0);transition:none;}
+.ws-pal-ch.is-pic img{transform-origin:50% 100%;opacity:0;transform:translateY(40px) scale(.2);filter:blur(5px);
+  transition:opacity .35s ease,transform .4s ease-in,filter .35s ease;}
+.ws-cap.pal-up .ws-pal-ch.is-pic img{animation:wsGhostGrow 2.8s cubic-bezier(.3,.9,.4,1) both;}
+@keyframes wsGhostGrow{0%{opacity:0;transform:translateY(60px) scale(.12);filter:blur(6px) saturate(.2);}
+  30%{opacity:.35;transform:translateY(34px) scale(.45);filter:blur(4px) saturate(.4);}
+  75%{opacity:.92;transform:translateY(-4px) scale(1.06);filter:blur(0) saturate(1);}
+  100%{opacity:1;transform:none;filter:none;}}
+/* the wand flies to the top of the hat, then circles round and round over it */
+.ws-cap.halo.pal-up .cap-wand{animation:wsWandToHead .45s ease-out both,wsWandOrbit 1.6s linear .45s infinite;}
+@keyframes wsWandToHead{to{transform:translate(70px,43px) rotate(-18deg);}}
+@keyframes wsWandOrbit{0%,100%{transform:translate(70px,43px) rotate(-18deg);}25%{transform:translate(160px,8px) rotate(0deg);}
+  50%{transform:translate(250px,43px) rotate(18deg);}75%{transform:translate(160px,72px) rotate(0deg);}}
+.ws-cap.halo .cap-star{transition:opacity .3s ease;}
+.ws-cap.halo.pal-up .cap-star{opacity:0;}
+/* a ring of gold sparkles circles the hat's head with the wand */
+.ws-halo{position:absolute;left:68%;top:36%;width:0;height:0;z-index:3;pointer-events:none;}
+.ws-halo i{position:absolute;left:-8px;top:-8px;width:16px;height:16px;opacity:0;background:#EFD460;
+  clip-path:polygon(50% 0,61% 38%,100% 50%,61% 62%,50% 100%,39% 62%,0 50%,39% 38%);}
+.ws-halo i:nth-child(3n){background:#FFF3B0;width:12px;height:12px;left:-6px;top:-6px;}
+.ws-cap.halo.pal-up .ws-halo i{animation:wsHalo 1.6s linear infinite;animation-delay:calc(var(--k) * -.2s);}
+@keyframes wsHalo{0%{opacity:0;transform:translate(-62px,0) scale(.4);}15%{opacity:1;}25%{transform:translate(0,-22px) scale(1);}
+  50%{transform:translate(62px,0) scale(.7);}75%{transform:translate(0,20px) scale(1);}90%{opacity:1;}100%{opacity:0;transform:translate(-62px,0) scale(.4);}}
+html.no-anim .ws-cap.halo .cap-wand,html.no-anim .ws-halo i{animation:none !important;}
+html.no-anim .ws-cap.pal-up .ws-pal-ch.is-pic img{animation:none !important;opacity:1;transform:none;filter:none;}
+.ws-cap.halo .cap-svg{z-index:3;}
+.ws-cap.halo .ws-halo{z-index:4;}
+/* ===== P1 + P2 layout (SME): the grid moves a little to the right, P2's grid a little bigger; the right side is narrower and
+   everything in it is centred - the question at the top, the magic hat centred UNDER the question (the hat body, not the wand) */
+.ws-wrap,.ws-wrap.g6{gap:48px !important;padding-left:40px;box-sizing:border-box;}
+.ws-wrap.g6{--ws-cs:74px;--ws-fs:37px;}
+.ws-side{width:580px !important;}
+.ws-cap{left:calc(50% - 156px) !important;right:auto !important;bottom:0 !important;}
+/* ===== P1 hat loop (SME): the hat stays; every 7 s the wand appears, draws a glowing gold ZIGZAG over the hat and vanishes,
+   then the picture rises out of the hat (bigger than before), holds, and sinks back in ===== */
+.ws-cap.halo .cap-star{display:none;}
+.ws-cap.halo .cap-wand{opacity:0;}
+.ws-cap.halo.loop .cap-wand{animation:wsZigWand 7s ease-in-out infinite !important;}
+/* the wand's tip (its gold end by the hat, 165,100 in the art) follows the zigzag's corners */
+@keyframes wsZigWand{
+  0%{opacity:0;transform:translate(-18px,24px) rotate(-10deg) scale(.6);}
+  4%{opacity:1;transform:translate(-18px,24px) rotate(-10deg) scale(1);}
+  8%{transform:translate(29px,-22px) rotate(4deg);}
+  12%{transform:translate(76px,24px) rotate(-6deg);}
+  16%{transform:translate(122px,-22px) rotate(6deg);}
+  20%{opacity:1;transform:translate(169px,24px) rotate(-4deg) scale(1);}
+  25%,100%{opacity:0;transform:translate(180px,10px) rotate(10deg) scale(.5);}}
+.ws-zig{position:absolute;left:0;top:0;width:100%;height:auto;z-index:5;overflow:visible;pointer-events:none;}
+.ws-zig polyline{fill:none;stroke:#FFE57A;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:100;stroke-dashoffset:100;opacity:0;filter:drop-shadow(0 0 4px #FFD23F) drop-shadow(0 0 9px rgba(255,200,40,.9));}
+.ws-cap.halo.loop .ws-zig polyline{animation:wsZigLine 7s ease-in-out infinite;}
+@keyframes wsZigLine{0%,4%{stroke-dashoffset:100;opacity:0;}5%{opacity:1;}20%{stroke-dashoffset:0;opacity:1;}
+  26%{stroke-dashoffset:0;opacity:1;}33%,100%{stroke-dashoffset:0;opacity:0;}}
+/* sparkles pop at the zigzag's corners as the wand passes them */
+.ws-cap.halo .ws-halo{left:0;top:0;z-index:6;}
+.ws-cap.halo .ws-halo i:nth-child(n+6){display:none;}
+.ws-cap.halo .ws-halo i:nth-child(1){left:87px;top:72px;--t:4%;}
+.ws-cap.halo .ws-halo i:nth-child(2){left:117px;top:42px;}
+.ws-cap.halo .ws-halo i:nth-child(3){left:147px;top:72px;}
+.ws-cap.halo .ws-halo i:nth-child(4){left:177px;top:42px;}
+.ws-cap.halo .ws-halo i:nth-child(5){left:207px;top:72px;}
+.ws-cap.halo.loop .ws-halo i{animation:wsZigSpark 7s ease-out infinite !important;animation-delay:calc(var(--k) * .28s) !important;}
+@keyframes wsZigSpark{0%,3%{opacity:0;transform:scale(.2) rotate(0);}6%{opacity:1;transform:scale(1.4) rotate(45deg);}
+  14%{opacity:0;transform:scale(.4) rotate(120deg);}100%{opacity:0;}}
+/* the picture: bigger (180x101), rises out of the hat from small and blurry to sharp, holds, then sinks back in */
+.ws-cap.halo .ws-pal{left:56px;width:200px;}
+.ws-cap.halo .ws-pal-ch.is-pic{animation:none !important;}
+.ws-cap.halo .ws-pal-ch.is-pic img{width:180px;height:101px;opacity:0;}
+.ws-cap.halo.loop .ws-pal-ch.is-pic img{animation:wsPicCycle 7s ease-in-out infinite !important;}
+@keyframes wsPicCycle{
+  0%,26%{opacity:0;transform:translateY(80px) scale(.15);filter:blur(6px);}
+  33%{opacity:.6;transform:translateY(30px) scale(.6);filter:blur(3px);}
+  41%{opacity:1;transform:translateY(-6px) scale(1.04);filter:blur(0);}
+  45%{transform:translateY(0) scale(1);}
+  58%{transform:translateY(-5px) scale(1);}
+  71%{opacity:1;transform:translateY(0) scale(1);filter:blur(0);}
+  83%{opacity:.4;transform:translateY(70px) scale(.3);filter:blur(4px);}
+  86%,100%{opacity:0;transform:translateY(80px) scale(.15);filter:blur(6px);}}
+html.no-anim .ws-cap.halo.loop .cap-wand,html.no-anim .ws-cap.halo.loop .ws-zig polyline,html.no-anim .ws-cap.halo.loop .ws-halo i{animation:none !important;}
+html.no-anim .ws-cap.halo.loop .ws-pal-ch.is-pic img{animation:none !important;opacity:1;transform:none;filter:none;}
+/* ===== story pages: the mic + the hand nudge at the HI02H04_L02_S01 reference's exact sizes ([L02-SPK-132] chip, #nudgeHand) =====
+   The mic is the reference chip: a 54.33 x 58.08 (x --fs) blue gradient disc with a 5.28 (x --fs) white ring and a 0 4px 2px
+   shadow, ~100px left of the sentence bar; its glyph is the art at 81.84 x 79.2 (x --fs) with the art's own disc and ring off. */
+.stage.tut.l02-story .mr-caption .mr-mic{left:calc(-96.5856px * var(--fs)) !important;top:calc(-1.04px * var(--fs)) !important;margin:0 !important;
+  width:calc(54.3312px * var(--fs)) !important;height:calc(58.08px * var(--fs)) !important;box-sizing:border-box;
+  border:calc(5.28px * var(--fs)) solid #FFFFFF;border-radius:999px;background:linear-gradient(90deg,#1987FC,#1565F4);
+  box-shadow:0 4px 2px rgba(0,0,0,.25);filter:none;overflow:visible;}
+.stage.tut.l02-story .mr-caption .mr-mic svg{position:absolute;left:50%;top:50%;width:calc(81.84px * var(--fs)) !important;height:calc(79.2px * var(--fs)) !important;
+  margin:calc(-34.32px * var(--fs)) 0 0 calc(-40.92px * var(--fs));overflow:visible;}
+.stage.tut.l02-story .mr-caption .mr-mic svg g[filter] > rect:not(.mic){display:none;}
+.stage.tut.l02-story .mr-caption .mr-mic.p2-rec-done{filter:grayscale(1);}
+/* the hand nudge: the reference's 86 x 108 hand everywhere (tap ripple 94.6 at -13.08 / -31.48) */
+.nudge-hand:not(.demo-fly):not(.demo-match){width:86px !important;height:108px !important;}
+#nudgeHand .nh-tapfx{width:94.6px !important;height:94.6px !important;left:-13.08px !important;top:-31.48px !important;}
+/* SME: every story page's sentence at S01's size (32 x --fs = 33.3px bold). A sentence too long for one line wraps onto two lines
+   at that same size; its bar grows taller (downwards, still clear of आगे) and the mic stays level with the bar's middle. */
+.stage.tut.l02-story .mr-read.mr-two .mr-caption{font-size:calc(32px * var(--fs)) !important;line-height:1.08 !important;
+  height:auto !important;min-height:calc(71px * var(--fs)) !important;padding:calc(5px * var(--fs)) calc(14px * var(--fs)) !important;}
+.stage.tut.l02-story .mr-read.mr-two .mr-caption .mr-mic{top:50% !important;margin-top:calc(-29.04px * var(--fs)) !important;}
+.stage.tut.l02-story .mr-read.mr-two .mr-caption{top:calc(286px * var(--fs)) !important;}
+/* the pastel hat: a light blue shadow and a soft pink-blue glow instead of the navy ones */
+.ws-cap .cap-svg{filter:drop-shadow(0 8px 10px rgba(61,134,242,.22)) !important;}
+.ws-cap-aura{background:radial-gradient(closest-side,rgba(255,169,203,.30),rgba(156,187,245,.18) 60%,transparent) !important;}
+/* ===== P1: the picture comes OUT of the hat and floats ABOVE it, in front (not behind the brim), bigger, with no dark shadow =====
+   It starts tiny in the hat's opening, grows as it rises, settles just above the brim, floats, then shrinks back into the opening. */
+.ws-cap.halo .ws-pal{left:41px;top:-150px;width:230px;height:240px;overflow:visible;z-index:5;}
+.ws-cap.halo .ws-pal-ch.is-pic{filter:none;bottom:0;}
+.ws-cap.halo .ws-pal-ch.is-pic img{width:210px;height:118px;border-radius:14px;border:4px solid #FFFFFF;
+  box-shadow:0 0 0 2px #FFE08A,0 0 22px rgba(255,224,138,.55);transform-origin:50% 100%;}
+.ws-cap.halo.loop .ws-pal-ch.is-pic img{animation:wsPicFloat 7s ease-in-out infinite !important;}
+@keyframes wsPicFloat{
+  0%,26%{opacity:0;transform:translateY(42px) scale(.1);filter:blur(5px);}
+  33%{opacity:.7;transform:translateY(18px) scale(.55);filter:blur(2px);}
+  41%{opacity:1;transform:translateY(-8px) scale(1.05);filter:blur(0);}
+  45%{transform:translateY(0) scale(1);}
+  58%{transform:translateY(-7px) scale(1);}
+  71%{opacity:1;transform:translateY(0) scale(1);filter:blur(0);}
+  82%{opacity:.5;transform:translateY(30px) scale(.35);filter:blur(3px);}
+  86%,100%{opacity:0;transform:translateY(42px) scale(.1);filter:blur(5px);}}
+/* ===== P1 "Candy Pop + Arc Fly": the popping letters, their star bursts, the flying letter copies and the answer box's landing bounce ===== */
+.ws-board .ws-cell.ws-candy{animation:none !important;z-index:4;}
+.ws-cstar{position:absolute;left:0;top:0;width:18px;height:18px;margin:-9px 0 0 -9px;z-index:9;pointer-events:none;background:#FFD23F;
+  clip-path:polygon(50% 0,61% 38%,100% 50%,61% 62%,50% 100%,39% 62%,0 50%,39% 38%);}
+.ws-fly{position:absolute;z-index:10;display:flex;align-items:center;justify-content:center;border-radius:24%;pointer-events:none;
+  font-family:var(--font-hi);font-weight:800;font-size:var(--ws-fs);line-height:1;color:color-mix(in srgb,var(--wc) 55%,#10132E);
+  background:color-mix(in srgb,var(--wc) 26%,#fff);box-shadow:0 4px 0 color-mix(in srgb,var(--wc) 60%,#fff),0 10px 18px rgba(43,200,90,.28);}
+.ws-slots.ws-land{animation:wsBoxLand .5s ease-out;}
+@keyframes wsBoxLand{0%{transform:scale(.7);}40%{transform:scale(1.25);}70%{transform:scale(.95);}100%{transform:scale(1);}}
+/* P2: the whole word as one card rising out of the hat on its way to the answer box */
+.ws-fly.ws-flyword{width:auto;height:auto;padding:6px 18px;border-radius:16px;font-size:34px;white-space:nowrap;z-index:11;
+  box-shadow:0 4px 0 color-mix(in srgb,var(--wc) 60%,#fff),0 0 18px rgba(255,224,138,.7);}
+/* ===== cover title (SME): centred at the top, on a RAINBOW ARC - the outer words tilt down the curve, the middle word is the top
+   of the arch - in a rich yellow gradient (bright yellow -> golden -> orange, no pale/white top), white + navy outline kept ===== */
+.sg-cover-title{left:50% !important;top:1.6cqw !important;transform:translateX(-50%) !important;gap:1.2cqw !important;align-items:flex-start !important;
+  font-size:7.6cqw !important;}
+.sg-cover-title .w{transform-origin:50% 100%;}
+.sg-cover-title .w:nth-child(1){rotate:-15deg;margin-top:3.4cqw;}
+.sg-cover-title .w:nth-child(2){rotate:0deg;margin-top:0;}
+.sg-cover-title .w:nth-child(3){rotate:15deg;margin-top:3.4cqw;}
+.sg-cover-title .w > span{background:linear-gradient(180deg,#FFE83D 0%,#FFD21A 30%,#FFB300 62%,#FF8A00 100%) !important;
+  -webkit-background-clip:text !important;background-clip:text !important;color:transparent !important;}
+.sg-cover-title{top:.4cqw !important;font-size:9.4cqw !important;gap:2.4cqw !important;}
+.sg-cover-title .w:nth-child(1){rotate:-17deg;margin-top:5.2cqw;}
+.sg-cover-title .w:nth-child(3){rotate:17deg;margin-top:5.2cqw;}
+.sg-cover-title{top:2.6cqw !important;font-size:7.4cqw !important;gap:1.3cqw !important;left:47% !important;}
+.sg-cover-title .w:nth-child(1){rotate:-13deg;margin-top:2.6cqw;}
+.sg-cover-title .w:nth-child(3){rotate:13deg;margin-top:2.6cqw;}
+/* ===== cover: room for the arched title ABOVE the deer (SME: the title must not touch the deer's head) =====
+   The picture moves 6.6cqw down inside the frame; the band it leaves is the picture's own sky (its top-edge colours, sampled), and
+   the picture's top edge fades into it, so the sky simply continues. The title arches in that band, clear of the antlers. */
+.start-gate .sg-frame{background:linear-gradient(90deg,#89CDFA 0%,#C3E5FB 12%,#F4FAFE 25%,#239BFC 38%,#1B96FA 50%,#1995FA 62%,#1A96FB 75%,#CCE5F9 88%,#F4FAFE 100%) !important;}
+.start-gate .sg-frame img{top:6.6cqw !important;height:100% !important;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 4cqw);mask-image:linear-gradient(180deg,transparent 0,#000 4cqw);}
+.sg-cover-title{top:1.4cqw !important;font-size:6.9cqw !important;gap:1.2cqw !important;left:50% !important;}
+.sg-cover-title .w:nth-child(1){rotate:-11deg;margin-top:2.1cqw;}
+.sg-cover-title .w:nth-child(3){rotate:11deg;margin-top:2.1cqw;}
+/* a solid, strong yellow - no pale top */
+.sg-cover-title .w > span{background:linear-gradient(180deg,#FFDA00 0%,#FFC800 45%,#FFA800 100%) !important;
+  -webkit-background-clip:text !important;background-clip:text !important;color:transparent !important;}
+.start-gate .sg-frame{background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,0) 7cqw),
+  linear-gradient(90deg,#B5DEFB 0%,#93CDF9 16%,#4AABFB 32%,#1E97FA 50%,#4AABFB 68%,#93CDF9 84%,#B5DEFB 100%) !important;}
+.start-gate .sg-frame img{-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 6cqw);mask-image:linear-gradient(180deg,transparent 0,#000 6cqw);}
 
