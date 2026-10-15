@@ -4633,4 +4633,20 @@ html.no-anim .ws-cap.halo.loop .ws-pal-ch.is-pic img{animation:none !important;o
 .start-gate .sg-frame{background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,0) 7cqw),
   linear-gradient(90deg,#B5DEFB 0%,#93CDF9 16%,#4AABFB 32%,#1E97FA 50%,#4AABFB 68%,#93CDF9 84%,#B5DEFB 100%) !important;}
 .start-gate .sg-frame img{-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 6cqw);mask-image:linear-gradient(180deg,transparent 0,#000 6cqw);}
+/* P2: the question's STICKER rises out of the hat (a cut-out with its own white sticker edge - no photo frame, no gold ring) */
+.ws-cap.halo .ws-pal-ch.is-pic.is-stk img{width:156px;height:156px;object-fit:contain;border:0;border-radius:0;background:none;box-shadow:none;}
+/* P1: each word's first letter in that word's colour (a soft tint + a ring + the letter in a deeper shade of it) */
+.ws-board .ws-cell.ws-first-c{background:color-mix(in srgb,var(--fc) 30%,#fff);
+  box-shadow:0 4px 0 color-mix(in srgb,var(--fc) 62%,#fff),0 0 0 3px var(--fc),0 6px 12px color-mix(in srgb,var(--fc) 30%,transparent);}
+.ws-board .ws-cell.ws-first-c .ws-ch{color:color-mix(in srgb,var(--fc) 55%,#10132E);}
+/* SME: the cover title a little lower - the picture steps down with it so the deer's antlers stay clear of the title */
+.start-gate .sg-frame img{top:8.8cqw !important;}
+.sg-cover-title{top:3.4cqw !important;}
+/* the yellow must cover the WHOLE letter - the chandrabindu / matra tops rise above the line box, where the gradient used to stop
+   (so the white ring layer behind showed through). The fill box is stretched up and down; the text itself does not move. */
+.sg-cover-title .w > span{padding:.42em .06em .2em !important;margin:-.42em -.06em -.2em !important;
+  background:linear-gradient(180deg,#FFD400 0%,#FFDA00 30%,#FFC800 62%,#FFA800 100%) !important;
+  -webkit-background-clip:text !important;background-clip:text !important;color:transparent !important;}
+/* checklist (guided): a wrong answer is never red - G1's wrongly tapped box gets a soft lavender-grey dim + its shake, no red */
+.tis-box.miss{border-color:#B9B4D9 !important;background:rgba(150,145,190,.18) !important;}
 

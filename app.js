@@ -138,7 +138,7 @@ const AUDIO_BUILD = "20261012120000";
    Formats: WebM (VP9 + Opus) and WebP play in Chrome, Edge, Firefox and Safari (WebP 14+, WebM
    video 16.4+); WAV plays everywhere. Fetch streams + AbortController: every browser since 2019. */
 var AssetLoader = (function(){
-  const MANIFEST = /*@ASSET_MANIFEST*/[["assets/Audio/vo2_try_again.ogg",14933],["assets/Images/st_cry_center.webp",106000],["assets/SFX/sfx_tring_1.ogg",7733],["assets/SFX/sfx_tring_2.ogg",7646],["assets/SFX/sfx_tring_3.ogg",7455],["assets/SFX/sfx_tring_4.ogg",6796],["assets/SFX/sfx_tring_5.ogg",7540],["assets/SFX/sfx_tring_6.ogg",7366],["assets/SFX/sfx_tring_big.ogg",11039],["assets/Images/cover.webp",193254],["assets/UI/btn-next-arrow.svg",409],["assets/UI/btn-next-disabled-arrow.svg",418],["assets/UI/btn-next-disabled-pill.svg",589],["assets/swiftpal_buttons/btn-play-waiting.svg",607],["assets/UI/nudge_fx_ring_outer.svg",631],["assets/UI/nudge_fx_ring_inner.svg",648],["assets/swiftpal_buttons/btn-next-disabled.svg",673],["assets/UI/start_card.webp",1024],["assets/UI/btn-next-pill.svg",1269],["assets/swiftpal_buttons/btn-next.svg",1271],["assets/swiftpal_buttons/btn-finish.svg",1316],["assets/SFX/sfx_next.ogg",1412],["assets/SFX/sfx_tap.ogg",1599],["assets/UI/nudge_fx_sparks.svg",2340],["assets/UI/btn-play.svg",2692],["assets/swiftpal_buttons/btn-play-round.svg",2692],["assets/UI/btn-play-waiting.svg",2702],["assets/swiftpal_buttons/btn-play-round-waiting.svg",2702],["assets/SFX/sfx_play.ogg",3317],["assets/Audio/vo2_w_thokar.ogg",4034],["assets/Audio/vo2_w_hiran.ogg",4100],["assets/Audio/vo2_w_shor.ogg",4255],["assets/Audio/vo2_o_phir_se.ogg",4317],["assets/Audio/vo_o_opt_tokri.ogg",4322],["assets/Audio/vo2_w_chupchap.ogg",4563],["assets/Audio/vo2_w_kisan.ogg",4735],["assets/Audio/vo2_w_suraj.ogg",4767],["assets/Audio/vo2_o_jharna.ogg",4863],["assets/Audio/vo_o_t_bhookh.ogg",4950],["assets/Audio/vo2_w_sahlana.ogg",5022],["assets/Audio/vo2_w_jhadiyan.ogg",5143],["assets/Audio/vo2_w_koodna.ogg",5210],["assets/UI/nudge_tap.webp",5306],["assets/Audio/vo2_o_nahi_to.ogg",5415],["assets/Audio/vo2_w_nala.ogg",5495],["assets/Audio/vo2_shabaash.ogg",5622],["assets/Audio/vo_o_t_saheli.ogg",5689],["assets/Audio/vo2_w_bakri.ogg",5731],["assets/Audio/vo2_w_jhadi.ogg",5750],["assets/SFX/sfx_wrong.ogg",5882],["assets/Audio/vo2_w_badal.ogg",5979],["assets/Audio/vo2_w_basta.ogg",6030],["assets/SFX/sfx_whoosh.ogg",6120],["assets/Audio/vo2_o_gusse_se.ogg",6307],["assets/Audio/vo_pt_practice.ogg",6391],["assets/Audio/vo2_w_gilahri.ogg",6498],["assets/Audio/vo2_o_gir_jana.ogg",6594],["assets/UI/nudge_hand_new.svg",6873],["assets/Audio/vo2_o_ooncha_ped.ogg",6947],["assets/Audio/vo_o_t_takrana.ogg",7002],["assets/Audio/vo_o_t_kheencha.ogg",7448],["assets/Audio/vo2_o_chhalang.ogg",7769],["assets/UI/mascot.webp",8006],["assets/Audio/vo2_c_tez_awaaz.ogg",8128],["assets/Audio/vo2_c_kheti.ogg",8508],["assets/Audio/vo2_o_phir_rone.ogg",8538],["assets/Audio/vo2_c_bina_bole.ogg",8548],["assets/Audio/vo2_o_tez_bhagna.ogg",8576],["assets/SFX/sfx_correct.ogg",9207],["assets/Audio/vo2_st04.ogg",9962],["assets/Audio/vo2_o_chhote_paudhe.ogg",10077],["assets/Audio/vo2_c_haath_phera.ogg",10284],["assets/Audio/vo2_h_thokar.ogg",10656],["assets/SFX/sfx_burst.ogg",11035],["assets/Audio/vo2_c_paani.ogg",11165],["assets/Audio/vo2_h_shor.ogg",11249],["assets/Audio/vo2_o_zor_rone.ogg",11550],["assets/Audio/vo2_h_bakri.ogg",11551],["assets/Audio/vo2_h_basta.ogg",11621],["assets/Audio/vo2_h_koodna.ogg",11627],["assets/Audio/vo2_h_chupchap.ogg",11853],["assets/Audio/vo2_h_badal.ogg",11890],["assets/Audio/vo2_h_kisan.ogg",11926],["assets/Audio/vo2_h_jhadiyan.ogg",12080],["assets/Audio/vo2_h_suraj.ogg",12289],["assets/Audio/vo2_h_gilahri.ogg",12353],["assets/Audio/vo2_h_sahlana.ogg",12498],["assets/Audio/vo2_o_dheere_rone.ogg",12498],["assets/Audio/vo2_c_takrana.ogg",13383],["assets/Audio/vo2_c_kutar.ogg",13680],["assets/Audio/vo2_t7_q.ogg",13971],["assets/Audio/vo2_g3_q.ogg",14181],["assets/SFX/sfx_celebrate.ogg",14250],["assets/Audio/vo2_st01.ogg",14440],["assets/Audio/vo2_st03.ogg",14749],["assets/Audio/vo2_c_doodh.ogg",14826],["assets/Audio/vo2_g4_q.ogg",15145],["assets/Audio/vo2_g1_q.ogg",15227],["assets/Audio/vo2_c_dhoop.ogg",16377],["assets/Audio/vo2_celebrate.ogg",17087],["assets/Audio/vo2_g5_q.ogg",17090],["assets/UI/audio.webp",17132],["assets/UI/hint.webp",17670],["assets/UI/start_mascot.webp",18020],["assets/Audio/vo2_g2_h3.ogg",18691],["assets/Audio/vo_pt_guided.ogg",18726],["assets/Audio/vo2_c_kitaben.ogg",19146],["assets/Audio/vo2_st11.ogg",19315],["assets/UI/start_bg.webp",19840],["assets/Audio/vo2_st06.ogg",19940],["assets/Audio/vo2_mic_read.ogg",22455],["assets/Audio/vo2_st09.ogg",23026],["assets/Audio/vo2_st07.ogg",23837],["assets/Images/opt_tokri.webp",23902],["assets/Audio/vo2_st05.ogg",23915],["assets/UI/sw_explain_still.webp",24366],["assets/UI/startnew_bg_plain.webp",24446],["assets/Audio/vo2_st08.ogg",25474],["assets/Audio/vo2_g2_h1.ogg",25746],["assets/Images/last_swifty_still.webp",26456],["assets/Audio/vo2_g4_h3.ogg",26698],["assets/Audio/vo2_g2_q.ogg",27711],["assets/Audio/vo2_g1_h3.ogg",29875],["assets/Audio/vo2_st02.ogg",30396],["assets/Audio/vo2_g1_h1.ogg",31049],["assets/UI/vo_button.webp",31892],["assets/UI/sw_head_neutral.webp",31940],["assets/Audio/vo2_g3_h3.ogg",32420],["assets/Audio/vo2_pt_tutorial.ogg",32850],["assets/Audio/vo2_t8_q.ogg",34870],["assets/Audio/vo2_st10.ogg",35146],["assets/Audio/vo2_g5_h3.ogg",36671],["assets/UI/sw_head_hint.webp",36812],["assets/UI/sw_head_talking.webp",37384],["assets/Audio/vo2_t8_read.ogg",37880],["assets/Audio/vo2_ws1_q.ogg",40435],["assets/UI/sw_head_celebrate.webp",41998],["assets/Audio/vo2_landing.ogg",42172],["assets/Audio/vo2_t7_end.ogg",44821],["assets/Audio/vo2_ws2_q.ogg",47189],["assets/UI/sw_head_tryagain.webp",48836],["assets/UI/end_screen.webp",50224],["assets/UI/startnew_bg.webp",52978],["assets/Audio/vo2_t7_type.ogg",56021],["assets/Audio/vo2_t7_ans.ogg",62497],["assets/UI/hint_active.webp",62642],["assets/UI/start_btn.webp",65092],["assets/UI/sw_lg_talking.webp",69960],["assets/UI/sw_lg_hint.webp",72584],["assets/UI/sw_lg_celebrating.webp",79680],["assets/Audio/vo2_t8_ans.ogg",82125],["assets/Images/st_cry.webp",88818],["assets/Images/st_ahead.webp",90326],["assets/Images/st_hans.webp",102828],["assets/Images/st_thokar.webp",105844],["assets/Images/st_cry_alone.webp",106676],["assets/UI/sw_lg_tryagain.webp",110656],["assets/Images/st_bandar.webp",114896],["assets/Images/st_maa.webp",115290],["assets/Images/st_bhalu.webp",115490],["assets/Images/st_run.webp",119698],["assets/Images/st_bola.webp",135808],["assets/Images/st_jhadi.webp",140506],["assets/Images/st_nala.webp",156254],["assets/SFX/bgm_mela.ogg",171495],["assets/UI/loader.webp",178248],["assets/UI/sw_explain_talk.webp",369026],["assets/UI/sw_head_celebrate_anim.webp",390546],["assets/UI/sw_head_tryagain_anim.webp",429222],["assets/UI/sw_lg_celebrating_anim.webp",430844],["assets/UI/sw_head_hint_anim.webp",435706],["assets/UI/cel_talk.webp",650742],["assets/UI/cel_idle.webp",651146],["assets/UI/cel_shabaash.webp",684852],["assets/UI/sw_lg_hint_anim.webp",878778],["assets/UI/new_landing_swiftee_anim.webp",1160630],["assets/UI/swiftee_transition.webp",1500554],["assets/UI/peeking_talk_up.webp",1561680],["assets/peeking_talk_up.webp",1561680],["assets/Images/last_swifty_end.webp",1779506]]/*@END_ASSET_MANIFEST*/;
+  const MANIFEST = /*@ASSET_MANIFEST*/[["assets/SFX/sfx_pop.ogg",4947],["assets/SFX/sfx_magic.ogg",10179],["assets/Images/stk_chupchap.webp",22670],["assets/Images/stk_shor.webp",28758],["assets/Images/stk_kisan.webp",26656],["assets/Images/stk_badal.webp",27180],["assets/Images/stk_basta.webp",28600],["assets/Images/stk_suraj.webp",24506],["assets/Images/stk_bakri.webp",26452],["assets/Images/stk_gilahri.webp",31380],["assets/Audio/vo2_try_again.ogg",14933],["assets/Images/st_cry_center.webp",106000],["assets/SFX/sfx_tring_1.ogg",7733],["assets/SFX/sfx_tring_2.ogg",7646],["assets/SFX/sfx_tring_3.ogg",7455],["assets/SFX/sfx_tring_4.ogg",6796],["assets/SFX/sfx_tring_5.ogg",7540],["assets/SFX/sfx_tring_6.ogg",7366],["assets/SFX/sfx_tring_big.ogg",11039],["assets/Images/cover.webp",193254],["assets/UI/btn-next-arrow.svg",409],["assets/UI/btn-next-disabled-arrow.svg",418],["assets/UI/btn-next-disabled-pill.svg",589],["assets/swiftpal_buttons/btn-play-waiting.svg",607],["assets/UI/nudge_fx_ring_outer.svg",631],["assets/UI/nudge_fx_ring_inner.svg",648],["assets/swiftpal_buttons/btn-next-disabled.svg",673],["assets/UI/start_card.webp",1024],["assets/UI/btn-next-pill.svg",1269],["assets/swiftpal_buttons/btn-next.svg",1271],["assets/swiftpal_buttons/btn-finish.svg",1316],["assets/SFX/sfx_next.ogg",1412],["assets/SFX/sfx_tap.ogg",1599],["assets/UI/nudge_fx_sparks.svg",2340],["assets/UI/btn-play.svg",2692],["assets/swiftpal_buttons/btn-play-round.svg",2692],["assets/UI/btn-play-waiting.svg",2702],["assets/swiftpal_buttons/btn-play-round-waiting.svg",2702],["assets/SFX/sfx_play.ogg",3317],["assets/Audio/vo2_w_thokar.ogg",4034],["assets/Audio/vo2_w_hiran.ogg",4100],["assets/Audio/vo2_w_shor.ogg",4255],["assets/Audio/vo2_o_phir_se.ogg",4317],["assets/Audio/vo_o_opt_tokri.ogg",4322],["assets/Audio/vo2_w_chupchap.ogg",4563],["assets/Audio/vo2_w_kisan.ogg",4735],["assets/Audio/vo2_w_suraj.ogg",4767],["assets/Audio/vo2_o_jharna.ogg",4863],["assets/Audio/vo_o_t_bhookh.ogg",4950],["assets/Audio/vo2_w_sahlana.ogg",5022],["assets/Audio/vo2_w_jhadiyan.ogg",5143],["assets/Audio/vo2_w_koodna.ogg",5210],["assets/UI/nudge_tap.webp",5306],["assets/Audio/vo2_o_nahi_to.ogg",5415],["assets/Audio/vo2_w_nala.ogg",5495],["assets/Audio/vo2_shabaash.ogg",5622],["assets/Audio/vo_o_t_saheli.ogg",5689],["assets/Audio/vo2_w_bakri.ogg",5731],["assets/Audio/vo2_w_jhadi.ogg",5750],["assets/SFX/sfx_wrong.ogg",5882],["assets/Audio/vo2_w_badal.ogg",5979],["assets/Audio/vo2_w_basta.ogg",6030],["assets/SFX/sfx_whoosh.ogg",6120],["assets/Audio/vo2_o_gusse_se.ogg",6307],["assets/Audio/vo_pt_practice.ogg",6391],["assets/Audio/vo2_w_gilahri.ogg",6498],["assets/Audio/vo2_o_gir_jana.ogg",6594],["assets/UI/nudge_hand_new.svg",6873],["assets/Audio/vo2_o_ooncha_ped.ogg",6947],["assets/Audio/vo_o_t_takrana.ogg",7002],["assets/Audio/vo_o_t_kheencha.ogg",7448],["assets/Audio/vo2_o_chhalang.ogg",7769],["assets/UI/mascot.webp",8006],["assets/Audio/vo2_c_tez_awaaz.ogg",8128],["assets/Audio/vo2_c_kheti.ogg",8508],["assets/Audio/vo2_o_phir_rone.ogg",8538],["assets/Audio/vo2_c_bina_bole.ogg",8548],["assets/Audio/vo2_o_tez_bhagna.ogg",8576],["assets/SFX/sfx_correct.ogg",9207],["assets/Audio/vo2_st04.ogg",9962],["assets/Audio/vo2_o_chhote_paudhe.ogg",10077],["assets/Audio/vo2_c_haath_phera.ogg",10284],["assets/Audio/vo2_h_thokar.ogg",10656],["assets/SFX/sfx_burst.ogg",11035],["assets/Audio/vo2_c_paani.ogg",11165],["assets/Audio/vo2_h_shor.ogg",11249],["assets/Audio/vo2_o_zor_rone.ogg",11550],["assets/Audio/vo2_h_bakri.ogg",11551],["assets/Audio/vo2_h_basta.ogg",11621],["assets/Audio/vo2_h_koodna.ogg",11627],["assets/Audio/vo2_h_chupchap.ogg",11853],["assets/Audio/vo2_h_badal.ogg",11890],["assets/Audio/vo2_h_kisan.ogg",11926],["assets/Audio/vo2_h_jhadiyan.ogg",12080],["assets/Audio/vo2_h_suraj.ogg",12289],["assets/Audio/vo2_h_gilahri.ogg",12353],["assets/Audio/vo2_h_sahlana.ogg",12498],["assets/Audio/vo2_o_dheere_rone.ogg",12498],["assets/Audio/vo2_c_takrana.ogg",13383],["assets/Audio/vo2_c_kutar.ogg",13680],["assets/Audio/vo2_t7_q.ogg",13971],["assets/Audio/vo2_g3_q.ogg",14181],["assets/SFX/sfx_celebrate.ogg",14250],["assets/Audio/vo2_st01.ogg",14440],["assets/Audio/vo2_st03.ogg",14749],["assets/Audio/vo2_c_doodh.ogg",14826],["assets/Audio/vo2_g4_q.ogg",15145],["assets/Audio/vo2_g1_q.ogg",15227],["assets/Audio/vo2_c_dhoop.ogg",16377],["assets/Audio/vo2_celebrate.ogg",17087],["assets/Audio/vo2_g5_q.ogg",17090],["assets/UI/audio.webp",17132],["assets/UI/hint.webp",17670],["assets/UI/start_mascot.webp",18020],["assets/Audio/vo2_g2_h3.ogg",18691],["assets/Audio/vo_pt_guided.ogg",18726],["assets/Audio/vo2_c_kitaben.ogg",19146],["assets/Audio/vo2_st11.ogg",19315],["assets/UI/start_bg.webp",19840],["assets/Audio/vo2_st06.ogg",19940],["assets/Audio/vo2_mic_read.ogg",22455],["assets/Audio/vo2_st09.ogg",23026],["assets/Audio/vo2_st07.ogg",23837],["assets/Images/opt_tokri.webp",23902],["assets/Audio/vo2_st05.ogg",23915],["assets/UI/sw_explain_still.webp",24366],["assets/UI/startnew_bg_plain.webp",24446],["assets/Audio/vo2_st08.ogg",25474],["assets/Audio/vo2_g2_h1.ogg",25746],["assets/Images/last_swifty_still.webp",26456],["assets/Audio/vo2_g4_h3.ogg",26698],["assets/Audio/vo2_g2_q.ogg",27711],["assets/Audio/vo2_g1_h3.ogg",29875],["assets/Audio/vo2_st02.ogg",30396],["assets/Audio/vo2_g1_h1.ogg",31049],["assets/UI/vo_button.webp",31892],["assets/UI/sw_head_neutral.webp",31940],["assets/Audio/vo2_g3_h3.ogg",32420],["assets/Audio/vo2_pt_tutorial.ogg",32850],["assets/Audio/vo2_t8_q.ogg",34870],["assets/Audio/vo2_st10.ogg",35146],["assets/Audio/vo2_g5_h3.ogg",36671],["assets/UI/sw_head_hint.webp",36812],["assets/UI/sw_head_talking.webp",37384],["assets/Audio/vo2_t8_read.ogg",37880],["assets/Audio/vo2_ws1_q.ogg",40435],["assets/UI/sw_head_celebrate.webp",41998],["assets/Audio/vo2_landing.ogg",42172],["assets/Audio/vo2_t7_end.ogg",44821],["assets/Audio/vo2_ws2_q.ogg",47189],["assets/UI/sw_head_tryagain.webp",48836],["assets/UI/end_screen.webp",50224],["assets/UI/startnew_bg.webp",52978],["assets/Audio/vo2_t7_type.ogg",56021],["assets/Audio/vo2_t7_ans.ogg",62497],["assets/UI/hint_active.webp",62642],["assets/UI/start_btn.webp",65092],["assets/UI/sw_lg_talking.webp",69960],["assets/UI/sw_lg_hint.webp",72584],["assets/UI/sw_lg_celebrating.webp",79680],["assets/Audio/vo2_t8_ans.ogg",82125],["assets/Images/st_cry.webp",88818],["assets/Images/st_ahead.webp",90326],["assets/Images/st_hans.webp",102828],["assets/Images/st_thokar.webp",105844],["assets/Images/st_cry_alone.webp",106676],["assets/UI/sw_lg_tryagain.webp",110656],["assets/Images/st_bandar.webp",114896],["assets/Images/st_maa.webp",115290],["assets/Images/st_bhalu.webp",115490],["assets/Images/st_run.webp",119698],["assets/Images/st_bola.webp",135808],["assets/Images/st_jhadi.webp",140506],["assets/Images/st_nala.webp",156254],["assets/SFX/bgm_mela.ogg",171495],["assets/UI/loader.webp",178248],["assets/UI/sw_explain_talk.webp",369026],["assets/UI/sw_head_celebrate_anim.webp",390546],["assets/UI/sw_head_tryagain_anim.webp",429222],["assets/UI/sw_lg_celebrating_anim.webp",430844],["assets/UI/sw_head_hint_anim.webp",435706],["assets/UI/cel_talk.webp",650742],["assets/UI/cel_idle.webp",651146],["assets/UI/cel_shabaash.webp",684852],["assets/UI/sw_lg_hint_anim.webp",878778],["assets/UI/new_landing_swiftee_anim.webp",1160630],["assets/UI/swiftee_transition.webp",1500554],["assets/UI/peeking_talk_up.webp",1561680],["assets/peeking_talk_up.webp",1561680],["assets/Images/last_swifty_end.webp",1779506]]/*@END_ASSET_MANIFEST*/;
   const HTTP = /^https?:$/.test(location.protocol) && !!window.fetch;
   const STALL_MS = 10000, HARD_MS = 60000, WORKERS = 5;
   const BASE = (function(){ try{ return new URL(".", location.href).href; }catch(e){ return ""; } })();
@@ -1019,7 +1019,7 @@ function resetIdleVo(){ stopIdleVo(); _idleVoFired = false; }
 function armIdleVo(){
   _idleSince = 0;                                // any (re)arm restarts the silence clock
   const slide = CARD.slides[state.idx];
-  if(!slide || slide.type === "CELEBRATION" || !IDLE_VO_PHASES.has(slide.phase)){ stopIdleVo(); return; }
+  if(!slide || slide.type === "CELEBRATION" || slide.type === "WORD_SEARCH" || !IDLE_VO_PHASES.has(slide.phase)){ stopIdleVo(); return; }   /* [HI02H02] the magic hat is the word search's 7 s nudge */
   if(_idleVoTimer) return;                       // ticker already running for this slide
   const ms = (CARD.scaffold_rules && CARD.scaffold_rules.idle_vo_replay_ms) || 7000;
   _idleVoTimer = setInterval(()=>{
@@ -3186,7 +3186,7 @@ const SlideModules = {
       state.replayAudio = ()=> play(audioFor(slide,"prompt")||null, ()=>{});
       setSwMood("point");
       play(audioFor(slide,"prompt")||null, ()=>{});
-      setTimeout(()=>{ if(!done) frame.querySelectorAll(".tis-hot.correct-hot").forEach(el=>el.classList.add("pulse")); }, 6000);
+      setTimeout(()=>{ if(!done) frame.querySelectorAll(".tis-hot.correct-hot").forEach(el=>el.classList.add("pulse")); }, 7000);
     },
     /* data.boxed (HI02H02 SME review): every candidate object wears a visible WHITE box; the right box turns
        GREEN. Taps outside the boxes are ignored. Wrong box → shake + buzz, then one hint rung per wrong tap:
@@ -3324,11 +3324,11 @@ const SlideModules = {
       const clearIdle = ()=>{ clearTimeout(idleT); idleT = null; };
       onLeave(clearIdle);
       const lit = (i)=> words.forEach((w, k)=> w.classList.toggle("on", k === i));
-      // idle guidance while the mic waits: hand on the mic after 6 s, the spoken cue again after 7 s more
+      // idle guidance while the mic waits: hand on the mic after 7 s (checklist: inactivity nudges at 7 s), the spoken cue again after 7 s more
       const armIdle = ()=>{ clearIdle(); if(phase !== "cue") return;
         idleT = setTimeout(()=>{ if(!alive() || phase !== "cue") return; pointNudgeAt(mic); state.nudgeUsed = true;
           SwiftPAL.emit("nudge_invoked", { slide_id: slide.id, phase: slide.phase, target: "mic" });
-          idleT = setTimeout(()=>{ if(!alive() || phase !== "cue") return; cue(); }, 7000); }, 6000); };
+          idleT = setTimeout(()=>{ if(!alive() || phase !== "cue") return; cue(); }, 7000); }, 7000); };
       const cue = ()=>{ if(phase !== "cue") return; cap.classList.add("p2-cue"); mic.classList.add("mr-glow"); setSwMood("talk");
         play(promptSrc, ()=>{ if(alive() && phase === "cue"){ setSwMood("point"); armIdle(); } }); };
       /* word sync while the sentence VO speaks: each shown word lights when the voice reaches it. The timing is the word's
@@ -3342,7 +3342,7 @@ const SlideModules = {
       const armNavNudge = ()=>{ clearTimeout(navNudgeT);
         navNudgeT = setTimeout(()=>{ if(!alive() || phase !== "done" || !nav.classList.contains("active")) return;
           if(isPlaying){ armNavNudge(); return; }
-          nudgeNavBtn(); SwiftPAL.emit("nudge_invoked", { slide_id: slide.id, phase: slide.phase, target: "next" }); }, 6000); };
+          nudgeNavBtn(); SwiftPAL.emit("nudge_invoked", { slide_id: slide.id, phase: slide.phase, target: "next" }); }, 7000); };
       const onTouch = ()=>{ if(phase !== "done" || !nav.classList.contains("active")) return; stopNudge(); armNavNudge(); };
       document.addEventListener("pointerdown", onTouch, true);
       onLeave(()=>{ clearTimeout(navNudgeT); document.removeEventListener("pointerdown", onTouch, true); });
@@ -3394,7 +3394,7 @@ const SlideModules = {
         el.dataset.r = r; el.dataset.c = c; el.innerHTML = `<span class="ws-ch">${ch}</span>`; board.appendChild(el); return el; }));
       const rings = document.createElement("div"); rings.className = "ws-rings"; board.appendChild(rings);
       // resolve each word's cells by walking from its start until the अक्षर spell the word
-      const COLORS = ["#3EDB4E","#FF4D5E","#5B5BF0","#FF4FAE","#F2E33A","#1FD3EE","#FF9F2E","#A562FF"];   // capsule colours (the mock)
+      const COLORS = ["#3EDB4E","#0FB9A0","#5B5BF0","#FF4FAE","#F2E33A","#1FD3EE","#FF9F2E","#A562FF"];   // SME: no red (it reads as "wrong") - teal in its place   // capsule colours (the mock)
       const words = (d.words || []).map((w, i)=>{ const out = []; let acc = "";
         for(let k = 0; k < Math.max(R, C) && acc.length < w.word_hi.length; k++){
           const r = w.dir === "v" ? w.r + k : w.r, c = w.dir === "v" ? w.c : w.c + k;
@@ -3402,6 +3402,8 @@ const SlideModules = {
         if(acc !== w.word_hi) console.error("[WORD_SEARCH] word not in grid:", w.word_hi);
         return Object.assign({}, w, { i, cells: out, found: false, miss: 0, level: 0, color: COLORS[i % COLORS.length] }); });
       if(d.highlight_first) words.forEach(w=> w.cells[0] && w.cells[0].classList.add("ws-first"));
+      // data.first_color (P1): each word's FIRST letter is tinted in that word's own colour - the colour the word turns when found
+      if(d.first_color) words.forEach(w=>{ const c = w.cells[0]; if(c){ c.classList.add("ws-first-c"); c.style.setProperty("--fc", w.color); } });
       // right side: progress dots, ONE numbered clue card at a time (it stays until its word is found), the found words below
       const side = document.createElement("div"); side.className = "ws-side";
       const dots = document.createElement("div"); dots.className = "ws-dots";
@@ -3592,10 +3594,11 @@ const SlideModules = {
           if(demo && !demo.found && !demoT && alive()) later(()=>{ if(demo && !demo.found && !state.locked) runDemo(demo); }, 900);
           return; }
         dragFrom = c; lastCell = c; paint(anchor && anchor !== c && okPath(pathBetween(anchor, c)) ? pathBetween(anchor, c) : [c]);
+        sfxTap();   // checklist: a sound for every interaction - picking up a letter
         try{ board.setPointerCapture(e.pointerId); }catch(err){} });
       board.addEventListener("pointermove", (e)=>{ if(!dragFrom) return; const c = cellAt(e.clientX, e.clientY);
         if(!c || c === lastCell) return; const p = pathBetween(dragFrom, c); if(!okPath(p)) return;   // the selection never leaves the word
-        lastCell = c; paint(p); });
+        lastCell = c; paint(p); sfxTap(); });   // ... and each letter the drag reaches
       const up = (e)=>{ if(!dragFrom) return; const from = dragFrom, to = lastCell || from; dragFrom = null;
         if(anchor) anchor.classList.remove("anchor");
         if(to === from){
@@ -3620,7 +3623,7 @@ const SlideModules = {
          ...) onto the FIRST LETTER of the word, which glows gold. Any touch sends it back down into the hat; it comes up again
          after the next quiet 6 s. It speaks before the engine's 7 s reminder would, so the two never overlap. Not a hint
          rung: no score change. */
-      const CAP_IDLE_MS = 6000;
+      const CAP_IDLE_MS = 7000;   // checklist: inactivity nudges at 7 s
       const cap = document.createElement("div"); cap.className = "ws-cap"; cap.innerHTML = '<i class="ws-cap-aura"></i>' + CAP_SVG +
         '<div class="ws-pal"><span class="ws-pal-ch"></span></div>';
       side.appendChild(cap);
@@ -3629,7 +3632,7 @@ const SlideModules = {
       const fxOf = (w)=> (w && w.fx) || "✨";
       let palT = null;
       /* the hat's guest: a story picture when the word has one (data.words[].pal_img - P1), else the word's character (pal) */
-      const palSet = (w)=>{ if(w && w.pal_img){ pal.classList.add("is-pic");
+      const palSet = (w)=>{ if(w && w.pal_img){ pal.classList.add("is-pic"); pal.classList.toggle("is-stk", /^stk_/.test(w.pal_img));   // a cut-out sticker (P2), not a framed story picture
           if(pal._img !== w.pal_img){ pal._img = w.pal_img;
             pal.innerHTML = `<img src="assets/Images/${w.pal_img}.${IMG_EXT}" alt="" draggable="false">`;
             cap.classList.remove("loop"); void cap.offsetWidth; cap.classList.add("loop"); } }   // a new picture: the show starts over
@@ -3670,6 +3673,7 @@ const SlideModules = {
         if(capWord && capWord.cells[0]) capWord.cells[0].classList.remove("ws-cap-glow");
         capWord = null; quietSince = Date.now(); }
       const capShow = (w)=>{ capOn = true; capWord = w;
+        playSfx("sfx_magic");   // checklist: the nudge has its own positive sound - a sparkly magic chime
         SwiftPAL.emit("idle_guide_shown", { slide_id: slide.id, phase: slide.phase, word: w.word_hi });
         palUp(w, false);
         later(()=>{ if(!capOn || capWord !== w) return;
@@ -3723,6 +3727,11 @@ const SlideModules = {
         // HI02H02 SME hint ladder: wiggle → read every option → name the answer (see mountLadderOptions)
         mountLadderOptions({ slide, host: right, signalName: d.signal_name || "evidence_qa_first_try", stimulus: chip,
           options: d.options, optionRenderer, mastery: d.mastery === true });
+        // checklist (guided): the options come on screen ONE BY ONE, each with a soft pop sound
+        right.querySelectorAll(".opt-cell").forEach((c, i)=>{
+          c.animate([{ opacity: 0, transform: "translateY(18px) scale(.6)" }, { opacity: 1, transform: "translateY(-4px) scale(1.06)", offset: .7 },
+            { opacity: 1, transform: "none" }], { duration: 420, delay: 500 + i * 380, easing: "ease-out", fill: "backwards" });
+          later(()=> playSfx("sfx_pop"), 500 + i * 380); });
       } else {
         mountTapOptions({ slide, host: right, signalName: d.signal_name || "evidence_qa_first_try", stimulus: chip,
           options: d.options, isCorrect: o=> o.correct === true, columnsHint: 1, mastery: d.mastery === true,
@@ -3741,7 +3750,15 @@ const SlideModules = {
         const alive = aliveFor();
         const nav = $("navBtn"); nav.style.display = ""; setNavActive(false);
         nav.onclick = ()=>{ if(!nav.disabled) completeSlide(true); };
-        let armed = false; const arm = ()=>{ if(armed || !alive()) return; armed = true; setNavActive(true); setSwMood("point"); };
+        let armed = false, navNudgeT = null;
+        const armNavNudge = ()=>{ clearTimeout(navNudgeT);
+          navNudgeT = setTimeout(()=>{ if(!alive() || !nav.classList.contains("active")) return;
+            if(isPlaying){ armNavNudge(); return; } nudgeNavBtn(); }, 7000); };
+        const onTouch = ()=>{ if(!armed || !nav.classList.contains("active")) return; stopNudge(); armNavNudge(); };
+        document.addEventListener("pointerdown", onTouch, true);
+        onLeave(()=>{ clearTimeout(navNudgeT); document.removeEventListener("pointerdown", onTouch, true); });
+        const arm = ()=>{ if(armed || !alive()) return; armed = true; setNavActive(true); setSwMood("point");
+          nav.classList.add("nav-call"); armNavNudge(); };   // checklist: next pulses once the VO + CTA are done
         // optional roles are skipped (no silent beat): explain_type, evidence_read (one clip that paraphrases
         // the clue lines instead of reading them one by one), conclude (the strategy wrap-up line)
         const say = (key, cb)=>{ if(!alive()) return; const s = audioFor(slide, key); if(s) play(s, cb); else cb(); };
