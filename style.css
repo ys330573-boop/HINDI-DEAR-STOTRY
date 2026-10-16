@@ -4659,4 +4659,35 @@ html.no-anim .ws-cap.halo.loop .ws-pal-ch.is-pic img{animation:none !important;o
 @keyframes readingMicPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
 .mr-mic svg .mic-wave > rect{animation:none !important;}
 .stage.tut.l02-story .mr-caption .mr-mic.p2-rec-done{opacity:.45;filter:grayscale(1) drop-shadow(0 3px 6px rgba(0,0,0,.22)) !important;}
+/* ===== story pages S01-S11: the outlines / strokes of the Alu-Malu-Kalu (HI02H04_L03_S01) story page =====
+   card: 12px #50AAF2 + a soft blue shadow; picture: a thin 2px white outline + soft shadow; sentence bar: a 4px white outline on
+   white with the lifted double shadow (instead of the orange picture frame and the blue sentence stroke) */
+.stage.tut.l02-story .tut-card{border-color:#50AAF2 !important;box-shadow:0 6px 18px rgba(11,61,140,.10) !important;}
+.stage.tut.l02-story .mr-read .story-frame.mr-frame{border:2px solid #FFFFFF !important;background:#DCEEFB !important;
+  box-shadow:0 6px 18px rgba(11,42,90,.12) !important;}
+.stage.tut.l02-story .mr-read .story-frame.mr-frame .story-img{border-radius:calc(18px * var(--fs)) !important;}
+.stage.tut.l02-story .mr-read .mr-caption{border:4px solid #FFFFFF !important;background:#FFFFFF !important;
+  box-shadow:0 5px 0 rgba(11,42,90,.10),0 10px 26px rgba(11,42,90,.12) !important;}
+/* T7 / T8: while the answer is explained ("इसका मतलब है ...") the right option pulses gently with a green glow */
+.stage .ev-qa .ev-right .q-row .opt-grid .opt-cell.opt-cell.ev-ans-glow{border-color:#2BC85A !important;background:#ECFBF0 !important;
+  animation:evAnsGlow 1.1s ease-in-out infinite !important;z-index:2;}
+@keyframes evAnsGlow{0%,100%{transform:scale(1);box-shadow:0 0 0 3px #2BC85A,0 0 10px 2px rgba(43,200,90,.35);}
+  50%{transform:scale(1.06);box-shadow:0 0 0 4px #2BC85A,0 0 26px 8px rgba(43,200,90,.6);}}
+html.no-anim .ev-qa .opt-cell.ev-ans-glow{animation:none !important;box-shadow:0 0 0 4px #2BC85A !important;}
+/* word search hints (SME ladder): 1st wrong - the word's first letter glows gold; 2nd/3rd - every letter of the word pulses gold */
+.ws-board .ws-cell.ws-hint1{z-index:3;animation:wsHint1 1.1s ease-in-out infinite;}
+@keyframes wsHint1{0%,100%{transform:scale(1);box-shadow:0 4px 0 #EBC566,0 0 0 4px #FFC21A,0 0 8px rgba(255,194,26,.6);}
+  50%{transform:scale(1.1);box-shadow:0 4px 0 #EBC566,0 0 0 5px #FFC21A,0 0 26px rgba(255,194,26,1);}}
+.ws-board .ws-cell.ws-hint{z-index:3;animation:wsTileHint 1.1s ease-in-out infinite !important;background:#FFF6D1 !important;}
+/* the grid owns every touch: no scrolling, no long-press menu, no text selection while a word is dragged */
+.ws-board,.ws-board *{touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;}
+html.no-anim .ws-board .ws-cell.ws-hint1,html.no-anim .ws-board .ws-cell.ws-hint{animation:none !important;box-shadow:0 0 0 4px #FFC21A !important;}
+/* SME: no word list under the question - the found-word chips are not shown */
+.ws-side .ws-tray{display:none !important;}
+/* SME: the cover title on ONE STRAIGHT LINE, centred, and STILL - no arch, no tilt, no drop-in, no floating */
+.sg-cover-title{align-items:flex-end !important;transform:translateX(-50%) !important;}
+.sg-cover-title .w,.sg-cover-title .w:nth-child(1),.sg-cover-title .w:nth-child(2),.sg-cover-title .w:nth-child(3){rotate:0deg !important;margin-top:0 !important;}
+.sg-cover-title .w,body.loaded .sg-cover-title .w{animation:none !important;opacity:1 !important;translate:none !important;transform:none !important;}
+/* SME: a little more space between the title's words */
+.sg-cover-title{gap:2.8cqw !important;}
 

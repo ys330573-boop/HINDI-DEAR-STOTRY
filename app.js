@@ -1272,11 +1272,16 @@ function mountLadderOptions({slide, host, signalName, stimulus, options, optionR
     SwiftPAL.emit("hint_shown", { slide_id: slide.id, level: n });
     const fin = ()=>{ if(!alive()) return; state.hintActive = false; cells.forEach(c=> c.classList.remove("hint-glow")); setSwMood("talk"); };
     if(n === 1){ const s = audioFor(slide, "hint1"); if(s) play(s, fin); else later(fin, 450); }
-    else if(n === 2){ let i = 0;
-      const step = ()=>{ if(!alive()) return; cells.forEach(c=> c.classList.remove("hint-glow"));
-        if(i >= cells.length){ fin(); return; }
-        const c = cells[i++]; c.classList.add("hint-glow"); play(c._src, ()=> later(step, 250)); };
-      step(); }
+    else if(n === 2){   // SME: the three options APPEAR AGAIN - they fade out together, then pop back one by one with a glow (no voice)
+      cells.forEach(c=> c.animate([{ opacity: 1, transform: "none" }, { opacity: 0, transform: "scale(.6)" }],
+        { duration: 300, easing: "ease-in", fill: "forwards" }));
+      cells.forEach((c, i)=> later(()=>{ if(!alive()) return;
+        c.getAnimations().forEach(a=> a.cancel());
+        c.classList.add("hint-glow");
+        c.animate([{ opacity: 0, transform: "translateY(16px) scale(.6)" }, { opacity: 1, transform: "translateY(-4px) scale(1.08)", offset: .65 },
+          { opacity: 1, transform: "none" }], { duration: 460, easing: "ease-out" });
+        later(()=> c.classList.remove("hint-glow"), 900); }, 450 + i * 450));
+      later(fin, 450 + cells.length * 450 + 700); }
     else { cells.forEach(c=>{ if(c !== ok) c.classList.add("faded"); });   // reference terminal hold: the others fade and go dead
       if(ok){ ok.classList.add("reveal-hold"); pointNudgeAt(ok); }
       play(audioFor(slide, "hint3") || null, ()=>{ if(!alive()) return; state.hintActive = false; setSwMood("talk"); }); }
@@ -1303,9 +1308,9 @@ function mountLadderOptions({slide, host, signalName, stimulus, options, optionR
       $("hintBtn").classList.add("show");
       SwiftPAL.emit("answer_wrong", { slide_id: slide.id, phase: slide.phase, attempts: state.attempts });
       const next = Math.min(Math.max(state.attempts, level + 1), 3);
-      state.hintActive = true;   // the tapped word speaks first, then the rung (never two voices)
+      state.hintActive = true;   // SME: a wrong option does NOT speak its own VO - the wiggle plays, then the rung
       const go = ()=>{ if(!alive()) return; state.hintActive = false; rung(next); };
-      if(cell._src) play(cell._src, go); else later(go, 450);
+      later(go, 650);
     }
   });
   $("hintBtn").onclick = ()=>{ if(state.locked || state.hintActive || level >= 3) return;
@@ -1314,7 +1319,7 @@ function mountLadderOptions({slide, host, signalName, stimulus, options, optionR
 }
 
 /* the word search's magic hat (an idle guide): the SME's own art (New assets map/magic cap.svg) - a navy top hat, teal band, magic wand + gold sparkles */
-const CAP_SVG = '<svg class="cap-svg" viewBox="0 0 357 358" fill="none" aria-hidden="true"><g class="cap-wand"><path d="M138.749 92.1798L30.1562 75.1113L29.0012 82.4602L137.594 99.5286L138.749 92.1798Z" fill="#8E80E0"/><path d="M138.32 94.8388C138.32 94.8388 81.6249 90.0364 29.7293 77.7645L28.9911 82.4609L137.582 99.5352L138.32 94.8388Z" fill="#B7ADF5"/><path d="M28.9946 82.4609L2.86722 78.3529C2.57262 77.8891 1.92227 76.7241 1.97678 75.1455C2.06075 72.7304 3.72763 71.2568 4.02208 71.0047C12.7314 72.3738 21.4401 73.7437 30.1495 75.1127L28.9946 82.4609Z" fill="#FFE08A"/><path d="M29.7301 77.7644L4.02018 71.0053L30.1468 75.1127L29.7301 77.7644Z" fill="#FFCB55"/><path d="M28.9929 82.4616C24.8188 82.0424 19.272 81.0335 13.1497 78.5765C8.87564 76.8608 5.35291 74.8531 2.59037 73.0121C2.33747 73.5268 1.56344 75.2636 2.22063 77.1369C2.39385 77.63 2.63093 78.0335 2.86637 78.3542C11.5749 79.7226 20.2836 81.0925 28.9929 82.4616Z" fill="#FFCB55"/><path d="M137.545 99.5292L163.672 103.637C164.095 103.287 165.072 102.377 165.503 100.858C166.164 98.5331 165.03 96.6193 164.827 96.2891C156.118 94.92 147.409 93.5501 138.7 92.1811L137.545 99.5292Z" fill="#FFE08A"/><path d="M138.283 94.8328L164.827 96.2891L138.7 92.1803L138.283 94.8328Z" fill="#FFCB55"/><path d="M137.543 99.5294C141.645 100.411 147.233 101.154 153.814 100.693C158.409 100.372 162.377 99.5423 165.572 98.6367C165.655 99.2041 165.859 101.094 164.658 102.676C164.343 103.092 163.993 103.404 163.671 103.637C154.961 102.268 146.253 100.898 137.543 99.5294Z" fill="#FFCB55"/><path d="M49.2003 78.1087C49.2003 78.1087 88.6514 87.9372 127.038 90.3471L49.2003 78.1087Z" fill="#B7ADF5"/><circle class="cap-wandtip" cx="4" cy="77" r="2" fill="#FFF3B0"/></g><path class="cap-star s1" d="M194.992 117.441C194.992 117.441 206.708 121.017 212.523 114.175C212.523 114.175 207.003 124.664 213.301 130.771C213.301 130.771 204.921 127.894 195.806 135.582C195.806 135.582 200.541 128.343 194.992 117.441Z" fill="#EFD460"/><path class="cap-star s2" d="M180.647 96.7828C180.647 96.7828 184.875 98.0733 186.974 95.6035C186.974 95.6035 184.982 99.3887 187.255 101.593C187.255 101.593 184.231 100.555 180.941 103.33C180.941 103.33 182.649 100.717 180.647 96.7828Z" fill="#EFD460"/><path class="cap-star s3" d="M169.567 125.929C169.567 125.929 175.686 127.796 178.722 124.223C178.722 124.223 175.839 129.701 179.129 132.891C179.129 132.891 174.752 131.388 169.991 135.404C169.991 135.404 172.465 131.623 169.567 125.929Z" fill="#EFD460"/><path class="cap-star s4" d="M153.148 125.867C152.438 126.844 151.069 127.061 150.092 126.351C149.115 125.64 148.898 124.271 149.608 123.294C150.319 122.316 151.687 122.101 152.664 122.811C153.642 123.521 153.859 124.889 153.148 125.867Z" fill="#EFD460"/><path class="cap-star s5" d="M172.793 154.221C172.198 155.04 171.053 155.221 170.234 154.626C169.415 154.031 169.234 152.886 169.829 152.067C170.424 151.248 171.57 151.067 172.388 151.662C173.207 152.256 173.388 153.402 172.793 154.221Z" fill="#EFD460"/><path class="cap-star s6" d="M173.974 111.853C173.227 112.882 171.786 113.111 170.756 112.362C169.727 111.614 169.499 110.174 170.247 109.144C170.995 108.114 172.436 107.886 173.465 108.635C174.495 109.383 174.723 110.823 173.974 111.853Z" fill="#EFD460"/><g class="cap-body"><path d="M293.028 181.41C301.815 180.778 308.893 189.611 307.832 199.805C306.371 213.842 305.301 228.906 304.84 244.893C303.953 275.626 305.497 303.457 308.124 327.658C308.972 335.468 304.973 342.853 298.565 345.326C283.853 351.003 263.242 356.526 238.492 356.047C216.364 355.618 197.831 350.526 184.155 345.215C177.884 342.78 173.926 335.591 174.632 327.927C177.11 301.022 178.293 270.791 176.968 237.858C176.538 227.175 175.871 216.852 175.016 206.912C174.221 197.672 180.183 189.528 188.13 188.956C223.096 186.441 258.062 183.925 293.028 181.41Z" fill="#9CBBF5"/><path d="M259.002 225.196C259.002 225.196 246.183 322.5 191.07 347.716C191.07 347.716 255.371 371.314 298.59 345.86C305.414 341.841 309.311 334.248 308.676 326.353C306.679 301.545 302.9 243.146 309.473 221.243C317.917 193.103 259.002 225.196 259.002 225.196Z" fill="#7C9DE6"/><path d="M176.273 224.054L177.466 256.642C177.466 256.642 253.583 283.227 306.047 256.642C306.047 256.642 305.829 234.318 310.205 220.949C314.581 207.58 176.273 224.054 176.273 224.054Z" fill="#FFA9CB"/><path d="M356.467 189.19C356.492 223.804 201.789 251.181 152.137 221.883C146.696 218.673 133.789 211.056 130.682 197.363C126.633 179.515 141.855 162.887 143.963 160.584C168.677 133.587 215.295 139.622 243.063 143.216C276.655 147.564 356.449 164.334 356.467 189.19Z" fill="#B3C9F8"/><path d="M186.874 226.991L210.372 229.034C210.495 233.745 210.292 239.368 209.35 245.636C208.276 252.779 206.526 258.876 204.771 263.743L181.867 258.046C183.488 254.668 185.288 250.046 186.363 244.359C187.704 237.269 187.413 231.201 186.874 226.991Z" fill="#FFC4DB"/><path d="M309.471 188.34C309.486 208.588 218.99 224.603 189.945 207.464C186.762 205.586 179.212 201.131 177.395 193.121C175.026 182.681 183.93 172.954 185.164 171.606C199.621 155.814 226.891 159.344 243.134 161.446C262.784 163.99 309.461 173.8 309.471 188.34Z" fill="#6F86D6"/><path d="M276.747 228.842C276.747 228.842 159.291 240.273 130.684 197.363C130.684 197.363 141.856 255.212 276.747 228.842Z" fill="#C7D7FB"/><mask id="capMask" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="176" y="159" width="134" height="56"><path d="M309.471 188.34C309.486 208.588 218.99 224.603 189.945 207.464C186.762 205.586 179.212 201.131 177.395 193.121C175.026 182.681 183.93 172.954 185.164 171.606C199.621 155.814 226.891 159.344 243.134 161.446C262.784 163.99 309.461 173.8 309.471 188.34Z" fill="white"/></mask><g mask="url(#capMask)"><path d="M271.671 164.67C242.057 175.968 224.297 190.722 226.386 201.302C226.823 203.516 228.88 209.348 243.289 214.076C233.316 216.958 224.941 217.094 219.566 216.775C213.213 216.397 201.318 215.541 189.938 207.58C185.539 204.502 178.781 199.775 176.656 191.234C176.534 190.744 175.178 184.988 176.891 179.452C183.001 159.715 223.843 156.684 226.717 156.498C235.958 155.901 252.261 156.259 271.671 164.67Z" fill="#5A70C2"/></g><path d="M220.586 159.562C220.587 159.792 226.562 159.505 236.932 160.584C242.453 161.158 246.575 161.844 251.235 162.627C258.064 163.775 263.968 164.768 271.668 166.714C277.624 168.219 285.611 170.537 293.123 173.866C295.854 175.076 298.916 176.595 302.318 178.974C304.532 180.522 306.25 181.988 307.426 183.061C303.229 177.965 299.058 174.757 296.188 172.845C289.618 168.468 283.542 166.672 276.777 164.672C271.288 163.05 266.652 162.134 263.496 161.607C259.924 160.925 255.036 160.122 249.193 159.564C233.605 158.074 220.583 159.223 220.586 159.562Z" fill="#C7D7FB"/><path d="M310.202 220.948C310.202 220.948 304.781 242.319 305.802 257.643C305.802 257.643 288.994 268.025 248.66 268.452C248.66 268.452 252.843 250.162 255.615 232.447C255.615 232.447 298.231 225.969 310.202 220.948Z" fill="#F48DB8"/><path d="M204.77 263.743C204.77 263.743 193.427 292.377 176.996 294.931L177.488 271.684L177.518 265.814C177.518 265.814 180.686 260.68 181.866 258.047C181.866 258.047 198.632 262.587 204.77 263.743Z" fill="#D3E3FF"/></g></svg>';
+const CAP_SVG = '<svg class="cap-svg" viewBox="0 0 357 358" fill="none" aria-hidden="true"><g class="cap-wand"><path d="M138.749 92.1798L30.1562 75.1113L29.0012 82.4602L137.594 99.5286L138.749 92.1798Z" fill="#7363CF"/><path d="M138.32 94.8388C138.32 94.8388 81.6249 90.0364 29.7293 77.7645L28.9911 82.4609L137.582 99.5352L138.32 94.8388Z" fill="#9C8FE8"/><path d="M28.9946 82.4609L2.86722 78.3529C2.57262 77.8891 1.92227 76.7241 1.97678 75.1455C2.06075 72.7304 3.72763 71.2568 4.02208 71.0047C12.7314 72.3738 21.4401 73.7437 30.1495 75.1127L28.9946 82.4609Z" fill="#FFE08A"/><path d="M29.7301 77.7644L4.02018 71.0053L30.1468 75.1127L29.7301 77.7644Z" fill="#FFCB55"/><path d="M28.9929 82.4616C24.8188 82.0424 19.272 81.0335 13.1497 78.5765C8.87564 76.8608 5.35291 74.8531 2.59037 73.0121C2.33747 73.5268 1.56344 75.2636 2.22063 77.1369C2.39385 77.63 2.63093 78.0335 2.86637 78.3542C11.5749 79.7226 20.2836 81.0925 28.9929 82.4616Z" fill="#FFCB55"/><path d="M137.545 99.5292L163.672 103.637C164.095 103.287 165.072 102.377 165.503 100.858C166.164 98.5331 165.03 96.6193 164.827 96.2891C156.118 94.92 147.409 93.5501 138.7 92.1811L137.545 99.5292Z" fill="#FFE08A"/><path d="M138.283 94.8328L164.827 96.2891L138.7 92.1803L138.283 94.8328Z" fill="#FFCB55"/><path d="M137.543 99.5294C141.645 100.411 147.233 101.154 153.814 100.693C158.409 100.372 162.377 99.5423 165.572 98.6367C165.655 99.2041 165.859 101.094 164.658 102.676C164.343 103.092 163.993 103.404 163.671 103.637C154.961 102.268 146.253 100.898 137.543 99.5294Z" fill="#FFCB55"/><path d="M49.2003 78.1087C49.2003 78.1087 88.6514 87.9372 127.038 90.3471L49.2003 78.1087Z" fill="#9C8FE8"/><circle class="cap-wandtip" cx="4" cy="77" r="2" fill="#FFF3B0"/></g><path class="cap-star s1" d="M194.992 117.441C194.992 117.441 206.708 121.017 212.523 114.175C212.523 114.175 207.003 124.664 213.301 130.771C213.301 130.771 204.921 127.894 195.806 135.582C195.806 135.582 200.541 128.343 194.992 117.441Z" fill="#EFD460"/><path class="cap-star s2" d="M180.647 96.7828C180.647 96.7828 184.875 98.0733 186.974 95.6035C186.974 95.6035 184.982 99.3887 187.255 101.593C187.255 101.593 184.231 100.555 180.941 103.33C180.941 103.33 182.649 100.717 180.647 96.7828Z" fill="#EFD460"/><path class="cap-star s3" d="M169.567 125.929C169.567 125.929 175.686 127.796 178.722 124.223C178.722 124.223 175.839 129.701 179.129 132.891C179.129 132.891 174.752 131.388 169.991 135.404C169.991 135.404 172.465 131.623 169.567 125.929Z" fill="#EFD460"/><path class="cap-star s4" d="M153.148 125.867C152.438 126.844 151.069 127.061 150.092 126.351C149.115 125.64 148.898 124.271 149.608 123.294C150.319 122.316 151.687 122.101 152.664 122.811C153.642 123.521 153.859 124.889 153.148 125.867Z" fill="#EFD460"/><path class="cap-star s5" d="M172.793 154.221C172.198 155.04 171.053 155.221 170.234 154.626C169.415 154.031 169.234 152.886 169.829 152.067C170.424 151.248 171.57 151.067 172.388 151.662C173.207 152.256 173.388 153.402 172.793 154.221Z" fill="#EFD460"/><path class="cap-star s6" d="M173.974 111.853C173.227 112.882 171.786 113.111 170.756 112.362C169.727 111.614 169.499 110.174 170.247 109.144C170.995 108.114 172.436 107.886 173.465 108.635C174.495 109.383 174.723 110.823 173.974 111.853Z" fill="#EFD460"/><g class="cap-body"><path d="M293.028 181.41C301.815 180.778 308.893 189.611 307.832 199.805C306.371 213.842 305.301 228.906 304.84 244.893C303.953 275.626 305.497 303.457 308.124 327.658C308.972 335.468 304.973 342.853 298.565 345.326C283.853 351.003 263.242 356.526 238.492 356.047C216.364 355.618 197.831 350.526 184.155 345.215C177.884 342.78 173.926 335.591 174.632 327.927C177.11 301.022 178.293 270.791 176.968 237.858C176.538 227.175 175.871 216.852 175.016 206.912C174.221 197.672 180.183 189.528 188.13 188.956C223.096 186.441 258.062 183.925 293.028 181.41Z" fill="#6F95E8"/><path d="M259.002 225.196C259.002 225.196 246.183 322.5 191.07 347.716C191.07 347.716 255.371 371.314 298.59 345.86C305.414 341.841 309.311 334.248 308.676 326.353C306.679 301.545 302.9 243.146 309.473 221.243C317.917 193.103 259.002 225.196 259.002 225.196Z" fill="#5577D2"/><path d="M176.273 224.054L177.466 256.642C177.466 256.642 253.583 283.227 306.047 256.642C306.047 256.642 305.829 234.318 310.205 220.949C314.581 207.58 176.273 224.054 176.273 224.054Z" fill="#F57FB0"/><path d="M356.467 189.19C356.492 223.804 201.789 251.181 152.137 221.883C146.696 218.673 133.789 211.056 130.682 197.363C126.633 179.515 141.855 162.887 143.963 160.584C168.677 133.587 215.295 139.622 243.063 143.216C276.655 147.564 356.449 164.334 356.467 189.19Z" fill="#86A6EE"/><path d="M186.874 226.991L210.372 229.034C210.495 233.745 210.292 239.368 209.35 245.636C208.276 252.779 206.526 258.876 204.771 263.743L181.867 258.046C183.488 254.668 185.288 250.046 186.363 244.359C187.704 237.269 187.413 231.201 186.874 226.991Z" fill="#F99AC2"/><path d="M309.471 188.34C309.486 208.588 218.99 224.603 189.945 207.464C186.762 205.586 179.212 201.131 177.395 193.121C175.026 182.681 183.93 172.954 185.164 171.606C199.621 155.814 226.891 159.344 243.134 161.446C262.784 163.99 309.461 173.8 309.471 188.34Z" fill="#4A5FB8"/><path d="M276.747 228.842C276.747 228.842 159.291 240.273 130.684 197.363C130.684 197.363 141.856 255.212 276.747 228.842Z" fill="#9DB7F2"/><mask id="capMask" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="176" y="159" width="134" height="56"><path d="M309.471 188.34C309.486 208.588 218.99 224.603 189.945 207.464C186.762 205.586 179.212 201.131 177.395 193.121C175.026 182.681 183.93 172.954 185.164 171.606C199.621 155.814 226.891 159.344 243.134 161.446C262.784 163.99 309.461 173.8 309.471 188.34Z" fill="white"/></mask><g mask="url(#capMask)"><path d="M271.671 164.67C242.057 175.968 224.297 190.722 226.386 201.302C226.823 203.516 228.88 209.348 243.289 214.076C233.316 216.958 224.941 217.094 219.566 216.775C213.213 216.397 201.318 215.541 189.938 207.58C185.539 204.502 178.781 199.775 176.656 191.234C176.534 190.744 175.178 184.988 176.891 179.452C183.001 159.715 223.843 156.684 226.717 156.498C235.958 155.901 252.261 156.259 271.671 164.67Z" fill="#3B4C9E"/></g><path d="M220.586 159.562C220.587 159.792 226.562 159.505 236.932 160.584C242.453 161.158 246.575 161.844 251.235 162.627C258.064 163.775 263.968 164.768 271.668 166.714C277.624 168.219 285.611 170.537 293.123 173.866C295.854 175.076 298.916 176.595 302.318 178.974C304.532 180.522 306.25 181.988 307.426 183.061C303.229 177.965 299.058 174.757 296.188 172.845C289.618 168.468 283.542 166.672 276.777 164.672C271.288 163.05 266.652 162.134 263.496 161.607C259.924 160.925 255.036 160.122 249.193 159.564C233.605 158.074 220.583 159.223 220.586 159.562Z" fill="#9DB7F2"/><path d="M310.202 220.948C310.202 220.948 304.781 242.319 305.802 257.643C305.802 257.643 288.994 268.025 248.66 268.452C248.66 268.452 252.843 250.162 255.615 232.447C255.615 232.447 298.231 225.969 310.202 220.948Z" fill="#E0609A"/><path d="M204.77 263.743C204.77 263.743 193.427 292.377 176.996 294.931L177.488 271.684L177.518 265.814C177.518 265.814 180.686 260.68 181.866 258.047C181.866 258.047 198.632 262.587 204.77 263.743Z" fill="#A9C4F7"/></g></svg>';
 /* crying FX: tear drops flung from the eyes (the "आँसू हवा में उड़ते हुए" cue). Positions are % of the picture. */
 /* tear FOUNTAINS (page 6, SME pick): cartoon "फूट-फूटकर" crying - drops shoot out of both eyes in arcs and fall
    (the PPT's "आँसू हवा में उड़ते हुए"). Each drop = an x-wrapper moving linearly + the drop moving up, then down under
@@ -3354,8 +3359,7 @@ const SlideModules = {
           setSwMood("point");
           /* the HI02H04_L02_S01 story page ([L02-POP-AFTER-SENTENCE]): when the sentence has been heard the picture POPS (the 2 s pop)
              with its sound, and आगे lights only once the pop is over (2 s after the voice) */
-          frame.classList.remove("p2-pop"); void frame.offsetWidth; frame.classList.add("p2-pop");
-          playSfx("sfx_burst");
+          frame.classList.remove("p2-pop"); void frame.offsetWidth; frame.classList.add("p2-pop");   // SME: the pop is silent (no sfx after the sentence)
           later(()=>{ if(!alive()) return; setNavActive(true); nav.classList.add("nav-call"); armNavNudge(); }, 2000);   // आगे lights and pulses
           SwiftPAL.emit("story_read_done", { slide_id: slide.id, phase: slide.phase, page: d.page_no || null,
             audio_replays: state.audioReplays, latency_ms: Date.now() - state.slideStart }); }); };
@@ -3437,23 +3441,28 @@ const SlideModules = {
       const markActive = ()=>{ const a = active(); words.forEach(w=> w.item.classList.toggle("active", w === a)); showCard(a); syncDots(); return a; };
       // --- hand demo (rung 3): the hand glides first cell → last cell, over and over, until the word is found
       let demo = null, demoT = null;
-      const stopDemo = ()=>{ clearInterval(demoT); demoT = null; if(demo) demo.cells.forEach(c=> c.classList.remove("ws-hint")); demo = null;
+      const stopDemo = ()=>{ clearInterval(demoT); demoT = null; if(demo && demo.found) demo.cells.forEach(c=> c.classList.remove("ws-hint")); demo = null;
         $("nudgeHand").classList.remove("glide"); stopNudge(); };
       onLeave(stopDemo);
-      const runDemo = (w)=>{ stopDemo(); demo = w; w.cells.forEach(c=> c.classList.add("ws-hint"));
+      const runDemo = (w)=>{ stopDemo(); demo = w; w.cells.forEach(c=> c.classList.add("ws-hint"));   // (the letters stay lit after the demo stops)
         const a = w.cells[0], b = w.cells[w.cells.length - 1]; let atEnd = false;
         $("nudgeHand").classList.remove("glide"); pointNudgeAt(a);
         requestAnimationFrame(()=> $("nudgeHand").classList.add("glide"));
         demoT = setInterval(()=>{ if(!alive()){ stopDemo(); return; } atEnd = !atEnd; pointNudgeAt(atEnd ? b : a); }, 1100); };
       const pauseDemo = ()=>{ clearInterval(demoT); demoT = null; $("nudgeHand").classList.remove("glide"); stopNudge(); };
+      /* SME hint ladder, per word (the misses on the clue in play):
+           1st wrong  - "फिर से कोशिश कीजिए।" + the word's FIRST LETTER glows (it stays lit until the word is found)
+           2nd wrong  - EVERY letter of the word lights up + "सही शब्द है ..." (hint_audio)
+           3rd wrong  - every letter lights up again (a fresh pulse) + "फिर से कोशिश कीजिए।"
+           4th wrong+ - the hand drags across the word, first letter -> last, until it is found
+         The voices never block the board: the child can keep dragging while a hint speaks. */
+      const say = (s, mood)=>{ if(!s) return; setSwMood(mood); play(s, ()=>{ if(alive()) setSwMood("point"); }); };
+      const lightAll = (w)=>{ w.cells.forEach(c=>{ c.classList.remove("ws-hint"); void c.offsetWidth; c.classList.add("ws-hint"); }); };
       const rung = (w, n)=>{ w.level = Math.max(w.level, n); state.scaffoldLevel = Math.max(state.scaffoldLevel, n);
         SwiftPAL.emit("hint_shown", { slide_id: slide.id, word: w.word_hi, level: n });
-        if(n === 1){ setSwMood("tryagain");                                   // the wiggle is wrong()'s; the voice: "फिर से कोशिश कीजिए।"
-          const s = audioFor(slide, "hint1");
-          if(s){ state.hintActive = true; play(s, ()=>{ if(alive()){ state.hintActive = false; setSwMood("point"); } }); }
-          return; }
-        if(n === 2){ state.hintActive = true; setSwMood("hint");
-          play(src(w.hint_audio), ()=>{ if(alive()){ state.hintActive = false; setSwMood("point"); } }); return; }
+        if(n === 1){ if(w.cells[0]) w.cells[0].classList.add("ws-hint1"); say(audioFor(slide, "hint1"), "tryagain"); return; }
+        if(n === 2){ lightAll(w); say(src(w.hint_audio) || audioFor(slide, "hint1"), "hint"); return; }
+        if(n === 3){ lightAll(w); say(audioFor(slide, "hint1"), "hint"); return; }
         setSwMood("hint"); runDemo(w); };
       // --- selection (drag, or tap-start + tap-end)
       let dragFrom = null, lastCell = null, anchor = null, painted = [];
@@ -3496,14 +3505,16 @@ const SlideModules = {
           { transform: `translate(${p.x + Math.cos(a) * dd}px,${p.y + Math.sin(a) * dd + 12}px) scale(1) rotate(200deg)`, opacity: 0 }],
           { duration: 700, easing: "cubic-bezier(.2,.7,.4,1)", fill: "forwards" });
         an.onfinish = ()=> s.remove(); onLeave(()=> s.remove()); } };
-      const settle = (w, wasActive)=>{
+      const settle = (w, wasActive)=>{ fxBusy = false; state.hintActive = false;
+        if(pending.length){ const p = pending.shift(); later(()=>{ if(alive() && !state.locked) evaluate(p); }, 60); }
+        w.cells.forEach(c=> c.classList.remove("ws-hint", "ws-hint1"));
         w.item.classList.add("done"); w.item.querySelector(".ws-slots").innerHTML = `<span class="ws-answer">${w.word_hi}</span>`;
         { const chip = document.createElement("span"); chip.className = "ws-chip"; chip.textContent = w.word_hi;
           chip.style.setProperty("--wc", w.color); tray.appendChild(chip); }
         syncDots();
-        play(src(w.word_audio), ()=>{ if(!alive()) return; state.hintActive = false;
-          if(!active()){ finish(); return; }
-          const a = markActive(); palUp(a, true); if(wasActive) play(src(a.clue_audio), ()=>{}); }); };
+        if(!active()){ fxBusy = true; play(src(w.word_audio), ()=>{ if(alive() && !state.locked) finish(); }); later(()=>{ if(alive() && !state.locked) finish(); }, 4000); return; }
+        const a = markActive(); palUp(a, true);   // the next clue is up at once - the child may start on it while the word is spoken
+        play(src(w.word_audio), ()=>{ if(!alive()) return; if(wasActive && a && !a.found) play(src(a.clue_audio), ()=>{}); }); };
       const landBox = (w, wasActive)=>{ const box = w.item.querySelector(".ws-slots"), b = at(box);
         box.classList.add("ws-land"); later(()=> box.classList.remove("ws-land"), 600);
         starBurst({ x: b.x + b.w / 2, y: b.y + b.h / 2 }, 12, 70); playSfx("sfx_tring_big"); settle(w, wasActive); };
@@ -3549,7 +3560,7 @@ const SlideModules = {
         capHide();
         setSwMood("happy");
         SwiftPAL.emit("word_found", { slide_id: slide.id, word: w.word_hi, misses: w.miss, level: w.level });
-        state.hintActive = true;
+        fxBusy = true; w.cells.forEach(c=> c.classList.remove("ws-hint", "ws-hint1"));
         if(!CANDY && !HATFLY){ sfxCorrect(); settle(w, wasActive); return; }
         const n = w.cells.length, STEP = 200;
         w.cells.forEach((c, i)=> later(()=>{ c.classList.add("ws-candy");
@@ -3582,26 +3593,28 @@ const SlideModules = {
         $("hintBtn").classList.add("show");
         SwiftPAL.emit("answer_wrong", { slide_id: slide.id, phase: slide.phase, attempts: state.attempts });
         const w = active(); if(!w) return; w.miss++;
-        rung(w, Math.min(Math.max(w.miss, w.level + 1), 3)); };
-      /* SME: ONLY THE TARGET WORD'S LETTERS CAN BE DRAGGED. A drag starts only on a letter of the active word and only grows
-         over that word's letters; any other letter just wiggles (a miss on the usual ladder: wiggle -> "सही शब्द है ..." -> hand). */
-      const inTarget = (c)=>{ const a = active(); return !!a && a.cells.includes(c); };
-      const okPath = (p)=>{ const a = active(); return !!a && p.length > 0 && p.every(c=> a.cells.includes(c)); };
-      const evaluate = (path)=>{ paint([]); if(path.length < 2) return;
-        const w = words.find(x=> !x.found && x.cells.length === path.length && x.cells[0] === path[0] && x.cells[x.cells.length - 1] === path[path.length - 1]);
-        if(w) found(w); else if(!okPath(path)) wrong(path); };   // part of the target word: simply let go
-      board.addEventListener("pointerdown", (e)=>{ if(state.locked || state.hintActive) return;
+        rung(w, Math.min(Math.max(w.miss, w.level + 1), 4)); };
+      /* SME: the child may drag ANY straight run of letters (across or down). Every release of 2+ letters is an ATTEMPT: a hidden
+         word -> found; anything else -> wrong (wiggle + the next hint for the clue in play). A single tap marks a start letter. */
+      const pending = [];   // words released while the last one is still flying to its box: checked, in order, the moment it lands
+      const evaluate = (path)=>{ if(fxBusy){ if(path.length >= 2) pending.push(path); return; }
+        paint([]); if(path.length < 2) return;
+        // SME: only the word of the question ON SCREEN counts - another hidden word dragged early is a wrong attempt
+        const a = active();
+        const hit = !!a && a.cells.length === path.length && a.cells[0] === path[0] && a.cells[a.cells.length - 1] === path[path.length - 1];
+        if(hit) found(a); else wrong(path); };
+      // the board is busy only while a found word flies to its box (not while a voice plays - the child can drag over any voice)
+      let fxBusy = false;
+      board.addEventListener("pointerdown", (e)=>{ if(state.locked) return;   // never blocked by a voice or by the found-word flight
         const c = cellAt(e.clientX, e.clientY); if(!c) return; e.preventDefault();
         if(demoT) pauseDemo();
-        if(!inTarget(c)){ if(anchor){ anchor.classList.remove("anchor"); anchor = null; } paint([]); wrong([c]);   // not a letter of the word
-          if(demo && !demo.found && !demoT && alive()) later(()=>{ if(demo && !demo.found && !state.locked) runDemo(demo); }, 900);
-          return; }
-        dragFrom = c; lastCell = c; paint(anchor && anchor !== c && okPath(pathBetween(anchor, c)) ? pathBetween(anchor, c) : [c]);
+        dragFrom = c; lastCell = c; dragId = e.pointerId; paint(anchor && anchor !== c ? pathBetween(anchor, c) : [c]);
         sfxTap();   // checklist: a sound for every interaction - picking up a letter
         try{ board.setPointerCapture(e.pointerId); }catch(err){} });
-      board.addEventListener("pointermove", (e)=>{ if(!dragFrom) return; const c = cellAt(e.clientX, e.clientY);
-        if(!c || c === lastCell) return; const p = pathBetween(dragFrom, c); if(!okPath(p)) return;   // the selection never leaves the word
-        lastCell = c; paint(p); sfxTap(); });   // ... and each letter the drag reaches
+      board.addEventListener("pointermove", (e)=>{ if(!dragFrom) return; lastAct = Date.now();
+        const c = cellAt(e.clientX, e.clientY);
+        if(!c || c === lastCell) return;   // off the grid / a pause: the selection simply holds where it is
+        lastCell = c; paint(pathBetween(dragFrom, c)); sfxTap(); });   // ... and each letter the drag reaches
       const up = (e)=>{ if(!dragFrom) return; const from = dragFrom, to = lastCell || from; dragFrom = null;
         if(anchor) anchor.classList.remove("anchor");
         if(to === from){
@@ -3611,8 +3624,16 @@ const SlideModules = {
         } else { anchor = null; evaluate(pathBetween(from, to)); }
         if(demo && !demo.found && !demoT && alive()) later(()=>{ if(demo && !demo.found && !state.locked) runDemo(demo); }, 900); };
       board.addEventListener("pointerup", up);
-      board.addEventListener("pointercancel", ()=>{ dragFrom = null; paint(anchor ? [anchor] : []); });
-      $("hintBtn").onclick = ()=>{ const w = active(); if(state.locked || state.hintActive || !w || w.level >= 3) return;
+      /* a held drag must never be lost: a touch that pauses 1-2 s can be CANCELLED by the browser (long-press), or the finger can
+         lift outside the grid - both now finish the drag exactly like a release, so the word is still checked */
+      let dragId = null;
+      board.addEventListener("pointercancel", (e)=>{ if(!dragFrom) return;
+        if(lastCell && lastCell !== dragFrom) up(e); else { dragFrom = null; paint(anchor ? [anchor] : []); } });
+      const winUp = (e)=>{ if(dragFrom && (dragId === null || e.pointerId === dragId)) up(e); };
+      window.addEventListener("pointerup", winUp, true);
+      board.addEventListener("contextmenu", (e)=> e.preventDefault());
+      onLeave(()=> window.removeEventListener("pointerup", winUp, true));
+      $("hintBtn").onclick = ()=>{ const w = active(); if(state.locked || fxBusy || !w || w.level >= 4) return;   // (hint button waits for the flight)
         state.hintUsed = true; rung(w, w.level + 1); };
       // re-hear: the instruction + the active clue
       const intro = ()=>{ setSwMood("talk"); const a = markActive();
@@ -3730,11 +3751,7 @@ const SlideModules = {
         // HI02H02 SME hint ladder: wiggle → read every option → name the answer (see mountLadderOptions)
         mountLadderOptions({ slide, host: right, signalName: d.signal_name || "evidence_qa_first_try", stimulus: chip,
           options: d.options, optionRenderer, mastery: d.mastery === true });
-        // checklist (guided): the options come on screen ONE BY ONE, each with a soft pop sound
-        right.querySelectorAll(".opt-cell").forEach((c, i)=>{
-          c.animate([{ opacity: 0, transform: "translateY(18px) scale(.6)" }, { opacity: 1, transform: "translateY(-4px) scale(1.06)", offset: .7 },
-            { opacity: 1, transform: "none" }], { duration: 420, delay: 500 + i * 380, easing: "ease-out", fill: "backwards" });
-          later(()=> playSfx("sfx_pop"), 500 + i * 380); });
+        // SME: the three options are on screen TOGETHER from the start, with no voice
       } else {
         mountTapOptions({ slide, host: right, signalName: d.signal_name || "evidence_qa_first_try", stimulus: chip,
           options: d.options, isCorrect: o=> o.correct === true, columnsHint: 1, mastery: d.mastery === true,
@@ -3776,7 +3793,7 @@ const SlideModules = {
         const backHTML = d.meaning ? `<span class="ev-opt-lbl"><b class="evm-word">${d.meaning.word_hi}</b><span class="evm-dash">—</span>${d.meaning.meaning_hi}</span>` : null;
         const resetReveal = ()=>{ right.querySelectorAll(".opt-cell").forEach(c=> c.classList.remove("opt-dim", "ev-leave"));
           if(!ok) return; kitClear(ok);
-          ok.classList.remove("correct", "ev-flip", "ev-back", "ev-solo"); ok.innerHTML = okFront; };
+          ok.classList.remove("correct", "ev-flip", "ev-back", "ev-solo", "ev-ans-glow"); ok.innerHTML = okFront; };
         const flipReveal = ()=>{ if(!ok) return;
           ok.classList.add("correct"); if(window.FLNKit) FLNKit.ck(ok, {});   // the kit's green correct ring
           later(()=>{ right.querySelectorAll(".opt-cell").forEach(c=>{ if(c !== ok) c.classList.add("ev-leave"); });   // wrong cards slide away
@@ -3790,7 +3807,9 @@ const SlideModules = {
           say("prompt", ()=> say("explain_type", ()=>{
             showEv(); pulse(true);
             const afterEv = ()=>{ pulse(false); lines.forEach(l=> l.classList.remove("ev-now"));
+              if(ok) ok.classList.add("ev-ans-glow");   // SME: as the voice says "इसका मतलब है", the right answer pulses with a green glow
               say("explain_answer", ()=>{
+                if(ok) ok.classList.remove("ev-ans-glow");
                 flipReveal();
                 sfxCorrect(); burstStars(); setSwMood("happy");
                 say("conclude", ()=>{ if(done) done(); }); }); };
