@@ -4649,4 +4649,14 @@ html.no-anim .ws-cap.halo.loop .ws-pal-ch.is-pic img{animation:none !important;o
   -webkit-background-clip:text !important;background-clip:text !important;color:transparent !important;}
 /* checklist (guided): a wrong answer is never red - G1's wrongly tapped box gets a soft lavender-grey dim + its shake, no red */
 .tis-box.miss{border-color:#B9B4D9 !important;background:rgba(150,145,190,.18) !important;}
+/* ===== story pages: the Alu-Malu-Kalu reading mic (yellow pill, navy mic) at that repo's size and place: 88 x 86, 115px left of the
+   sentence bar, centred on it; it pulses (1 -> 1.08, 1.4 s) while it waits, shows navy voice bars while the child reads, greys after ===== */
+.stage.tut.l02-story .mr-caption .mr-mic,.stage.tut.l02-story .mr-read.mr-two .mr-caption .mr-mic{left:-115px !important;right:auto !important;top:50% !important;margin:-43px 0 0 0 !important;
+  width:88px !important;height:86px !important;border:0 !important;border-radius:0 !important;background:none !important;box-shadow:none !important;padding:0 !important;
+  filter:drop-shadow(0 3px 6px rgba(0,0,0,.22)) !important;}
+.stage.tut.l02-story .mr-caption .mr-mic svg{position:static !important;width:100% !important;height:100% !important;margin:0 !important;display:block;overflow:visible;}
+.stage.tut.l02-story .mr-caption .mr-mic.mr-glow{animation:readingMicPulse 1.4s ease-in-out infinite !important;}
+@keyframes readingMicPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+.mr-mic svg .mic-wave > rect{animation:none !important;}
+.stage.tut.l02-story .mr-caption .mr-mic.p2-rec-done{opacity:.45;filter:grayscale(1) drop-shadow(0 3px 6px rgba(0,0,0,.22)) !important;}
 
