@@ -3767,7 +3767,11 @@ const SlideModules = {
         // HI02H02 SME hint ladder: wiggle → read every option → name the answer (see mountLadderOptions)
         mountLadderOptions({ slide, host: right, signalName: d.signal_name || "evidence_qa_first_try", stimulus: chip,
           options: d.options, optionRenderer, mastery: d.mastery === true });
-        // SME: the three options are on screen TOGETHER from the start, with no voice
+        // checklist (guided): the options come on screen ONE BY ONE, each with a soft pop sound (no option voice)
+        right.querySelectorAll(".opt-cell").forEach((c, i)=>{
+          c.animate([{ opacity: 0, transform: "translateY(18px) scale(.6)" }, { opacity: 1, transform: "translateY(-4px) scale(1.06)", offset: .7 },
+            { opacity: 1, transform: "none" }], { duration: 420, delay: 500 + i * 380, easing: "ease-out", fill: "backwards" });
+          later(()=> playSfx("sfx_pop"), 500 + i * 380); });
       } else {
         mountTapOptions({ slide, host: right, signalName: d.signal_name || "evidence_qa_first_try", stimulus: chip,
           options: d.options, isCorrect: o=> o.correct === true, columnsHint: 1, mastery: d.mastery === true,
