@@ -4698,4 +4698,14 @@ html.no-anim .ws-board .ws-cell.ws-hint1,html.no-anim .ws-board .ws-cell.ws-hint
 html.no-anim .ev-qa .opt-cell.opt-soft-glow{animation:none !important;box-shadow:0 0 0 3px rgba(255,210,90,.7) !important;}
 /* P1/P2, 4th wrong attempt: every letter except the answer's is disabled - faded and untouchable */
 .ws-board .ws-cell.ws-off{opacity:.32;filter:grayscale(.6);pointer-events:none;transform:scale(.94);transition:opacity .3s ease,transform .3s ease;}
+/* ===== SME: every card / option / picture border in the game is WHITE with a soft greyish shadow - the story sentence bar's look
+   (4px white stroke, white fill, a soft lift 0 5px 0 + a wide 0 10px 26px grey shadow). Feedback states (glows, correct, wrong) keep
+   their own colours on top of it. ===== */
+.stage .ev-qa .ev-passage,.stage .ev-find .ev-passage{border:4px solid #FFFFFF !important;background:#FFFFFF !important;
+  box-shadow:0 5px 0 rgba(11,42,90,.10),0 10px 26px rgba(11,42,90,.12) !important;}
+.stage .ev-qa .ev-right .q-row .opt-grid .opt-cell{border:4px solid #FFFFFF;background:#FFFFFF;
+  box-shadow:0 5px 0 rgba(11,42,90,.10),0 10px 26px rgba(11,42,90,.12);}
+.stage .ev-qa .ev-right .opt-cell.ev-back{border-color:#FFFFFF !important;box-shadow:0 5px 0 rgba(11,42,90,.10),0 10px 26px rgba(11,42,90,.12) !important;}
+.ws-clue,.ws-clue.active{border:4px solid #FFFFFF !important;background:#FFFFFF !important;
+  box-shadow:0 5px 0 rgba(11,42,90,.10),0 10px 26px rgba(11,42,90,.12) !important;}
 
