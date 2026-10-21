@@ -119,7 +119,7 @@ function _resumeVoiceAudio(){
    AUDIO_BUILD changes whenever the game is rebuilt, so every clip URL changes with it and the
    browser has to fetch. It is added in the two places every clip passes through, rather than at
    the ~20 sites that spell out a path, so nothing can be missed. */
-const AUDIO_BUILD = "20261012120000";
+const AUDIO_BUILD = "20261021120000";
 /* [H11-187] ASSET PRELOADER - every file the game uses is fetched ONCE, behind the loading bar,
    before the Play button can appear.
    - ONE DOWNLOAD PER FILE. The bar, the voice decoder, the picture warm-up and the gate / landing /
@@ -138,7 +138,7 @@ const AUDIO_BUILD = "20261012120000";
    Formats: WebM (VP9 + Opus) and WebP play in Chrome, Edge, Firefox and Safari (WebP 14+, WebM
    video 16.4+); WAV plays everywhere. Fetch streams + AbortController: every browser since 2019. */
 var AssetLoader = (function(){
-  const MANIFEST = /*@ASSET_MANIFEST*/[["assets/SFX/sfx_pop.ogg",4947],["assets/SFX/sfx_magic.ogg",10179],["assets/Images/stk_chupchap.webp",22670],["assets/Images/stk_shor.webp",28758],["assets/Images/stk_kisan.webp",26656],["assets/Images/stk_badal.webp",27180],["assets/Images/stk_basta.webp",28600],["assets/Images/stk_suraj.webp",24506],["assets/Images/stk_bakri.webp",26452],["assets/Images/stk_gilahri.webp",31380],["assets/Audio/vo2_try_again.ogg",14933],["assets/Images/st_cry_center.webp",106000],["assets/SFX/sfx_tring_1.ogg",7733],["assets/SFX/sfx_tring_2.ogg",7646],["assets/SFX/sfx_tring_3.ogg",7455],["assets/SFX/sfx_tring_4.ogg",6796],["assets/SFX/sfx_tring_5.ogg",7540],["assets/SFX/sfx_tring_6.ogg",7366],["assets/SFX/sfx_tring_big.ogg",11039],["assets/Images/cover.webp",193254],["assets/UI/btn-next-arrow.svg",409],["assets/UI/btn-next-disabled-arrow.svg",418],["assets/UI/btn-next-disabled-pill.svg",589],["assets/swiftpal_buttons/btn-play-waiting.svg",607],["assets/UI/nudge_fx_ring_outer.svg",631],["assets/UI/nudge_fx_ring_inner.svg",648],["assets/swiftpal_buttons/btn-next-disabled.svg",673],["assets/UI/start_card.webp",1024],["assets/UI/btn-next-pill.svg",1269],["assets/swiftpal_buttons/btn-next.svg",1271],["assets/swiftpal_buttons/btn-finish.svg",1316],["assets/SFX/sfx_next.ogg",1412],["assets/SFX/sfx_tap.ogg",1599],["assets/UI/nudge_fx_sparks.svg",2340],["assets/UI/btn-play.svg",2692],["assets/swiftpal_buttons/btn-play-round.svg",2692],["assets/UI/btn-play-waiting.svg",2702],["assets/swiftpal_buttons/btn-play-round-waiting.svg",2702],["assets/SFX/sfx_play.ogg",3317],["assets/Audio/vo2_w_thokar.ogg",4034],["assets/Audio/vo2_w_hiran.ogg",4100],["assets/Audio/vo2_w_shor.ogg",4255],["assets/Audio/vo2_o_phir_se.ogg",4317],["assets/Audio/vo_o_opt_tokri.ogg",4322],["assets/Audio/vo2_w_chupchap.ogg",4563],["assets/Audio/vo2_w_kisan.ogg",4735],["assets/Audio/vo2_w_suraj.ogg",4767],["assets/Audio/vo2_o_jharna.ogg",4863],["assets/Audio/vo_o_t_bhookh.ogg",4950],["assets/Audio/vo2_w_sahlana.ogg",5022],["assets/Audio/vo2_w_jhadiyan.ogg",5143],["assets/Audio/vo2_w_koodna.ogg",5210],["assets/UI/nudge_tap.webp",5306],["assets/Audio/vo2_o_nahi_to.ogg",5415],["assets/Audio/vo2_w_nala.ogg",5495],["assets/Audio/vo2_shabaash.ogg",5622],["assets/Audio/vo_o_t_saheli.ogg",5689],["assets/Audio/vo2_w_bakri.ogg",5731],["assets/Audio/vo2_w_jhadi.ogg",5750],["assets/SFX/sfx_wrong.ogg",5882],["assets/Audio/vo2_w_badal.ogg",5979],["assets/Audio/vo2_w_basta.ogg",6030],["assets/SFX/sfx_whoosh.ogg",6120],["assets/Audio/vo2_o_gusse_se.ogg",6307],["assets/Audio/vo_pt_practice.ogg",6391],["assets/Audio/vo2_w_gilahri.ogg",6498],["assets/Audio/vo2_o_gir_jana.ogg",6594],["assets/UI/nudge_hand_new.svg",6873],["assets/Audio/vo2_o_ooncha_ped.ogg",6947],["assets/Audio/vo_o_t_takrana.ogg",7002],["assets/Audio/vo_o_t_kheencha.ogg",7448],["assets/Audio/vo2_o_chhalang.ogg",7769],["assets/UI/mascot.webp",8006],["assets/Audio/vo2_c_tez_awaaz.ogg",8128],["assets/Audio/vo2_c_kheti.ogg",8508],["assets/Audio/vo2_o_phir_rone.ogg",8538],["assets/Audio/vo2_c_bina_bole.ogg",8548],["assets/Audio/vo2_o_tez_bhagna.ogg",8576],["assets/SFX/sfx_correct.ogg",9207],["assets/Audio/vo2_st04.ogg",9962],["assets/Audio/vo2_o_chhote_paudhe.ogg",10077],["assets/Audio/vo2_c_haath_phera.ogg",10284],["assets/Audio/vo2_h_thokar.ogg",10656],["assets/SFX/sfx_burst.ogg",11035],["assets/Audio/vo2_c_paani.ogg",11165],["assets/Audio/vo2_h_shor.ogg",11249],["assets/Audio/vo2_o_zor_rone.ogg",11550],["assets/Audio/vo2_h_bakri.ogg",11551],["assets/Audio/vo2_h_basta.ogg",11621],["assets/Audio/vo2_h_koodna.ogg",11627],["assets/Audio/vo2_h_chupchap.ogg",11853],["assets/Audio/vo2_h_badal.ogg",11890],["assets/Audio/vo2_h_kisan.ogg",11926],["assets/Audio/vo2_h_jhadiyan.ogg",12080],["assets/Audio/vo2_h_suraj.ogg",12289],["assets/Audio/vo2_h_gilahri.ogg",12353],["assets/Audio/vo2_h_sahlana.ogg",12498],["assets/Audio/vo2_o_dheere_rone.ogg",12498],["assets/Audio/vo2_c_takrana.ogg",13383],["assets/Audio/vo2_c_kutar.ogg",13680],["assets/Audio/vo2_t7_q.ogg",13971],["assets/Audio/vo2_g3_q.ogg",14181],["assets/SFX/sfx_celebrate.ogg",14250],["assets/Audio/vo2_st01.ogg",14440],["assets/Audio/vo2_st03.ogg",14749],["assets/Audio/vo2_c_doodh.ogg",14826],["assets/Audio/vo2_g4_q.ogg",15145],["assets/Audio/vo2_g1_q.ogg",15227],["assets/Audio/vo2_c_dhoop.ogg",16377],["assets/Audio/vo2_celebrate.ogg",17087],["assets/Audio/vo2_g5_q.ogg",17090],["assets/UI/audio.webp",17132],["assets/UI/hint.webp",17670],["assets/UI/start_mascot.webp",18020],["assets/Audio/vo2_g2_h3.ogg",18691],["assets/Audio/vo_pt_guided.ogg",18726],["assets/Audio/vo2_c_kitaben.ogg",19146],["assets/Audio/vo2_st11.ogg",19315],["assets/UI/start_bg.webp",19840],["assets/Audio/vo2_st06.ogg",19940],["assets/Audio/vo2_mic_read.ogg",22455],["assets/Audio/vo2_st09.ogg",23026],["assets/Audio/vo2_st07.ogg",23837],["assets/Images/opt_tokri.webp",23902],["assets/Audio/vo2_st05.ogg",23915],["assets/UI/sw_explain_still.webp",24366],["assets/UI/startnew_bg_plain.webp",24446],["assets/Audio/vo2_st08.ogg",25474],["assets/Audio/vo2_g2_h1.ogg",25746],["assets/Images/last_swifty_still.webp",26456],["assets/Audio/vo2_g4_h3.ogg",26698],["assets/Audio/vo2_g2_q.ogg",27711],["assets/Audio/vo2_g1_h3.ogg",29875],["assets/Audio/vo2_st02.ogg",30396],["assets/Audio/vo2_g1_h1.ogg",31049],["assets/UI/vo_button.webp",31892],["assets/UI/sw_head_neutral.webp",31940],["assets/Audio/vo2_g3_h3.ogg",32420],["assets/Audio/vo2_pt_tutorial.ogg",32850],["assets/Audio/vo2_t8_q.ogg",34870],["assets/Audio/vo2_st10.ogg",35146],["assets/Audio/vo2_g5_h3.ogg",36671],["assets/UI/sw_head_hint.webp",36812],["assets/UI/sw_head_talking.webp",37384],["assets/Audio/vo2_t8_read.ogg",37880],["assets/Audio/vo2_ws1_q.ogg",40435],["assets/UI/sw_head_celebrate.webp",41998],["assets/Audio/vo2_landing.ogg",42172],["assets/Audio/vo2_t7_end.ogg",44821],["assets/Audio/vo2_ws2_q.ogg",47189],["assets/UI/sw_head_tryagain.webp",48836],["assets/UI/end_screen.webp",50224],["assets/UI/startnew_bg.webp",52978],["assets/Audio/vo2_t7_type.ogg",56021],["assets/Audio/vo2_t7_ans.ogg",62497],["assets/UI/hint_active.webp",62642],["assets/UI/start_btn.webp",65092],["assets/UI/sw_lg_talking.webp",69960],["assets/UI/sw_lg_hint.webp",72584],["assets/UI/sw_lg_celebrating.webp",79680],["assets/Audio/vo2_t8_ans.ogg",82125],["assets/Images/st_cry.webp",88818],["assets/Images/st_ahead.webp",90326],["assets/Images/st_hans.webp",102828],["assets/Images/st_thokar.webp",105844],["assets/Images/st_cry_alone.webp",106676],["assets/UI/sw_lg_tryagain.webp",110656],["assets/Images/st_bandar.webp",114896],["assets/Images/st_maa.webp",115290],["assets/Images/st_bhalu.webp",115490],["assets/Images/st_run.webp",119698],["assets/Images/st_bola.webp",135808],["assets/Images/st_jhadi.webp",140506],["assets/Images/st_nala.webp",156254],["assets/SFX/bgm_mela.ogg",171495],["assets/UI/loader.webp",178248],["assets/UI/sw_explain_talk.webp",369026],["assets/UI/sw_head_celebrate_anim.webp",390546],["assets/UI/sw_head_tryagain_anim.webp",429222],["assets/UI/sw_lg_celebrating_anim.webp",430844],["assets/UI/sw_head_hint_anim.webp",435706],["assets/UI/cel_talk.webp",650742],["assets/UI/cel_idle.webp",651146],["assets/UI/cel_shabaash.webp",684852],["assets/UI/sw_lg_hint_anim.webp",878778],["assets/UI/new_landing_swiftee_anim.webp",1160630],["assets/UI/swiftee_transition.webp",1500554],["assets/UI/peeking_talk_up.webp",1561680],["assets/peeking_talk_up.webp",1561680],["assets/Images/last_swifty_end.webp",1779506]]/*@END_ASSET_MANIFEST*/;
+  const MANIFEST = /*@ASSET_MANIFEST*/[["assets/Audio/vo2_st04b.ogg",15705],["assets/SFX/sfx_pop.ogg",4947],["assets/SFX/sfx_magic.ogg",10179],["assets/Images/stk_chupchap.webp",22670],["assets/Images/stk_shor.webp",28758],["assets/Images/stk_kisan.webp",26656],["assets/Images/stk_badal.webp",27180],["assets/Images/stk_basta.webp",28600],["assets/Images/stk_suraj.webp",24506],["assets/Images/stk_bakri.webp",26452],["assets/Images/stk_gilahri.webp",31380],["assets/Audio/vo2_try_again.ogg",8204],["assets/Images/st_cry_center.webp",106000],["assets/SFX/sfx_tring_1.ogg",7733],["assets/SFX/sfx_tring_2.ogg",7646],["assets/SFX/sfx_tring_3.ogg",7455],["assets/SFX/sfx_tring_4.ogg",6796],["assets/SFX/sfx_tring_5.ogg",7540],["assets/SFX/sfx_tring_6.ogg",7366],["assets/SFX/sfx_tring_big.ogg",11039],["assets/Images/cover.webp",193254],["assets/UI/btn-next-arrow.svg",409],["assets/UI/btn-next-disabled-arrow.svg",418],["assets/UI/btn-next-disabled-pill.svg",589],["assets/swiftpal_buttons/btn-play-waiting.svg",607],["assets/UI/nudge_fx_ring_outer.svg",631],["assets/UI/nudge_fx_ring_inner.svg",648],["assets/swiftpal_buttons/btn-next-disabled.svg",673],["assets/UI/start_card.webp",1024],["assets/UI/btn-next-pill.svg",1269],["assets/swiftpal_buttons/btn-next.svg",1271],["assets/swiftpal_buttons/btn-finish.svg",1316],["assets/SFX/sfx_next.ogg",1412],["assets/SFX/sfx_tap.ogg",1599],["assets/UI/nudge_fx_sparks.svg",2340],["assets/UI/btn-play.svg",2692],["assets/swiftpal_buttons/btn-play-round.svg",2692],["assets/UI/btn-play-waiting.svg",2702],["assets/swiftpal_buttons/btn-play-round-waiting.svg",2702],["assets/SFX/sfx_play.ogg",3317],["assets/Audio/vo2_w_thokar.ogg",3747],["assets/Audio/vo2_w_hiran.ogg",3898],["assets/Audio/vo2_w_shor.ogg",4183],["assets/Audio/vo2_o_phir_se.ogg",4417],["assets/Audio/vo_o_opt_tokri.ogg",4322],["assets/Audio/vo2_w_chupchap.ogg",4763],["assets/Audio/vo2_w_kisan.ogg",4879],["assets/Audio/vo2_w_suraj.ogg",5290],["assets/Audio/vo2_o_jharna.ogg",4753],["assets/Audio/vo_o_t_bhookh.ogg",4950],["assets/Audio/vo2_w_sahlana.ogg",6169],["assets/Audio/vo2_w_jhadiyan.ogg",4941],["assets/Audio/vo2_w_koodna.ogg",4614],["assets/UI/nudge_tap.webp",5306],["assets/Audio/vo2_o_nahi_to.ogg",5196],["assets/Audio/vo2_w_nala.ogg",5079],["assets/Audio/vo2_shabaash.ogg",7496],["assets/Audio/vo_o_t_saheli.ogg",5689],["assets/Audio/vo2_w_bakri.ogg",4120],["assets/Audio/vo2_w_jhadi.ogg",5508],["assets/SFX/sfx_wrong.ogg",5882],["assets/Audio/vo2_w_badal.ogg",4494],["assets/Audio/vo2_w_basta.ogg",4813],["assets/SFX/sfx_whoosh.ogg",6120],["assets/Audio/vo2_o_gusse_se.ogg",6307],["assets/Audio/vo_pt_practice.ogg",6391],["assets/Audio/vo2_w_gilahri.ogg",4978],["assets/Audio/vo2_o_gir_jana.ogg",6066],["assets/UI/nudge_hand_new.svg",6873],["assets/Audio/vo2_o_ooncha_ped.ogg",6997],["assets/Audio/vo_o_t_takrana.ogg",7002],["assets/Audio/vo_o_t_kheencha.ogg",7448],["assets/Audio/vo2_o_chhalang.ogg",7167],["assets/UI/mascot.webp",8006],["assets/Audio/vo2_c_tez_awaaz.ogg",8128],["assets/Audio/vo2_c_kheti.ogg",8563],["assets/Audio/vo2_o_phir_rone.ogg",8187],["assets/Audio/vo2_c_bina_bole.ogg",8548],["assets/Audio/vo2_o_tez_bhagna.ogg",6277],["assets/SFX/sfx_correct.ogg",9207],["assets/Audio/vo2_st04.ogg",9187],["assets/Audio/vo2_o_chhote_paudhe.ogg",9104],["assets/Audio/vo2_c_haath_phera.ogg",10429],["assets/Audio/vo2_h_thokar.ogg",11741],["assets/SFX/sfx_burst.ogg",11035],["assets/Audio/vo2_c_paani.ogg",9437],["assets/Audio/vo2_h_shor.ogg",11623],["assets/Audio/vo2_o_zor_rone.ogg",11929],["assets/Audio/vo2_h_bakri.ogg",11519],["assets/Audio/vo2_h_basta.ogg",13275],["assets/Audio/vo2_h_koodna.ogg",12564],["assets/Audio/vo2_h_chupchap.ogg",14113],["assets/Audio/vo2_h_badal.ogg",12266],["assets/Audio/vo2_h_kisan.ogg",12463],["assets/Audio/vo2_h_jhadiyan.ogg",13701],["assets/Audio/vo2_h_suraj.ogg",13025],["assets/Audio/vo2_h_gilahri.ogg",14895],["assets/Audio/vo2_h_sahlana.ogg",15263],["assets/Audio/vo2_o_dheere_rone.ogg",16354],["assets/Audio/vo2_c_takrana.ogg",11943],["assets/Audio/vo2_c_kutar.ogg",12140],["assets/Audio/vo2_t7_q.ogg",9858],["assets/Audio/vo2_g3_q.ogg",11599],["assets/SFX/sfx_celebrate.ogg",14250],["assets/Audio/vo2_st01.ogg",12669],["assets/Audio/vo2_st03.ogg",12498],["assets/Audio/vo2_c_doodh.ogg",13814],["assets/Audio/vo2_g4_q.ogg",9935],["assets/Audio/vo2_g1_q.ogg",9599],["assets/Audio/vo2_c_dhoop.ogg",15228],["assets/Audio/vo2_celebrate.ogg",16035],["assets/Audio/vo2_g5_q.ogg",13899],["assets/UI/audio.webp",17132],["assets/UI/hint.webp",17670],["assets/UI/start_mascot.webp",18020],["assets/Audio/vo2_g2_h3.ogg",16787],["assets/Audio/vo_pt_guided.ogg",18726],["assets/Audio/vo2_c_kitaben.ogg",16826],["assets/Audio/vo2_st11.ogg",18210],["assets/UI/start_bg.webp",19840],["assets/Audio/vo2_st06.ogg",17351],["assets/Audio/vo2_mic_read.ogg",16272],["assets/Audio/vo2_st09.ogg",21898],["assets/Audio/vo2_st07.ogg",19579],["assets/Images/opt_tokri.webp",23902],["assets/Audio/vo2_st05.ogg",20382],["assets/UI/sw_explain_still.webp",24366],["assets/UI/startnew_bg_plain.webp",24446],["assets/Audio/vo2_st08.ogg",26038],["assets/Audio/vo2_g2_h1.ogg",21066],["assets/Images/last_swifty_still.webp",26456],["assets/Audio/vo2_g4_h3.ogg",20075],["assets/Audio/vo2_g2_q.ogg",22650],["assets/Audio/vo2_g1_h3.ogg",25232],["assets/Audio/vo2_st02.ogg",19166],["assets/Audio/vo2_g1_h1.ogg",23677],["assets/UI/vo_button.webp",31892],["assets/UI/sw_head_neutral.webp",31940],["assets/Audio/vo2_g3_h3.ogg",26441],["assets/Audio/vo2_pt_tutorial.ogg",27260],["assets/Audio/vo2_t8_q.ogg",25747],["assets/Audio/vo2_st10.ogg",28159],["assets/Audio/vo2_g5_h3.ogg",29974],["assets/UI/sw_head_hint.webp",36812],["assets/UI/sw_head_talking.webp",37384],["assets/Audio/vo2_t8_read.ogg",37880],["assets/Audio/vo2_ws1_q.ogg",37910],["assets/UI/sw_head_celebrate.webp",41998],["assets/Audio/vo2_landing.ogg",35618],["assets/Audio/vo2_t7_end.ogg",39304],["assets/Audio/vo2_ws2_q.ogg",39868],["assets/UI/sw_head_tryagain.webp",48836],["assets/UI/end_screen.webp",50224],["assets/UI/startnew_bg.webp",52978],["assets/Audio/vo2_t7_type.ogg",49446],["assets/Audio/vo2_t7_ans.ogg",50839],["assets/UI/hint_active.webp",62642],["assets/UI/start_btn.webp",65092],["assets/UI/sw_lg_talking.webp",69960],["assets/UI/sw_lg_hint.webp",72584],["assets/UI/sw_lg_celebrating.webp",79680],["assets/Audio/vo2_t8_ans.ogg",73217],["assets/Images/st_cry.webp",88818],["assets/Images/st_ahead.webp",90326],["assets/Images/st_hans.webp",102828],["assets/Images/st_thokar.webp",105844],["assets/Images/st_cry_alone.webp",106676],["assets/UI/sw_lg_tryagain.webp",110656],["assets/Images/st_bandar.webp",114896],["assets/Images/st_maa.webp",115290],["assets/Images/st_bhalu.webp",115490],["assets/Images/st_run.webp",119698],["assets/Images/st_bola.webp",135808],["assets/Images/st_jhadi.webp",140506],["assets/Images/st_nala.webp",156254],["assets/SFX/bgm_mela.ogg",171495],["assets/UI/loader.webp",178248],["assets/UI/sw_explain_talk.webp",369026],["assets/UI/sw_head_celebrate_anim.webp",390546],["assets/UI/sw_head_tryagain_anim.webp",429222],["assets/UI/sw_lg_celebrating_anim.webp",430844],["assets/UI/sw_head_hint_anim.webp",435706],["assets/UI/cel_talk.webp",650742],["assets/UI/cel_idle.webp",651146],["assets/UI/cel_shabaash.webp",684852],["assets/UI/sw_lg_hint_anim.webp",878778],["assets/UI/new_landing_swiftee_anim.webp",1160630],["assets/UI/swiftee_transition.webp",1500554],["assets/UI/peeking_talk_up.webp",1561680],["assets/peeking_talk_up.webp",1561680],["assets/Images/last_swifty_end.webp",1779506]]/*@END_ASSET_MANIFEST*/;
   const HTTP = /^https?:$/.test(location.protocol) && !!window.fetch;
   const STALL_MS = 10000, HARD_MS = 60000, WORKERS = 5;
   const BASE = (function(){ try{ return new URL(".", location.href).href; }catch(e){ return ""; } })();
@@ -1270,18 +1270,15 @@ function mountLadderOptions({slide, host, signalName, stimulus, options, optionR
     level = Math.max(level, n); state.scaffoldLevel = Math.max(state.scaffoldLevel, n);
     state.hintActive = true; setSwMood("hint");
     SwiftPAL.emit("hint_shown", { slide_id: slide.id, level: n });
-    const fin = ()=>{ if(!alive()) return; state.hintActive = false; cells.forEach(c=> c.classList.remove("hint-glow")); setSwMood("talk"); };
+    const fin = ()=>{ if(!alive()) return; state.hintActive = false; cells.forEach(c=> c.classList.remove("hint-glow", "opt-soft-glow")); setSwMood("talk"); };
     if(n === 1){ const s = audioFor(slide, "hint1"); if(s) play(s, fin); else later(fin, 450); }
-    else if(n === 2){   // SME: the three options APPEAR AGAIN - they fade out together, then pop back one by one with a glow (no voice)
-      cells.forEach(c=> c.animate([{ opacity: 1, transform: "none" }, { opacity: 0, transform: "scale(.6)" }],
-        { duration: 300, easing: "ease-in", fill: "forwards" }));
-      cells.forEach((c, i)=> later(()=>{ if(!alive()) return;
-        c.getAnimations().forEach(a=> a.cancel());
-        c.classList.add("hint-glow");
-        c.animate([{ opacity: 0, transform: "translateY(16px) scale(.6)" }, { opacity: 1, transform: "translateY(-4px) scale(1.08)", offset: .65 },
-          { opacity: 1, transform: "none" }], { duration: 460, easing: "ease-out" });
-        later(()=> c.classList.remove("hint-glow"), 900); }, 450 + i * 450));
-      later(fin, 450 + cells.length * 450 + 700); }
+    else if(n === 2){   // SME: all the answers STAY on screen; each in turn gets a soft glow while its own VO is read
+      let i = 0;
+      const step = ()=>{ if(!alive()) return; cells.forEach(c=> c.classList.remove("opt-soft-glow"));
+        if(i >= cells.length){ fin(); return; }
+        const c = cells[i++]; c.classList.add("opt-soft-glow");
+        if(c._src) play(c._src, ()=> later(step, 300)); else later(step, 1000); };
+      later(step, 250); }
     else { cells.forEach(c=>{ if(c !== ok) c.classList.add("faded"); });   // reference terminal hold: the others fade and go dead
       if(ok){ ok.classList.add("reveal-hold"); pointNudgeAt(ok); }
       play(audioFor(slide, "hint3") || null, ()=>{ if(!alive()) return; state.hintActive = false; setSwMood("talk"); }); }
@@ -3332,10 +3329,14 @@ const SlideModules = {
       const clearIdle = ()=>{ clearTimeout(idleT); idleT = null; };
       onLeave(clearIdle);
       const lit = (i)=> words.forEach((w, k)=> w.classList.toggle("on", k === i));
-      // idle guidance while the mic waits: hand on the mic after 7 s (checklist: inactivity nudges at 7 s), the spoken cue again after 7 s more
+      /* SME: the mic line "इस बटन पर टैप कीजिए और वाक्य पढ़िए।" is spoken when the FIRST story page opens; on every other story page
+         it is only the INACTIVITY reminder - 7 s without a tap on the mic: the hand points at it and the line is said, and again
+         after each further 7 s of waiting. (First page: hand after 7 s, the line again 7 s later, as before.) */
+      const FIRST_PAGE = CARD.slides.find(s=> s.type === "STORY_MIC_READ") === slide;
       const armIdle = ()=>{ clearIdle(); if(phase !== "cue") return;
         idleT = setTimeout(()=>{ if(!alive() || phase !== "cue") return; pointNudgeAt(mic); state.nudgeUsed = true;
           SwiftPAL.emit("nudge_invoked", { slide_id: slide.id, phase: slide.phase, target: "mic" });
+          if(!FIRST_PAGE){ if(isPlaying){ armIdle(); return; } cue(); return; }
           idleT = setTimeout(()=>{ if(!alive() || phase !== "cue") return; cue(); }, 7000); }, 7000); };
       const cue = ()=>{ if(phase !== "cue") return; cap.classList.add("p2-cue"); mic.classList.add("mr-glow"); setSwMood("talk");
         play(promptSrc, ()=>{ if(alive() && phase === "cue"){ setSwMood("point"); armIdle(); } }); };
@@ -3360,7 +3361,7 @@ const SlideModules = {
           /* the HI02H04_L02_S01 story page ([L02-POP-AFTER-SENTENCE]): when the sentence has been heard the picture POPS (the 2 s pop)
              with its sound, and आगे lights only once the pop is over (2 s after the voice) */
           frame.classList.remove("p2-pop"); void frame.offsetWidth; frame.classList.add("p2-pop");   // SME: the pop is silent (no sfx after the sentence)
-          later(()=>{ if(!alive()) return; setNavActive(true); nav.classList.add("nav-call"); armNavNudge(); }, 2000);   // आगे lights and pulses
+          setNavActive(true); nav.classList.add("nav-call"); armNavNudge();   // SME: आगे lights (and pulses) the moment the voice is over
           SwiftPAL.emit("story_read_done", { slide_id: slide.id, phase: slide.phase, page: d.page_no || null,
             audio_replays: state.audioReplays, latency_ms: Date.now() - state.slideStart }); }); };
       mic.onclick = (e)=>{ if(e) e.stopPropagation();
@@ -3376,7 +3377,8 @@ const SlideModules = {
       };
       cap.onclick = ()=>{ if(phase !== "done" || document.body.classList.contains("vo-playing")) return; state.audioReplays++; speak(); };
       state.replayAudio = ()=>{ if(phase === "cue"){ clearIdle(); cue(); } else if(phase === "done") cap.onclick(); };
-      cue();
+      if(FIRST_PAGE) cue();
+      else { cap.classList.add("p2-cue"); mic.classList.add("mr-glow"); setSwMood("point"); armIdle(); }   // silent: the mic just pulses
     }
   },
 
@@ -3453,8 +3455,8 @@ const SlideModules = {
       /* SME hint ladder, per word (the misses on the clue in play):
            1st wrong  - "फिर से कोशिश कीजिए।" + the word's FIRST LETTER glows (it stays lit until the word is found)
            2nd wrong  - EVERY letter of the word lights up + "सही शब्द है ..." (hint_audio)
-           3rd wrong  - every letter lights up again (a fresh pulse) + "फिर से कोशिश कीजिए।"
-           4th wrong+ - the hand drags across the word, first letter -> last, until it is found
+           3rd wrong  - the hand drags across the word, first letter -> last + "फिर से कोशिश कीजिए।"
+           4th wrong+ - every other letter is DISABLED; the word stays highlighted, the hand keeps showing the drag
          The voices never block the board: the child can keep dragging while a hint speaks. */
       const say = (s, mood)=>{ if(!s) return; setSwMood(mood); play(s, ()=>{ if(alive()) setSwMood("point"); }); };
       const lightAll = (w)=>{ w.cells.forEach(c=>{ c.classList.remove("ws-hint"); void c.offsetWidth; c.classList.add("ws-hint"); }); };
@@ -3462,8 +3464,10 @@ const SlideModules = {
         SwiftPAL.emit("hint_shown", { slide_id: slide.id, word: w.word_hi, level: n });
         if(n === 1){ if(w.cells[0]) w.cells[0].classList.add("ws-hint1"); say(audioFor(slide, "hint1"), "tryagain"); return; }
         if(n === 2){ lightAll(w); say(src(w.hint_audio) || audioFor(slide, "hint1"), "hint"); return; }
-        if(n === 3){ lightAll(w); say(audioFor(slide, "hint1"), "hint"); return; }
-        setSwMood("hint"); runDemo(w); };
+        if(n === 3){ setSwMood("hint"); runDemo(w); say(audioFor(slide, "hint1"), "hint"); return; }            // SME: 3rd wrong - the hand shows the drag
+        // SME: 4th wrong - every other letter is disabled; the answer stays highlighted and the hand shows the drag
+        cells.flat().forEach(c=>{ if(!w.cells.includes(c) && !c.classList.contains("found")) c.classList.add("ws-off"); });
+        lightAll(w); setSwMood("hint"); runDemo(w); say(src(w.hint_audio) || audioFor(slide, "hint1"), "hint"); };
       // --- selection (drag, or tap-start + tap-end)
       let dragFrom = null, lastCell = null, anchor = null, painted = [];
       const live = document.createElement("div"); live.className = "ws-live"; rings.appendChild(live);
@@ -3505,16 +3509,21 @@ const SlideModules = {
           { transform: `translate(${p.x + Math.cos(a) * dd}px,${p.y + Math.sin(a) * dd + 12}px) scale(1) rotate(200deg)`, opacity: 0 }],
           { duration: 700, easing: "cubic-bezier(.2,.7,.4,1)", fill: "forwards" });
         an.onfinish = ()=> s.remove(); onLeave(()=> s.remove()); } };
-      const settle = (w, wasActive)=>{ fxBusy = false; state.hintActive = false;
-        if(pending.length){ const p = pending.shift(); later(()=>{ if(alive() && !state.locked) evaluate(p); }, 60); }
+      const settle = (w, wasActive)=>{ state.hintActive = false;
         w.cells.forEach(c=> c.classList.remove("ws-hint", "ws-hint1"));
         w.item.classList.add("done"); w.item.querySelector(".ws-slots").innerHTML = `<span class="ws-answer">${w.word_hi}</span>`;
         { const chip = document.createElement("span"); chip.className = "ws-chip"; chip.textContent = w.word_hi;
           chip.style.setProperty("--wc", w.color); tray.appendChild(chip); }
         syncDots();
         if(!active()){ fxBusy = true; play(src(w.word_audio), ()=>{ if(alive() && !state.locked) finish(); }); later(()=>{ if(alive() && !state.locked) finish(); }, 4000); return; }
-        const a = markActive(); palUp(a, true);   // the next clue is up at once - the child may start on it while the word is spoken
-        play(src(w.word_audio), ()=>{ if(!alive()) return; if(wasActive && a && !a.found) play(src(a.clue_audio), ()=>{}); }); };
+        /* SME: the answered card stays in place, its word in the box, for 1 s - then the next question comes up. The word is spoken
+           in that second; a drag made meanwhile is held (fxBusy) and checked once the next question is on screen. */
+        play(src(w.word_audio), ()=>{});
+        later(()=>{ if(!alive()) return;
+          fxBusy = false;
+          const a = markActive(); palUp(a, true);
+          if(wasActive && a && !a.found) play(src(a.clue_audio), ()=>{});
+          drain(); }, 1000); };   // the next question is up: check any word dragged meanwhile, in order
       const landBox = (w, wasActive)=>{ const box = w.item.querySelector(".ws-slots"), b = at(box);
         box.classList.add("ws-land"); later(()=> box.classList.remove("ws-land"), 600);
         starBurst({ x: b.x + b.w / 2, y: b.y + b.h / 2 }, 12, 70); playSfx("sfx_tring_big"); settle(w, wasActive); };
@@ -3561,6 +3570,7 @@ const SlideModules = {
         setSwMood("happy");
         SwiftPAL.emit("word_found", { slide_id: slide.id, word: w.word_hi, misses: w.miss, level: w.level });
         fxBusy = true; w.cells.forEach(c=> c.classList.remove("ws-hint", "ws-hint1"));
+        cells.flat().forEach(c=> c.classList.remove("ws-off"));   // the letters disabled by the 4th hint come back
         if(!CANDY && !HATFLY){ sfxCorrect(); settle(w, wasActive); return; }
         const n = w.cells.length, STEP = 200;
         w.cells.forEach((c, i)=> later(()=>{ c.classList.add("ws-candy");
@@ -3596,8 +3606,13 @@ const SlideModules = {
         rung(w, Math.min(Math.max(w.miss, w.level + 1), 4)); };
       /* SME: the child may drag ANY straight run of letters (across or down). Every release of 2+ letters is an ATTEMPT: a hidden
          word -> found; anything else -> wrong (wiggle + the next hint for the clue in play). A single tap marks a start letter. */
-      const pending = [];   // words released while the last one is still flying to its box: checked, in order, the moment it lands
-      const evaluate = (path)=>{ if(fxBusy){ if(path.length >= 2) pending.push(path); return; }
+      /* words released while the last one is flying / held: queued, and checked IN ORDER once the next question is up. A new release
+         joins the back of the queue while older ones still wait, so a word is never checked against the wrong question. */
+      const pending = [];
+      const drain = ()=>{ while(alive() && !state.locked && !fxBusy && pending.length) check(pending.shift()); };
+      const evaluate = (path)=>{ if(path.length >= 2 && (fxBusy || pending.length)){ pending.push(path); paint([]); drain(); return; }
+        check(path); };
+      const check = (path)=>{
         paint([]); if(path.length < 2) return;
         // SME: only the word of the question ON SCREEN counts - another hidden word dragged early is a wrong attempt
         const a = active();
@@ -3607,6 +3622,7 @@ const SlideModules = {
       let fxBusy = false;
       board.addEventListener("pointerdown", (e)=>{ if(state.locked) return;   // never blocked by a voice or by the found-word flight
         const c = cellAt(e.clientX, e.clientY); if(!c) return; e.preventDefault();
+        if(c.classList.contains("ws-off")) return;   // a letter disabled by the 4th hint
         if(demoT) pauseDemo();
         dragFrom = c; lastCell = c; dragId = e.pointerId; paint(anchor && anchor !== c ? pathBetween(anchor, c) : [c]);
         sfxTap();   // checklist: a sound for every interaction - picking up a letter
@@ -3803,11 +3819,16 @@ const SlideModules = {
             later(()=>{ kitClear(ok); ok.classList.remove("correct");
               ok.innerHTML = backHTML; ok.classList.add("ev-back"); }, 300);                                             // ...where the face becomes the meaning
             later(()=> ok.classList.remove("ev-flip"), 650); }, 1550); };
+        let seqTok = 0;   // a replay of the demo cancels the last run's pending answer-glow
         const seq = (done)=>{ setSwMood("teach"); resetReveal();
           say("prompt", ()=> say("explain_type", ()=>{
             showEv(); pulse(true);
             const afterEv = ()=>{ pulse(false); lines.forEach(l=> l.classList.remove("ev-now"));
-              if(ok) ok.classList.add("ev-ans-glow");   // SME: as the voice says "इसका मतलब है", the right answer pulses with a green glow
+              /* SME: the right answer pulses with a green glow - from the start of the answer line, or (data.answer_glow_ms, T7) from the
+                 moment the voice reaches the meaning ("तो ठोकर का मतलब हुआ ...") */
+              const runTok = (seqTok = (seqTok || 0) + 1);
+              if(ok && !d.answer_glow_ms) ok.classList.add("ev-ans-glow");
+              if(ok && d.answer_glow_ms) later(()=>{ if(runTok === seqTok && !ok.classList.contains("ev-back")) ok.classList.add("ev-ans-glow"); }, d.answer_glow_ms);
               say("explain_answer", ()=>{
                 if(ok) ok.classList.remove("ev-ans-glow");
                 flipReveal();

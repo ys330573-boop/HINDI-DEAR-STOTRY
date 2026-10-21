@@ -4690,4 +4690,12 @@ html.no-anim .ws-board .ws-cell.ws-hint1,html.no-anim .ws-board .ws-cell.ws-hint
 .sg-cover-title .w,body.loaded .sg-cover-title .w{animation:none !important;opacity:1 !important;translate:none !important;transform:none !important;}
 /* SME: a little more space between the title's words */
 .sg-cover-title{gap:2.8cqw !important;}
+/* G2-G5, 2nd wrong attempt: the answer being read glows softly (a light gold halo + a gentle lift), the others stay as they are */
+.stage .ev-qa .ev-right .q-row .opt-grid .opt-cell.opt-cell.opt-soft-glow{border-color:#FFD25A !important;background:#FFFBEA !important;z-index:2;
+  animation:optSoftGlow 1.2s ease-in-out infinite !important;}
+@keyframes optSoftGlow{0%,100%{transform:scale(1);box-shadow:0 0 0 3px rgba(255,210,90,.55),0 0 10px 2px rgba(255,200,60,.25);}
+  50%{transform:scale(1.03);box-shadow:0 0 0 4px rgba(255,210,90,.75),0 0 20px 6px rgba(255,200,60,.4);}}
+html.no-anim .ev-qa .opt-cell.opt-soft-glow{animation:none !important;box-shadow:0 0 0 3px rgba(255,210,90,.7) !important;}
+/* P1/P2, 4th wrong attempt: every letter except the answer's is disabled - faded and untouchable */
+.ws-board .ws-cell.ws-off{opacity:.32;filter:grayscale(.6);pointer-events:none;transform:scale(.94);transition:opacity .3s ease,transform .3s ease;}
 
