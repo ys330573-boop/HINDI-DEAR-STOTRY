@@ -4711,4 +4711,31 @@ html.no-anim .ev-qa .opt-cell.opt-soft-glow{animation:none !important;box-shadow
 /* checklist: wrong feedback is never red - a wrong word in the word search wiggles on a soft lavender-grey tile, its letters stay navy */
 .ws-board .ws-cell.ws-wrong{background:#ECEAF6 !important;border-color:#BCB7DA !important;box-shadow:0 4px 0 #CFCBE6 !important;}
 .ws-board .ws-cell.ws-wrong .ws-ch{color:#1E2350 !important;}
+/* G2-G5, 2nd wrong attempt: the answer being read also has its TEXT highlighted (the read-along orange, a gentle lift) */
+.stage .ev-qa .opt-cell.opt-soft-glow .ev-opt-lbl{color:#E86A00 !important;display:inline-block;animation:optTextPop .35s ease-out both;}
+@keyframes optTextPop{from{transform:scale(.92);}60%{transform:scale(1.08);}to{transform:scale(1.04);}}
+/* the 4th hint dims a found word too (its green tiles fade like every other letter) */
+.ws-board .ws-cell.found.ws-off{opacity:.32 !important;filter:grayscale(.7) !important;animation:none !important;}
+/* ===== the cover deer BLINKS: two fur-coloured eyelids over its eyes (placed in % of the cover picture, which fills its box), closing
+   for a quick blink every few seconds - a double blink now and then. The layer sits exactly on the picture. ===== */
+.start-gate .sg-frame .sg-eyes{position:absolute;left:0;right:0;top:8.8cqw;height:100%;z-index:1;pointer-events:none;}
+.sg-eyes .lid{position:absolute;display:block;border-radius:50% 50% 46% 46% / 60% 60% 40% 40%;
+  background:linear-gradient(180deg,#FFD57D 0%,#FED08C 78%,#C98A4A 88%,#3B2A20 100%);
+  transform-origin:50% 0;transform:scaleY(0);animation:deerBlink 4.2s ease-in-out infinite;}
+.sg-eyes .lid.l{left:54.0%;top:28.6%;width:3.75%;height:8.0%;}
+.sg-eyes .lid.r{left:61.2%;top:33.6%;width:2.15%;height:6.6%;animation-delay:.02s;}
+@keyframes deerBlink{0%,86%,100%{transform:scaleY(0);}89%{transform:scaleY(1);}92%{transform:scaleY(0);}
+  95%{transform:scaleY(0);}97.5%{transform:scaleY(1);}99.5%{transform:scaleY(0);}}
+html.no-anim .sg-eyes .lid{animation:none;}
+.sg-eyes .lid{border-radius:50%;background:radial-gradient(120% 90% at 50% 20%,#FAC987 0%,#F2B06A 70%,#E39B55 100%);
+  border-bottom:2px solid #3B2418;box-sizing:border-box;box-shadow:0 1px 0 rgba(59,36,24,.35);}
+.sg-eyes .lid.l{left:54.05%;top:28.8%;width:3.55%;height:7.2%;}
+.sg-eyes .lid.r{left:61.3%;top:34.4%;width:1.85%;height:5.7%;}
+.sg-eyes .lid{background:radial-gradient(130% 100% at 50% 15%,#FFD996 0%,#FBC983 60%,#F2B472 100%);filter:blur(.35px);}
+/* SME pick: "Soft Smile Arch" - a gentle smile-shaped curve: वह and दिया tilt 7deg and sit a little lower, हँस stays on top. Still (no motion). */
+.sg-cover-title{align-items:flex-start !important;}
+.sg-cover-title .w{transform-origin:50% 100%;}
+.sg-cover-title .w:nth-child(1){rotate:-7deg !important;margin-top:1.3cqw !important;}
+.sg-cover-title .w:nth-child(2){rotate:0deg !important;margin-top:0 !important;}
+.sg-cover-title .w:nth-child(3){rotate:7deg !important;margin-top:1.3cqw !important;}
 
