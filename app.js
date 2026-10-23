@@ -3748,6 +3748,7 @@ const SlideModules = {
       const wrap = document.createElement("div"); wrap.className = "ev-qa";
       const card = evPassage(d.passage); const lines = card._lines;
       if(d.auto) card.classList.add("with-lens");   // SME: the magnifying glass reads along in the tutorial demos (T7, T8) only
+      if(d.auto || d.ladder) wrap.classList.add("ev-row");   // T7/T8 + G2-G5: picture + sentences on the LEFT, the options stacked on the RIGHT
       const right = document.createElement("div"); right.className = "ev-right";
       wrap.appendChild(card); wrap.appendChild(right); host.appendChild(wrap);
       const chip = evQtypeChip(qt, d.chip_hi, d.chip_icon); chip.style.cursor = "pointer";
@@ -3769,7 +3770,7 @@ const SlideModules = {
           options: d.options, optionRenderer, mastery: d.mastery === true });
         // checklist (guided): the options come on screen ONE BY ONE, each with a soft pop sound (no option voice)
         right.querySelectorAll(".opt-cell").forEach((c, i)=>{
-          c.animate([{ opacity: 0, transform: "translateY(18px) scale(.6)" }, { opacity: 1, transform: "translateY(-4px) scale(1.06)", offset: .7 },
+          c.animate([{ opacity: 0, transform: "translateX(40px) scale(.6)" }, { opacity: 1, transform: "translateX(-4px) scale(1.06)", offset: .7 },
             { opacity: 1, transform: "none" }], { duration: 420, delay: 500 + i * 380, easing: "ease-out", fill: "backwards" });
           later(()=> playSfx("sfx_pop"), 500 + i * 380); });
       } else {
@@ -3811,6 +3812,14 @@ const SlideModules = {
         const ok = right.querySelector('.opt-cell[data-ok="1"]');
         const okFront = ok ? ok.innerHTML : "";
         const backHTML = d.meaning ? `<span class="ev-opt-lbl"><b class="evm-word">${d.meaning.word_hi}</b><span class="evm-dash">—</span>${d.meaning.meaning_hi}</span>` : null;
+        /* the options wait off-screen until the magnifying glass has read the sentences, then come in ONE BY ONE with a pop */
+        const optCells = ()=> Array.from(right.querySelectorAll(".opt-cell"));
+        const hideOpts = ()=> optCells().forEach(c=>{ c.getAnimations().forEach(a=> a.cancel()); c.classList.add("ev-wait"); });
+        const popOpts = (tok, gap = 450, sfx = ()=> "sfx_pop")=> optCells().forEach((c, i)=> later(()=>{ if(tok !== seqTok || !alive()) return;
+          c.classList.remove("ev-wait"); playSfx(sfx(i));
+          c.animate([{ opacity: 0, transform: "translateX(40px) scale(.6)" }, { opacity: 1, transform: "translateX(-4px) scale(1.06)", offset: .7 },
+            { opacity: 1, transform: "none" }], { duration: 420, easing: "ease-out" }); }, i * gap));
+        hideOpts();
         const resetReveal = ()=>{ right.querySelectorAll(".opt-cell").forEach(c=> c.classList.remove("opt-dim", "ev-leave"));
           if(!ok) return; kitClear(ok);
           ok.classList.remove("correct", "ev-flip", "ev-back", "ev-solo", "ev-ans-glow"); ok.innerHTML = okFront; };
@@ -3824,13 +3833,27 @@ const SlideModules = {
               ok.innerHTML = backHTML; ok.classList.add("ev-back"); }, 300);                                             // ...where the face becomes the meaning
             later(()=> ok.classList.remove("ev-flip"), 650); }, 1550); };
         let seqTok = 0;   // a replay of the demo cancels the last run's pending answer-glow
-        const seq = (done)=>{ setSwMood("teach"); resetReveal();
-          say("prompt", ()=> say("explain_type", ()=>{
+        /* data.options_after_question (T7): the new word is NOT marked at first - it lights up the moment the question
+           VO starts; when the question ends the three options pop in one by one (ting, ting, ting, no option VO), and
+           only then the next line (explain_type) plays. Otherwise the options wait for the magnifying glass (T8). */
+        const qFirst = d.options_after_question === true, OPT_GAP = 600;
+        const newWord = (on)=>{ card.classList.toggle("ev-new-wait", !on); card.classList.toggle("ev-new-hl", on); };
+        if(qFirst) newWord(false);
+        const sayPrompt = (cb)=>{ if(!qFirst){ say("prompt", cb); return; }
+          const tok = seqTok;
+          later(()=>{ if(tok !== seqTok || !alive()) return;   // a short beat on the plain screen first (picture + sentences + question)
+          newWord(true);
+          say("prompt", ()=>{ const n = optCells().length;
+            popOpts(tok, OPT_GAP, i=> "sfx_tring_" + Math.min(i + 1, 6));
+            later(()=>{ if(tok === seqTok && alive()) cb(); }, (n - 1) * OPT_GAP + 700); }); }, 800); };
+        const seq = (done)=>{ setSwMood("teach"); resetReveal(); hideOpts(); seqTok++; if(qFirst) newWord(false);
+          sayPrompt(()=> say("explain_type", ()=>{
             showEv(); pulse(true);
             const afterEv = ()=>{ pulse(false); lines.forEach(l=> l.classList.remove("ev-now"));
               /* SME: the right answer pulses with a green glow - from the start of the answer line, or (data.answer_glow_ms, T7) from the
                  moment the voice reaches the meaning ("तो ठोकर का मतलब हुआ ...") */
               const runTok = (seqTok = (seqTok || 0) + 1);
+              if(!qFirst) popOpts(runTok);
               if(ok && !d.answer_glow_ms) ok.classList.add("ev-ans-glow");
               if(ok && d.answer_glow_ms) later(()=>{ if(runTok === seqTok && !ok.classList.contains("ev-back")) ok.classList.add("ev-ans-glow"); }, d.answer_glow_ms);
               say("explain_answer", ()=>{
@@ -5299,6 +5322,15 @@ function mountSlide(idx){
 
   // header prompt
   $("promptText").textContent = slide.prompt_hi || "";
+  /* kid-friendly "?": the trailing question mark is drawn in Chewy, same navy as the text */
+  (function(){
+    const pt = $("promptText"), t = slide.prompt_hi || "";
+    if (/\?\s*$/.test(t)) {
+      pt.textContent = t.replace(/\?\s*$/, "");
+      const q = document.createElement("span"); q.className = "q-mark"; q.textContent = "?";
+      pt.appendChild(q);
+    }
+  })();
   /* [2026-08-31 compact-title] auto-shrink a prompt that wraps to 2 lines (e.g. T4 माफ़ करें) so it
      doesn't fill the band edge-to-edge — see the matching .compact rule in style.css. Wording/VO
      untouched.

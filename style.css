@@ -4739,3 +4739,26 @@ html.no-anim .sg-eyes .lid{animation:none;}
 .sg-cover-title .w:nth-child(2){rotate:0deg !important;margin-top:0 !important;}
 .sg-cover-title .w:nth-child(3){rotate:7deg !important;margin-top:1.3cqw !important;}
 
+/* kid-friendly question mark (Chewy, "?" only, embedded subset) - same colour as the question text */
+@font-face{font-family:"ChewyQ";font-style:normal;font-weight:400;font-display:block;src:url(data:font/woff2;base64,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) format("woff2");}
+.prompt-text .q-mark{font-family:"ChewyQ","Baloo 2",sans-serif;font-weight:400;color:inherit;font-size:1.12em;line-height:1;margin-left:.06em;display:inline-block;}
+
+/* T7/T8 (tutorial demos): picture + sentences on the left, the three options stacked vertically on the right */
+.stage .ev-qa.ev-row{flex-direction:row !important;align-items:center !important;justify-content:center !important;gap:44px !important;top:0;}
+.stage .ev-qa.ev-row .ev-passage{width:600px !important;max-width:600px !important;}
+.stage .ev-qa.ev-row .ev-pic{width:552px !important;height:310px !important;}
+.stage .ev-qa.ev-row .ev-right{width:460px !important;flex:0 0 460px;}
+.stage .ev-qa.ev-row .ev-right .opt-grid.cols-1{flex-direction:column !important;align-items:center !important;justify-content:center !important;}
+.stage .ev-qa.ev-row .ev-right .q-row .opt-grid .opt-cell.opt-cell{width:420px !important;margin:18px 0 !important;height:88px !important;
+  transition:height .45s ease,margin .45s ease,opacity .35s ease,width .45s ease;}
+.stage .ev-qa.ev-row .ev-right .q-row .opt-grid .opt-cell.opt-cell.ev-solo{width:460px !important;}
+.stage .ev-qa.ev-row .ev-right .q-row .opt-grid .opt-cell.opt-cell.ev-leave{width:420px !important;max-width:none !important;flex-basis:auto !important;
+  height:0 !important;margin:0 !important;opacity:0 !important;}
+.stage .ev-qa .ev-right .opt-cell.ev-wait{visibility:hidden;}
+
+/* T7: the new word (ठोकर) is plain at first, then lights up with a yellow marker + a soft pop when the question VO starts */
+.stage .ev-qa .ev-passage.ev-new-wait .ev-new,.stage .ev-qa .ev-passage.ev-new-wait .ev-new .ev-w:not(.on){color:inherit !important;}
+.stage .ev-qa .ev-passage.ev-new-hl .ev-new{color:#E86A00 !important;background:none !important;box-shadow:none !important;display:inline-block;animation:evNewPop .55s ease-out both;}
+@keyframes evNewPop{0%{transform:scale(1);}45%{transform:scale(1.22);}100%{transform:scale(1);}}
+html.no-anim .stage .ev-qa .ev-passage.ev-new-hl .ev-new{animation:none;}
+
