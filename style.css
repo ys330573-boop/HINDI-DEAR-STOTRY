@@ -4762,3 +4762,13 @@ html.no-anim .sg-eyes .lid{animation:none;}
 @keyframes evNewPop{0%{transform:scale(1);}45%{transform:scale(1.22);}100%{transform:scale(1);}}
 html.no-anim .stage .ev-qa .ev-passage.ev-new-hl .ev-new{animation:none;}
 
+/* S01: story credit line under the blue teaching frame (like the reference) */
+.tut-credit{position:absolute;white-space:nowrap;pointer-events:none;z-index:3;
+  font-family:var(--font-hi);font-size:13px;font-weight:600;line-height:1.2;color:#6B7A93;}
+
+/* 2nd wrong (G2-G5): the glowing answer is read WORD BY WORD - the label stays navy, only the word being spoken turns orange */
+.stage .ev-qa .opt-cell.opt-soft-glow .ev-opt-lbl{color:#0B3D8C !important;animation:none !important;}
+.stage .ev-qa .opt-cell .ev-opt-lbl .ow{display:inline-block;transition:color .12s ease;}
+.stage .ev-qa .opt-cell.opt-soft-glow .ev-opt-lbl .ow.on{color:#E86A00 !important;animation:optTextPop .3s ease-out both;}
+html.no-anim .stage .ev-qa .opt-cell .ev-opt-lbl .ow.on{animation:none !important;}
+

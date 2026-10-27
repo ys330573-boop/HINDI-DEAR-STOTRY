@@ -40,7 +40,7 @@
       "File": "assets/Audio/vo2_mic_read.ogg",
       "Speaker": "Swiftee",
       "Hindi script": "इस बटन पर टैप कीजिए और वाक्य पढ़िए।",
-      "Duration (s)": 2.74,
+      "Duration (s)": 3.08,
       "Highlight cues": "",
       "Note": ""
     },
@@ -66,7 +66,7 @@
       "File": "assets/Audio/vo2_mic_read.ogg",
       "Speaker": "Swiftee",
       "Hindi script": "इस बटन पर टैप कीजिए और वाक्य पढ़िए।",
-      "Duration (s)": 2.74,
+      "Duration (s)": 3.08,
       "Highlight cues": "",
       "Note": ""
     },
@@ -92,7 +92,7 @@
       "File": "assets/Audio/vo2_mic_read.ogg",
       "Speaker": "Swiftee",
       "Hindi script": "इस बटन पर टैप कीजिए और वाक्य पढ़िए।",
-      "Duration (s)": 2.74,
+      "Duration (s)": 3.08,
       "Highlight cues": "",
       "Note": ""
     },
@@ -118,7 +118,7 @@
       "File": "assets/Audio/vo2_mic_read.ogg",
       "Speaker": "Swiftee",
       "Hindi script": "इस बटन पर टैप कीजिए और वाक्य पढ़िए।",
-      "Duration (s)": 2.74,
+      "Duration (s)": 3.08,
       "Highlight cues": "",
       "Note": ""
     },
@@ -144,7 +144,7 @@
       "File": "assets/Audio/vo2_mic_read.ogg",
       "Speaker": "Swiftee",
       "Hindi script": "इस बटन पर टैप कीजिए और वाक्य पढ़िए।",
-      "Duration (s)": 2.74,
+      "Duration (s)": 3.08,
       "Highlight cues": "",
       "Note": ""
     },
@@ -170,7 +170,7 @@
       "File": "assets/Audio/vo2_mic_read.ogg",
       "Speaker": "Swiftee",
       "Hindi script": "इस बटन पर टैप कीजिए और वाक्य पढ़िए।",
-      "Duration (s)": 2.74,
+      "Duration (s)": 3.08,
       "Highlight cues": "",
       "Note": ""
     },
@@ -196,7 +196,7 @@
       "File": "assets/Audio/vo2_mic_read.ogg",
       "Speaker": "Swiftee",
       "Hindi script": "इस बटन पर टैप कीजिए और वाक्य पढ़िए।",
-      "Duration (s)": 2.74,
+      "Duration (s)": 3.08,
       "Highlight cues": "",
       "Note": ""
     },
@@ -209,7 +209,7 @@
       "File": "assets/Audio/vo2_st07.ogg",
       "Speaker": "Swiftee",
       "Hindi script": "बंदर ने पैर सहलाया, पर वह चुप नहीं हुआ।",
-      "Duration (s)": 3.4,
+      "Duration (s)": 3.25,
       "Highlight cues": "word-by-word highlight, each word lit when the voice reaches it",
       "Note": ""
     },
@@ -222,7 +222,7 @@
       "File": "assets/Audio/vo2_mic_read.ogg",
       "Speaker": "Swiftee",
       "Hindi script": "इस बटन पर टैप कीजिए और वाक्य पढ़िए।",
-      "Duration (s)": 2.74,
+      "Duration (s)": 3.08,
       "Highlight cues": "",
       "Note": ""
     },
@@ -235,7 +235,7 @@
       "File": "assets/Audio/vo2_st08.ogg",
       "Speaker": "Swiftee",
       "Hindi script": "भालू दादा ने गोद में उठाया, पर वह चुप नहीं हुआ।",
-      "Duration (s)": 4.44,
+      "Duration (s)": 4.1,
       "Highlight cues": "word-by-word highlight, each word lit when the voice reaches it",
       "Note": ""
     },
@@ -248,7 +248,7 @@
       "File": "assets/Audio/vo2_mic_read.ogg",
       "Speaker": "Swiftee",
       "Hindi script": "इस बटन पर टैप कीजिए और वाक्य पढ़िए।",
-      "Duration (s)": 2.74,
+      "Duration (s)": 3.08,
       "Highlight cues": "",
       "Note": ""
     },
@@ -274,7 +274,7 @@
       "File": "assets/Audio/vo2_mic_read.ogg",
       "Speaker": "Swiftee",
       "Hindi script": "इस बटन पर टैप कीजिए और वाक्य पढ़िए।",
-      "Duration (s)": 2.74,
+      "Duration (s)": 3.08,
       "Highlight cues": "",
       "Note": ""
     },
@@ -300,7 +300,7 @@
       "File": "assets/Audio/vo2_mic_read.ogg",
       "Speaker": "Swiftee",
       "Hindi script": "इस बटन पर टैप कीजिए और वाक्य पढ़िए।",
-      "Duration (s)": 2.74,
+      "Duration (s)": 3.08,
       "Highlight cues": "",
       "Note": ""
     },
@@ -321,12 +321,25 @@
       "#": 25,
       "Section": "Teaching",
       "Screen": "T7 - ‘ठोकर’ का क्या मतलब है?",
-      "When it plays": "Question - plays when the page opens",
-      "VO ID": "vo2_t7_q",
-      "File": "assets/Audio/vo2_t7_q.ogg",
+      "When it plays": "First VO - plays when the page opens (before the question)",
+      "VO ID": "vo2_t7_first",
+      "File": "assets/Audio/vo2_t7_first.ogg",
       "Speaker": "Swiftee",
-      "Hindi script": "‘ठोकर’ का क्या मतलब है?",
-      "Duration (s)": 1.65,
+      "Hindi script": "(new vo.wav)",
+      "Duration (s)": 3.31,
+      "Highlight cues": "",
+      "Note": ""
+    },
+    {
+      "#": 25,
+      "Section": "Teaching",
+      "Screen": "T7 - ‘ठोकर’ का क्या मतलब है?",
+      "When it plays": "Question - plays when the page opens",
+      "VO ID": "vo2_t7_intro",
+      "File": "assets/Audio/vo2_t7_intro.ogg",
+      "Speaker": "Swiftee",
+      "Hindi script": "सोचिए! ‘ठोकर’ का क्या मतलब है?",
+      "Duration (s)": 2.73,
       "Highlight cues": "",
       "Note": ""
     },
@@ -430,7 +443,7 @@
       "File": "assets/Audio/vo2_st07.ogg",
       "Speaker": "Swiftee",
       "Hindi script": "बंदर ने पैर सहलाया, पर वह चुप नहीं हुआ।",
-      "Duration (s)": 3.4,
+      "Duration (s)": 3.25,
       "Highlight cues": "magnifying glass + word-by-word highlight",
       "Note": ""
     },
