@@ -4772,3 +4772,43 @@ html.no-anim .stage .ev-qa .ev-passage.ev-new-hl .ev-new{animation:none;}
 .stage .ev-qa .opt-cell.opt-soft-glow .ev-opt-lbl .ow.on{color:#E86A00 !important;animation:optTextPop .3s ease-out both;}
 html.no-anim .stage .ev-qa .opt-cell .ev-opt-lbl .ow.on{animation:none !important;}
 
+/* T7/T8/G2-G5: bigger passage sentences in the picture box */
+.stage .ev-qa.ev-row .ev-passage .ev-line{font-size:28px !important;line-height:1.45;}
+/* T7/T8/G2-G5: bigger option text */
+.stage .ev-qa.ev-row .ev-right .opt-cell .ev-opt-lbl{font-size:32px !important;}
+.stage .ev-qa.ev-row .ev-right .opt-cell.ev-back .ev-opt-lbl{font-size:29px !important;}
+/* P1/P2 image hint (1st wrong): the word's picture is HELD above the hat (no rise-and-sink cycle) with a gentle float */
+.ws-cap.halo.pic-hold .ws-pal-ch.is-pic img{animation:wsPicHoldIn .55s cubic-bezier(.3,.9,.4,1) both,wsPicHold 2.6s ease-in-out .55s infinite !important;opacity:1;filter:none;}
+@keyframes wsPicHoldIn{0%{opacity:0;transform:translateY(42px) scale(.1);filter:blur(5px);}70%{opacity:1;transform:translateY(-8px) scale(1.05);filter:blur(0);}100%{opacity:1;transform:translateY(0) scale(1);filter:blur(0);}}
+@keyframes wsPicHold{0%,100%{opacity:1;transform:translateY(0) scale(1);filter:blur(0);}50%{opacity:1;transform:translateY(-6px) scale(1);filter:blur(0);}}
+html.no-anim .ws-cap.halo.pic-hold .ws-pal-ch.is-pic img{animation:none !important;opacity:1;transform:none;filter:none;}
+/* P1/P2 inactivity: the UNANSWERED question's text pulses softly; an answered card never does */
+.ws-wrap.ws-idle .ws-clue.active:not(.done) .ws-ctext{display:inline-block;animation:wsIdleText 1.6s ease-in-out infinite;}
+.ws-wrap .ws-clue.done .ws-ctext{animation:none !important;}
+@keyframes wsIdleText{0%,100%{transform:scale(1);}50%{transform:scale(1.045);}}
+html.no-anim .ws-wrap.ws-idle .ws-clue.active .ws-ctext{animation:none !important;}
+/* P1/P2 inactivity: every highlighted (coloured) letter of a word NOT yet found pulses softly; a found word's letters never do */
+.ws-wrap.ws-idle .ws-board .ws-cell.ws-first-c:not(.found):not(.ws-hint):not(.ws-hint1):not(.ws-cap-glow):not(.ws-off){animation:wsIdleCell 1.6s ease-in-out infinite;z-index:2;}
+.ws-wrap .ws-board .ws-cell.found.ws-first-c{animation-iteration-count:1;}
+@keyframes wsIdleCell{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+html.no-anim .ws-wrap.ws-idle .ws-board .ws-cell.ws-first-c{animation:none !important;}
+/* P1/P2: no magic wand (nor its zigzag line and sparkles) */
+.ws-cap .cap-wand,.ws-cap .ws-zig,.ws-cap .ws-halo{display:none !important;}
+/* P1/P2: the picture is shown ONLY as the wrong-attempt hint (pic-hold) - never on its own loop */
+.ws-cap.halo:not(.pic-hold) .ws-pal-ch.is-pic img{animation:none !important;opacity:0 !important;}
+
+/* [FLN end screen] = the FLN repo's (MTG2A04_L03_S01) end screen. Swiftee from the standard end-animation sheets, lip-synced:
+   the same 330 x 465 footprint; the art may reach past the box (arms up) and is never clipped by it */
+.end-screen .end-sw{position:relative;width:330px;height:465px;flex:0 0 auto;z-index:2;overflow:visible;pointer-events:none;}
+.end-screen .end-sw.in{animation:endSwIn .5s cubic-bezier(.22,1,.36,1) both;}
+@keyframes endSwIn{from{opacity:0;transform:translateY(18px) scale(.96);}to{opacity:1;transform:none;}}
+.end-screen .end-sw-art{position:absolute;background-repeat:no-repeat;will-change:background-position;}
+/* its arrow button: the yellow pill with a white rim and the "→" glyph (in place of the btn-finish artwork) */
+.end-screen .end-btn{width:auto !important;height:auto !important;min-width:0 !important;padding:14px 44px !important;
+  font-family:var(--font-hi);font-weight:800;font-size:28px !important;color:var(--navy);background:#FCB717 !important;
+  border:4.54px solid #FFFFFF !important;border-radius:44.56px !important;
+  box-shadow:0 6px 6px rgba(0,0,0,.25), inset 4.54px 9.09px 12.12px rgba(255,255,255,.25), inset -4.54px -4.54px 13.63px rgba(116,60,0,.19) !important;}
+.end-screen .end-btn:active{transform:translateY(3px);box-shadow:0 3px 3px rgba(0,0,0,.25), inset 4.54px 9.09px 12.12px rgba(255,255,255,.25), inset -4.54px -4.54px 13.63px rgba(116,60,0,.19) !important;}
+.end-screen .end-btn::before{content:none !important;}
+.end-screen .end-btn::after{content:"\2192" !important;display:block !important;font-size:52px !important;line-height:1 !important;color:var(--navy) !important;background:none !important;width:auto !important;height:auto !important;}
+
