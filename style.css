@@ -4812,3 +4812,7 @@ html.no-anim .ws-wrap.ws-idle .ws-board .ws-cell.ws-first-c{animation:none !impo
 .end-screen .end-btn::before{content:none !important;}
 .end-screen .end-btn::after{content:"\2192" !important;display:block !important;font-size:52px !important;line-height:1 !important;color:var(--navy) !important;background:none !important;width:auto !important;height:auto !important;}
 
+/* SME: bigger story text under the picture on T7, T8 and G2-G5 (was 24px) */
+.ev-qa.ev-row .ev-text{font-size:30px;line-height:1.5;}
+.ev-qa.ev-row .ev-text .ev-line{margin:3px auto;}
+
