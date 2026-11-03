@@ -884,8 +884,8 @@
       "VO ID": "vo2_ws1_q",
       "File": "assets/Audio/vo2_ws1_q.ogg",
       "Speaker": "Swiftee",
-      "Hindi script": "कहानी में आए शब्दों को पहचानकर, इस वर्ग पहेली में ढूँढ़िए और उन पर गोला लगाइए।",
-      "Duration (s)": 6.26,
+      "Hindi script": "कहानी में आए शब्दों को पहचानकर, इस वर्ग पहेली में ढूँढ़िए।",
+      "Duration (s)": 4.68,
       "Highlight cues": "",
       "Note": ""
     },
@@ -1066,8 +1066,8 @@
       "VO ID": "vo2_ws2_q",
       "File": "assets/Audio/vo2_ws2_q.ogg",
       "Speaker": "Swiftee",
-      "Hindi script": "अब कुछ नए शब्दों का अर्थ समझकर, सही शब्द इस वर्ग पहेली में ढूँढ़िए और उन पर गोला लगाइए।",
-      "Duration (s)": 6.64,
+      "Hindi script": "(not used - P2 now plays vo2_ws1_q) अब कुछ नए शब्दों का अर्थ समझकर, सही शब्द इस वर्ग पहेली में ढूँढ़िए।",
+      "Duration (s)": 5.2,
       "Highlight cues": "",
       "Note": ""
     },

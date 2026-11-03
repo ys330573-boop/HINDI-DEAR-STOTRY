@@ -120,7 +120,7 @@ function _resumeVoiceAudio(){
    AUDIO_BUILD changes whenever the game is rebuilt, so every clip URL changes with it and the
    browser has to fetch. It is added in the two places every clip passes through, rather than at
    the ~20 sites that spell out a path, so nothing can be missed. */
-const AUDIO_BUILD = "20261102110000";
+const AUDIO_BUILD = "20261103190000";
 /* [H11-187] ASSET PRELOADER - every file the game uses is fetched ONCE, behind the loading bar,
    before the Play button can appear.
    - ONE DOWNLOAD PER FILE. The bar, the voice decoder, the picture warm-up and the gate / landing /
@@ -3627,6 +3627,7 @@ const SlideModules = {
         w.cells.forEach((c, k)=>{ c.classList.add("found"); c.style.setProperty("--wc", w.color); c.style.setProperty("--k", k); });   // --k: the wave-hop order
         drawRing(w);
         capHide();
+        if(picWord === w) picOff();   // SME: the answer is found - its picture goes back into the hat
         setSwMood("happy");
         SwiftPAL.emit("word_found", { slide_id: slide.id, word: w.word_hi, misses: w.miss, level: w.level });
         fxBusy = true; w.cells.forEach(c=> c.classList.remove("ws-hint", "ws-hint1"));
@@ -3752,8 +3753,22 @@ const SlideModules = {
       /* IMAGE HINT (1st wrong): the word's picture comes out of the hat and STAYS - through a correct answer too, until the next
          question's picture takes its place (or the next hint replaces it) */
       let picWord = null;
-      function picOn(w){ picWord = w; palUp(w, false); cap.classList.add("pic-hold"); }
-      function picOff(){ if(!picWord) return; picWord = null; cap.classList.remove("pic-hold"); if(!capOn) palDown(); }
+      /* SME: the hat is STILL - it moves only while an item comes out of it (1.1 s, in step with the picture's rise) or goes back
+         in (0.9 s, in step with its sink): .emerge / .return, a soft squash-and-stretch from the hat's base */
+      const OUT_MS = 1100, IN_MS = 900;
+      let moveT = null, sinkT = null;
+      const hatMove = (cls, ms)=>{ cap.classList.remove("emerge", "return"); void cap.offsetWidth; cap.classList.add(cls);
+        clearTimeout(moveT); moveT = setTimeout(()=> cap.classList.remove(cls), ms); };
+      onLeave(()=>{ clearTimeout(moveT); clearTimeout(sinkT); });
+      function picOn(w){ const fresh = picWord !== w || cap.classList.contains("pic-sink") || !cap.classList.contains("pic-hold");
+        clearTimeout(sinkT); cap.classList.remove("pic-sink");
+        picWord = w; palUp(w, false); cap.classList.add("pic-hold");
+        if(fresh) hatMove("emerge", OUT_MS); }
+      /* SME: the picture never just disappears - it goes back INTO the hat (the reverse of how it came out); then the hat is still */
+      function picOff(){ if(!picWord) return; picWord = null;
+        cap.classList.add("pic-sink"); hatMove("return", IN_MS);
+        clearTimeout(sinkT); sinkT = setTimeout(()=>{ if(picWord) return;
+          cap.classList.remove("pic-hold", "pic-sink"); if(!capOn) palDown(); }, IN_MS); }
       /* P1 (story pictures): the "Wand Halo + Ghost Grow" show - while the picture is up the wand circles round and round over the
          hat with a ring of gold sparkles, and the picture grows from a tiny, faint, blurry ghost into a full, sharp picture (CSS) */
       if(words.some(w=> w.pal_img)){ cap.classList.add("halo");
