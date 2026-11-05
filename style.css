@@ -4857,3 +4857,6 @@ html.no-anim .ws-cap.halo.pic-hold .ws-pal-ch.is-pic img{animation:none !importa
 html.no-anim .ws-cap.emerge .cap-svg,html.no-anim .ws-cap.return .cap-svg{animation:none !important;}
 html.no-anim .ws-cap.halo.pic-hold.pic-sink .ws-pal-ch.is-pic img{animation:none !important;opacity:0 !important;}
 
+/* G1 (SME): the picture's boxes are not tappable while any VO speaks - only once it is over (same lock as every other mechanic) */
+body.vo-lock .tis-box,body.vo-lock .tis-frame,body.vo-lock .tis-hot{pointer-events:none !important;}
+
