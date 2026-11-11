@@ -120,7 +120,7 @@ function _resumeVoiceAudio(){
    AUDIO_BUILD changes whenever the game is rebuilt, so every clip URL changes with it and the
    browser has to fetch. It is added in the two places every clip passes through, rather than at
    the ~20 sites that spell out a path, so nothing can be missed. */
-const AUDIO_BUILD = "20261105120000";
+const AUDIO_BUILD = "20261111200000";
 /* [H11-187] ASSET PRELOADER - every file the game uses is fetched ONCE, behind the loading bar,
    before the Play button can appear.
    - ONE DOWNLOAD PER FILE. The bar, the voice decoder, the picture warm-up and the gate / landing /
@@ -430,11 +430,40 @@ function _duckScene(on){
     }catch(e){}
   });
 }
+/* [SPEAKER GREY] the speaker is GREY - one still state, no throb, no moving sound waves, no taps - until the voice-over is
+   COMPLETE, on every screen (as the reference repo ys330573-boop/FLN, speakerState). Following each single clip (vo-lock) let it
+   flash blue in every gap of a sequence; body.spk-busy covers the WHOLE sequence: a clip playing, a module's silent step
+   (state.spkHold: the mic reading the words, the T7/T8 demo, a found word flying into its box), and 700 ms of quiet after
+   that (bridges the gaps between clips). A page opens grey and stays grey until its opening voice is over; a page that says
+   nothing on opening (S02-S11 wait for the mic tap) lets go after 2.5 s. The cover follows its greeting only. */
+(function speakerState(){
+  let quietSince = 0, page = null, heard = false, openAt = 0, intro = false;
+  const tick = ()=>{
+    try{
+      if(document.hidden) return;   // [TAB-AWAY] frozen with the rest of the game
+      const st = (typeof state !== "undefined") ? state : null;
+      const seq = !!((typeof isPlaying !== "undefined" && isPlaying) ||
+        (st && (st.revealing || st.demoRunning || (st.spkHold && st.spkHold === st.mountId))));
+      const now = performance.now();
+      const onCover = document.body.classList.contains("is-start");
+      const pg = st ? st.mountId : null;
+      if(pg !== page && !onCover){ page = pg; heard = false; openAt = now; intro = page != null; }
+      if(onCover) intro = false;
+      if(seq){ quietSince = 0; heard = true; } else if(!quietSince) quietSince = now;
+      const settled = !seq && now - quietSince >= 700;
+      if(intro && ((heard && settled) || (!heard && now - openAt > 2500))) intro = false;
+      const busy = !settled || intro;
+      if(document.body && document.body.classList.contains("spk-busy") !== busy) document.body.classList.toggle("spk-busy", busy);
+    }catch(e){}
+  };
+  setInterval(tick, 80);
+})();
 function setPlaying(on){
   // the dynamic Swiftie sits header-left; the audio chips pulse to signal playback. r4/F1: share the
   // .playing toggle across the header chip AND the tut-card replay chip (the header is hidden in the
   // tut frame, so the in-card .tut-audio is the only visible affordance and must react to VO too).
   isPlaying=on;
+  if(on) document.body.classList.add("spk-busy");   // [SPEAKER GREY] grey the instant a voice starts (speakerState lets it go)
   if(on) _voStart = Date.now();   // drag VO-gate 4s safety: stamp when a VO began so a stalled clip can't soft-lock the tiles
   document.querySelectorAll(".audio-chip, .tut-audio, .sg-vo").forEach(c => c.classList.toggle("playing", on && !isMuted));
   /* [30g] VO LOCK — UNTAPPABLE, ZERO VISUAL. Yasir 2026-07-30: "cards untappable when VO being
@@ -468,7 +497,13 @@ function stopAudio(){
   setPlaying(false);
 }
 
-function play(src, onEnd){
+/* [speaker] the 🔊 chip replays the LAST voice heard on this screen (the prompt, a hint, a feedback line, a story
+   line ...), not always the slide's opening prompt. play() notes each clip; a chain is noted as one whole; a
+   read-along notes itself (so the replay lights its words again). Kept per mount, so it never carries to the next screen. */
+let _lastVo = null;
+function noteVo(srcs, run){ if(!srcs || !srcs.length) return; _lastVo = { mount: state.mountId, srcs: srcs.slice(), run: run || null }; }
+function play(src, onEnd, _inChain){
+  if(src && !_inChain) noteVo([src]);
   stopAudio(); setPlaying(true);
   const myGen=_audioGen;
   let done=false; const fire=()=>{ if(done || myGen!==_audioGen)return; done=true; currentVoiceSource=null; currentAudio=null; _curVoMs=null; setPlaying(false); if(onEnd) onEnd(); };
@@ -555,6 +590,7 @@ function readAlong(words, voText, src, onEnd, onWord, atMs){
     if(i !== cur){ cur = i; if(onWord) try{ onWord(i, words[i] || null); }catch(_){} } };
   let fin = false;
   play(src, ()=>{ fin = true; lit(-1); if(onEnd) onEnd(); });
+  if(src) noteVo([src], (cb)=> readAlong(words, voText, src, cb, null, atMs));
   const gen = _audioGen;
   (function sync(){ if(fin || gen !== _audioGen){ lit(-1); return; }
     const p = voProgress();
@@ -849,8 +885,9 @@ function playSeq(list, cb){
    falls back to silent beat if missing) before the next starts. */
 function playChain(srcs, i, onDone){
   i = i || 0;
+  if(i === 0) noteVo(srcs.filter(Boolean));
   if(i >= srcs.length){ if(onDone) onDone(); return; }
-  play(srcs[i], () => playChain(srcs, i+1, onDone));
+  play(srcs[i], () => playChain(srcs, i+1, onDone), true);
 }
 /* On slide mount, play prompt → phoneme/word_name → instruction in order.
    KG learners can't read prompt_hi — the chain gives them both the
@@ -3395,7 +3432,7 @@ const SlideModules = {
       document.addEventListener("pointerdown", onTouch, true);
       onLeave(()=>{ clearTimeout(navNudgeT); document.removeEventListener("pointerdown", onTouch, true); });
       const listen = ()=>{ phase = "listen"; setSwMood("talk");
-        speak(()=>{ if(!alive()) return; phase = "done";
+        speak(()=>{ if(!alive()) return; phase = "done"; state.spkHold = 0;
           setSwMood("point");
           /* the HI02H04_L02_S01 story page ([L02-POP-AFTER-SENTENCE]): when the sentence has been heard the picture POPS (the 2 s pop)
              with its sound, and आगे lights only once the pop is over (2 s after the voice) */
@@ -3406,6 +3443,7 @@ const SlideModules = {
       mic.onclick = (e)=>{ if(e) e.stopPropagation();
         if(phase !== "cue") return;
         clearIdle(); stopNudge(); stopAudio(); _ac();
+        state.spkHold = state.mountId;   // [SPEAKER GREY] the words light one by one, then the sentence is read: one sequence
         phase = "rec"; cap.classList.remove("p2-cue"); mic.classList.remove("mr-glow"); mic.classList.add("p2-rec"); setSwMood("point");
         SwiftPAL.emit("mic_read_started", { slide_id: slide.id, words: words.length });
         let i = 0;
@@ -3581,7 +3619,7 @@ const SlideModules = {
            in that second; a drag made meanwhile is held (fxBusy) and checked once the next question is on screen. */
         play(src(w.word_audio), ()=>{});
         later(()=>{ if(!alive()) return;
-          fxBusy = false; picOff();
+          fxBusy = false; state.spkHold = 0; picOff();
           const a = markActive(); palUp(a, true);
           if(wasActive && a && !a.found) playQ(src(a.clue_audio), ()=>{});
           drain(); }, 1000); };   // the next question is up: check any word dragged meanwhile, in order
@@ -3631,7 +3669,8 @@ const SlideModules = {
         if(picWord === w) picOff();   // SME: the answer is found - its picture goes back into the hat
         setSwMood("happy");
         SwiftPAL.emit("word_found", { slide_id: slide.id, word: w.word_hi, misses: w.miss, level: w.level });
-        fxBusy = true; w.cells.forEach(c=> c.classList.remove("ws-hint", "ws-hint1"));
+        fxBusy = true; state.spkHold = state.mountId;   // [SPEAKER GREY] pop, fly, the word's voice, then the next clue: one sequence
+        w.cells.forEach(c=> c.classList.remove("ws-hint", "ws-hint1"));
         cells.flat().forEach(c=> c.classList.remove("ws-off"));   // the letters disabled by the 4th hint come back
         if(!CANDY && !HATFLY){ sfxCorrect(); settle(w, wasActive); return; }
         const n = w.cells.length, STEP = 200;
@@ -3889,7 +3928,7 @@ const SlideModules = {
         const onTouch = ()=>{ if(!armed || !nav.classList.contains("active")) return; stopNudge(); armNavNudge(); };
         document.addEventListener("pointerdown", onTouch, true);
         onLeave(()=>{ clearTimeout(navNudgeT); document.removeEventListener("pointerdown", onTouch, true); });
-        const arm = ()=>{ if(armed || !alive()) return; armed = true; setNavActive(true); setSwMood("point");
+        const arm = ()=>{ if(!alive()) return; state.spkHold = 0; if(armed) return; armed = true; setNavActive(true); setSwMood("point");
           nav.classList.add("nav-call"); armNavNudge(); };   // checklist: next pulses once the VO + CTA are done
         // optional roles are skipped (no silent beat): explain_type, evidence_read (one clip that paraphrases
         // the clue lines instead of reading them one by one), conclude (the strategy wrap-up line)
@@ -3939,7 +3978,8 @@ const SlideModules = {
           say("prompt", ()=>{ const n = optCells().length;
             popOpts(tok, OPT_GAP, i=> "sfx_tring_" + Math.min(i + 1, 6));
             later(()=>{ if(tok === seqTok && alive()) cb(); }, (n - 1) * OPT_GAP + 700); }); }); }, 800); };
-        const seq = (done)=>{ setSwMood("teach"); resetReveal(); hideOpts(); seqTok++; if(qFirst) newWord(false);
+        const seq = (done)=>{ state.spkHold = state.mountId;   // [SPEAKER GREY] the demo is one sequence (pauses, options popping in)
+          setSwMood("teach"); resetReveal(); hideOpts(); seqTok++; if(qFirst) newWord(false);
           sayPrompt(()=> say("explain_type", ()=>{
             showEv(); pulse(true);
             const afterEv = ()=>{ pulse(false); lines.forEach(l=> l.classList.remove("ev-now"));
@@ -3962,7 +4002,8 @@ const SlideModules = {
                   if(runTok !== seqTok || !alive()) return;
                   e.stopPropagation(); stopNudge(); reveal(); };
                 ok.addEventListener("click", onTap, true);
-                say("tap_answer", ()=>{ if(runTok === seqTok && alive() && !ok.classList.contains("ev-back")) pointNudgeAt(ok); }); }); };
+                say("tap_answer", ()=>{ if(runTok === seqTok && alive()) state.spkHold = 0;   // now it waits for the child: blue
+                  if(runTok === seqTok && alive() && !ok.classList.contains("ev-back")) pointNudgeAt(ok); }); }); };
             if(audioFor(slide, "evidence_read") && !ev.every(i=> lines[i] && lines[i]._src)){ ev.forEach(i=> lines[i] && lines[i].classList.add("ev-now")); say("evidence_read", afterEv); }
             else readEv(0, afterEv); })); };
         state.replayAudio = ()=> seq(arm);
@@ -5494,10 +5535,14 @@ function mountSlide(idx){
   // reveal_seq/sort reveal runs (no stomping the one-by-one narration); while a self-driving demo
   // chain runs (a replay would gen-kill its chain); and on self-driving slides that offer no replay.
   const replaySlideAudio = ()=>{
-    if(isPlaying || state.revealing || state.demoRunning || (state.ownsAudio && !state.replayAudio)) return;
+    if(document.body.classList.contains("spk-busy")) return;   // [SPEAKER GREY] grey = no taps
+    const last = (_lastVo && _lastVo.mount === state.mountId) ? _lastVo : null;
+    if(isPlaying || state.revealing || state.demoRunning || (state.ownsAudio && !state.replayAudio && !last)) return;
     state.audioReplays++;
     GameBus.emit("audio_replay", { slide_id: slide.id, phase: slide.phase, count: state.audioReplays });
-    if(state.replayAudio){ state.replayAudio(); navUnlock(); } else autoPlayChain(slide, navUnlock);
+    // [speaker] replay the voice heard last on this screen (a hint / feedback line too); before any, the slide's own replay
+    if(last){ if(last.run) last.run(navUnlock); else if(last.srcs.length === 1) play(last.srcs[0], navUnlock); else playChain(last.srcs, 0, navUnlock); }
+    else if(state.replayAudio){ state.replayAudio(); navUnlock(); } else autoPlayChain(slide, navUnlock);
   };
   $("audioChip").onclick = replaySlideAudio;
 
@@ -6233,7 +6278,9 @@ function boot(){
   const playLanding = ()=>{ if(_voOnTap && !_landStarted){ setStartBtnReady(true); return; }
     if(!$("startGate").classList.contains("hidden")){
     _landingSpeaking = true;
-    if(!_voOnTap){ setStartBtnReady(false); if(typeof replayLandingSwifty === "function") replayLandingSwifty(); }   /* [H11-173] he waves as he speaks */   /* [H11-148] pressed play: it stays gold, it was the child's go */
+    /* [cover] a replay from the speaker AFTER the greeting is over keeps Play on screen - only the speaker waits out the voice */
+    if(!_voOnTap && _landVoDone){ const v = $("sgVo"); if(v){ v.classList.add("sg-vo-off"); v.setAttribute("aria-disabled", "true"); } if(typeof replayLandingSwifty === "function") replayLandingSwifty(); }
+    else if(!_voOnTap){ setStartBtnReady(false); if(typeof replayLandingSwifty === "function") replayLandingSwifty(); }   /* [H11-173] he waves as he speaks */   /* [H11-148] pressed play: it stays gold, it was the child's go */
     /* THE WATCHDOG IS ARMED BY THE FIRST TOUCH, NOT BY THE PAGE OPENING. Armed at load it did
        the exact harm it was meant to prevent: on a browser that refuses autoplay the greeting
        never started, the timer fired anyway nine seconds later, and the button went gold having

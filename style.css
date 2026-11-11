@@ -4860,3 +4860,13 @@ html.no-anim .ws-cap.halo.pic-hold.pic-sink .ws-pal-ch.is-pic img{animation:none
 /* G1 (SME): the picture's boxes are not tappable while any VO speaks - only once it is over (same lock as every other mechanic) */
 body.vo-lock .tis-box,body.vo-lock .tis-frame,body.vo-lock .tis-hot{pointer-events:none !important;}
 
+
+/* [SPEAKER GREY] the speaker is GREY until the voice-over is complete - body.spk-busy (app.js speakerState) covers the whole
+   sequence, the gaps between its clips and a page's opening voice. ONE still state: no throb, no moving sound waves, no
+   fade in/out, no taps. Blue again only when it is all over. (Same look as the vo-lock grey above.) The cover speaker keeps
+   its entrance animation; only its sound waves are stilled. */
+body.spk-busy .audio-chip,body.spk-busy .tut-audio,body.spk-busy .sg-vo{pointer-events:none !important;opacity:.5 !important;
+  filter:grayscale(1) brightness(1.2) !important;transition:none !important;}
+body.spk-busy .audio-chip,body.spk-busy .tut-audio,body.vo-lock .audio-chip,body.vo-lock .tut-audio{animation:none !important;transform:none !important;transition:none !important;}
+body.spk-busy .audio-chip .wv,body.spk-busy .tut-audio .wv,body.spk-busy .sg-vo .wv,
+body.vo-lock .audio-chip .wv,body.vo-lock .tut-audio .wv,body.vo-lock .sg-vo .wv,.sg-vo.sg-vo-off .wv{animation:none !important;opacity:1 !important;}

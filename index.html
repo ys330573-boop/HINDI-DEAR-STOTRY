@@ -1,17 +1,55 @@
 <!doctype html>
-<html lang="hi">
+<html lang="hi" translate="no" class="notranslate">
 <head>
 <meta charset="utf-8">
 <meta name="google" content="notranslate">
+<meta http-equiv="Content-Language" content="hi">
+<!-- [no-translate] the Hindi lesson must never be offered to (or changed by) Google Translate: lang + translate="no"
+     on <html> and <body>, class "notranslate", and the google meta above -->
+<script>
+/* [TAB-AWAY FREEZE] while the game tab is in the background the WHOLE game stands still, not only its sound: every
+   pending setTimeout / setInterval is paused with the time it had left, and every running CSS / Web Animation is
+   paused. Coming back, they all carry on from exactly that point - so a voice resumes on the word it stopped on and
+   nothing (next slide, hint, gate, a "silent beat" for a missing clip) happens while the child is away. A timer set
+   while hidden waits for the child to come back. (The audio itself is paused/resumed in app.js [TAB-AWAY].) */
+(function(){
+  var rawST = window.setTimeout.bind(window), rawCT = window.clearTimeout.bind(window);
+  var T = new Map(), seq = 1e9, frozen = document.hidden, anims = [];
+  function arm(id, t, ms){ t.due = Date.now() + ms; t.real = rawST(function(){ fire(id); }, ms); }
+  function fire(id){ var t = T.get(id); if(!t) return; t.real = null;
+    if(t.every){ if(frozen) t.left = t.ms; else arm(id, t, t.ms); } else T.delete(id);
+    t.fn.apply(window, t.args); }
+  function add(fn, ms, args, every){
+    if(typeof fn !== "function") return every ? window.__rawSI(fn, ms) : rawST(fn, ms);
+    var id = ++seq, t = { fn:fn, args:args, ms:Math.max(every ? 1 : 0, +ms || 0), every:every, real:null };
+    T.set(id, t); if(frozen) t.left = t.ms; else arm(id, t, t.ms); return id; }
+  function clear(id){ var t = T.get(id); if(t){ if(t.real != null) rawCT(t.real); T.delete(id); } else rawCT(id); }
+  window.__rawSI = window.setInterval.bind(window);
+  window.setTimeout = function(fn, ms){ return add(fn, ms, Array.prototype.slice.call(arguments, 2), false); };
+  window.setInterval = function(fn, ms){ return add(fn, ms, Array.prototype.slice.call(arguments, 2), true); };
+  window.clearTimeout = clear; window.clearInterval = clear;
+  document.addEventListener("visibilitychange", function(){
+    if(document.hidden && !frozen){
+      frozen = true;
+      T.forEach(function(t){ if(t.real != null){ rawCT(t.real); t.real = null; t.left = Math.max(0, t.due - Date.now()); } });
+      try{ anims = document.getAnimations().filter(function(a){ return a.playState === "running"; }); anims.forEach(function(a){ a.pause(); }); }catch(e){ anims = []; }
+    } else if(!document.hidden && frozen){
+      frozen = false;
+      anims.forEach(function(a){ try{ if(a.playState === "paused") a.play(); }catch(e){} }); anims = [];
+      T.forEach(function(t, id){ if(t.real == null) arm(id, t, t.left); });
+    }
+  });
+})();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>SwiftPAL · HI02H02_L01_S01 · वह हँस दिया</title>
 <!-- inline favicon: stops the browser asking for /favicon.ico and logging a 404 -->
 <link rel="icon" href="data:,">
 <!-- UI/UX: the reference lesson HI02H11_L03_S02's page shell, stylesheet, kits and engine UI, ported; this lesson's
      content, card and modules are its own. -->
-<link rel="stylesheet" href="style.css?v=20261105120000">
+<link rel="stylesheet" href="style.css?v=20261111200000">
 </head>
-<body class="is-start">
+<body class="is-start notranslate" translate="no">
 <div class="start-bg" aria-hidden="true"></div>
 <div class="sg-glow" aria-hidden="true"></div>
 <div class="sg-sky"  aria-hidden="true"></div>
@@ -147,6 +185,6 @@
 <!-- ============ REFERENCE KITS (FLN animation kit + FLN confetti kit) ============ -->
 <script src="ui-kit.js"></script>
 <!-- ============ ENGINE ============ -->
-<script src="app.js?v=20261105120000"></script>
+<script src="app.js?v=20261111200000"></script>
 </body>
 </html>
